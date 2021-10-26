@@ -1,4 +1,4 @@
-# Caratflare public facing marketing site
+# Green Hedge Capital public facing marketing site
 
 ## Getting started
 
@@ -46,14 +46,3 @@ export default connect((state) => ({
   meLoading: loadingSelector(state),
 }))(user);
 ```
-
-## Setting up SSH
-
-`
-git remote set-url origin https://github.com/manjotsk/cflare-app.git
-git remote set-url origin git@github.com:manjotsk/cflare-app.git
-
-\$ git remote -v
-origin git@github.com:manjotsk/cflare-app.git (fetch)
-origin git@github.com:manjotsk/cflare-app.git (push)
-`
