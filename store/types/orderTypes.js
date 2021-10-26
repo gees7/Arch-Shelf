@@ -1,0 +1,1 @@
+export const GET_ORDERS = 'CARATFLARE/ORDER/GET_ORDERS';
