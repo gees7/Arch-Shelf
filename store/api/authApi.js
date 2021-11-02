@@ -80,14 +80,13 @@ export const refreshToken = () =>
         storeId: 'cflare.product.store',
       },
     },
-  })
-    .then((res) => {
-      if (res) {
-        cookies.set('accessToken', res.accessToken, { path: '/' });
-        cookies.set('refreshToken', res.accessToken, { path: '/' });
-      }
-    })
-    .catch(() => Router.replace('/auth/login'));
+  }).then((res) => {
+    if (res) {
+      cookies.set('accessToken', res.accessToken, { path: '/' });
+      cookies.set('refreshToken', res.accessToken, { path: '/' });
+    }
+  });
+// .catch(() => Router.replace('/auth/login'));
 
 export const kycDocumentsApi = async (data, type, customerId) => {
   try {

@@ -1,136 +1,128 @@
 import React from 'react';
 
-const Footer = () => {
+const Footer = ({
+  dashboard,
+  setDashboard,
+  projects,
+  setProjects,
+  competitions,
+  setCompetitions,
+}) => {
   return (
     <div>
-      <footer id="footer" className="footer-2 wf-section">
-        <div className="container-16 w-container">
-          <div className="footer-flex-container-2">
-            <div>
+      <div className="footercontainer w-container">
+        <div className="div-block-376">
+          <img
+            src="/images/ad-4.JPG"
+            loading="lazy"
+            sizes="(max-width: 479px) 92vw, (max-width: 767px) 95vw, (max-width: 991px) 96vw, (max-width: 1279px) 88vw, 972px"
+            srcSet="images/ad-4-p-500.jpeg 500w, images/ad-4.JPG 972w"
+            alt
+          />
+        </div>
+        <div className="footerdiv">
+          <div className="logoimage">
+            <div className="text-block-8 ft">
+              <span className="text-span">ARCH</span> SHELF
+            </div>
+          </div>
+          <div className="logocontent">
+            <p className="divpara footer">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt &nbsp;aliqua.
+            </p>
+          </div>
+        </div>
+        <div className="footer-links-container">
+          <div className="divlinks">
+            <div className="divnewsletter">
+              <img
+                src="../../../assets/images/message.svg"
+                loading="lazy"
+                width={90}
+                alt
+                className="newsletterimage"
+              />
+              <div className="text-block-8 ft">
+                <span className="text-span">ARCH</span> SHELF
+              </div>
+              <p className="paragraph color">
+                Lorem ipsum dolor sit amet, consectetur&nbsp;elit. Suspendisse
+                varius enim in eros elementum tristique.
+              </p>
+            </div>
+            <div className="footerdiv1">
+              <h4 className="footerheading1">
+                <strong>Quick Links</strong>
+              </h4>
               <a
                 href="index.html"
                 aria-current="page"
-                className="footer-logo-link-2 w--current"
+                className="homelink w--current"
               >
-                <img
-                  src={require('../../../assets/images/logo.png')}
-                  alt=""
-                  className="footer-image-2"
-                />
+                Home
               </a>
-              <div>
-                <p className="paragraph-132">
-                  Lorem Ipsum is simply dummy text of the
-                  <br /> printing and typesetting industry. Lorem Ipsum has
-                  <br /> been the industry's standard dummy <br />
-                  text ever since the 1500s
-                </p>
-              </div>
-            </div>
-            <div className="div-block-23314">
-              <h2 className="footer-heading-2">Contact us</h2>
-              <ul role="list" className="list w-list-unstyled">
-                <li>
-                  <div className="div-block-30118">
-                    <div className="div-block-30119">
-                      <div className="text-block-15114"></div>
-                    </div>
-                    <div>
-                      <div className="text-block-15115">
-                        Lawrence Road, Amritsar, Punjab 143001
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <a
-                    href="mailto:info@greenhedgecapital.com"
-                    className="link-block-51 w-inline-block"
-                  >
-                    <div className="div-block-30118">
-                      <div className="div-block-30119">
-                        <div className="text-block-15114"></div>
-                      </div>
-                      <div>
-                        <div className="text-block-15115">
-                          info@greenhedgecapital.com
-                        </div>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="tel:6283286207"
-                    className="link-block-50 w-inline-block"
-                  >
-                    <div className="div-block-30145">
-                      <div className="text-block-15114 icon-size"> </div>
-                      <div className="text-block-15115">6283286207</div>
-                    </div>
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h2 className="footer-heading-2">Quick links</h2>
-              <ul role="list" className="w-list-unstyled">
-                <li>
-                  <a
-                    href="index.html"
-                    aria-current="page"
-                    className="footer-link-2 w--current"
-                  >
-                    Home
-                  </a>
-                </li>
-                <li>
-                  <a href="about-us.html" className="footer-link-2">
-                    About us
-                  </a>
-                </li>
-                <li>
-                  <a href="blog-page.html" className="footer-link-2">
-                    Blog
-                  </a>
-                </li>
-                <li>
-                  <a href="personal-branding.html" className="footer-link-2">
-                    Founder
-                  </a>
-                  <a href="contact-us.html" className="footer-link-2">
-                    Contact us
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h2 className="footer-heading-2">Information</h2>
-              <ul role="list" className="w-list-unstyled">
-                <li>
-                  <a href="ghc-academy.html" className="footer-link-2">
-                    GHC&nbsp;Academy
-                  </a>
-                </li>
-                <li>
-                  <a href="ghc-life.html" className="footer-link-2">
-                    GHC&nbsp;Life
-                  </a>
-                  <a href="ghc-foundation.html" className="footer-link-2">
-                    GHC&nbsp;Foundation
-                  </a>
-                </li>
-              </ul>
-              <a href="ghc-initiatives.html" className="footer-link-2">
-                GHC Initiatives
+              <a href="about-us.html" className="homelink">
+                About
+              </a>
+              <a href="#" className="homelink">
+                Team
+              </a>
+              <a href="#" className="homelink">
+                Services
+              </a>
+              <a href="#" className="homelink">
+                Career
               </a>
             </div>
-          </div>
-          <div className="text-block-63">
-            Copyright © 2021 Green Hedge Capital. All rights reserved.
+            <div className="footerdiv1 _1 _2">
+              <h4 className="footerheading1">
+                <strong>Information</strong>
+              </h4>
+              <a href="#" className="homelink">
+                Privacy policy
+              </a>
+              <a href="#" className="homelink">
+                Terms &amp; condition
+              </a>
+              <a href="contact-us.html" className="homelink">
+                Contact
+              </a>
+            </div>
+            <div className="footerdiv1 _3">
+              <h4 className="footerheading1">Resources</h4>
+              <a href="#" className="homelink">
+                Resources
+              </a>
+              <a href="#" className="homelink">
+                Projects
+              </a>
+              <a href="#" className="homelink">
+                Courses
+              </a>
+              <a href="competitions.html" className="homelink">
+                Competitions
+              </a>
+              <a href="#" className="homelink">
+                Travel
+              </a>
+            </div>
           </div>
         </div>
-      </footer>
+        <div className="bottomdiv">
+          <div className="copyrightdiv">
+            <p className="paragraph color">
+              Copyright © archshelf
+              <a
+                href="https://webflow.com/"
+                target="_blank"
+                className="bottomlink"
+              />
+              <br />
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

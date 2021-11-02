@@ -1,13 +1,13 @@
 import App from 'next/app';
 import Router from 'next/router';
 import { Provider } from 'react-redux';
-import '../assets/css/global.less';
 // import '../assets/css/frontnew.less';
 // import 'antd/dist/antd.less';
 
 import { createWrapper } from 'next-redux-wrapper';
 import store from '../store/store';
 import Security from '../components/security';
+import '../assets/css/global.less';
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {

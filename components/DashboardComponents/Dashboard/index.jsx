@@ -1,168 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import FixedSocialIcons from '../../FixedSocialIcons';
-import {
-  getDashboardFeed, getFeeds
-} from "../../../store/api/dashboardApi";
-import { notification } from "antd";
-import moment from "moment";
+import { getDashboardFeed, getFeeds } from '../../../store/api/dashboardApi';
+import { notification } from 'antd';
+import moment from 'moment';
+import styles from './style.less';
+import router from 'next/router';
 
-const Dashboard = () => {
-  const [slider, setSlider] = useState("");
-  const [sliderData, setSliderData] = useState([]);
-  const [nextSlider, setNextSlider] = useState({})
-  const [blogs, setBlogs] = useState();
-  const [initiatives, setInitiatives] = useState();
-  const [academy, setAcademy] = useState();
-  const [foundation, setFoundation] = useState();
-  const [life, setLife] = useState();
-
-  useEffect(() => {
-    if(sliderData[0]) setSlider(sliderData[0]?._id)
-    // if(sliderData[0]) setNextSlider(sliderData[0])
-  }, [sliderData])
-
-  useEffect(() => {
-    getDashboardFeed()
-      .then((res) => {
-        setSliderData(res.data);
-      })
-      .catch((err) => {
-        if (err && err.status === 400) {
-          notification.error({
-            message: "Failed to get sliders",
-          });
-        } else {
-          notification.error({
-            message: `${err?.data?.error?.message}`,
-          });
-        }
-      });
-  }, []);
-
-  useEffect(() => {
-    const body = {
-      start: 0,
-      limit: 4,
-      type: 'blog'
-    };
-    getFeeds({ query: body })
-      .then((res) => {
-        setBlogs(res?.data?.feedList)
-      })
-      .catch((err) => {
-        if (err && err.status === 400) {
-          notification.error({
-            message: "Failed to get feeds",
-          });
-        } else {
-          notification.error({
-            message: `${err?.data?.error?.message}`,
-          });
-        }
-      });
-  }, []);
-
-  useEffect(() => {
-    const body = {
-      start: 0,
-      limit: 1,
-      type: 'academy'
-    };
-    getFeeds({ query: body })
-      .then((res) => {
-        setAcademy(res?.data?.feedList)
-      })
-      .catch((err) => {
-        if (err && err.status === 400) {
-          notification.error({
-            message: "Failed to get feeds",
-          });
-        } else {
-          notification.error({
-            message: `${err?.data?.error?.message}`,
-          });
-        }
-      });
-  }, []);
-
-  useEffect(() => {
-    const body = {
-      start: 0,
-      limit: 1,
-      type: 'foundation'
-    };
-    getFeeds({ query: body })
-      .then((res) => {
-        setFoundation(res?.data?.feedList)
-      })
-      .catch((err) => {
-        if (err && err.status === 400) {
-          notification.error({
-            message: "Failed to get feeds",
-          });
-        } else {
-          notification.error({
-            message: `${err?.data?.error?.message}`,
-          });
-        }
-      });
-  }, []);  
-  
-  useEffect(() => {
-    const body = {
-      start: 0,
-      limit: 1,
-      type: 'life'
-    };
-    getFeeds({ query: body })
-      .then((res) => {
-        setLife(res?.data?.feedList)
-      })
-      .catch((err) => {
-        if (err && err.status === 400) {
-          notification.error({
-            message: "Failed to get feeds",
-          });
-        } else {
-          notification.error({
-            message: `${err?.data?.error?.message}`,
-          });
-        }
-      });
-  }, []);
-
-  useEffect(() => {
-    const body = {
-      start: 0,
-      limit: 3,
-      type: 'initiative'
-    };
-    getFeeds({ query: body })
-      .then((res) => {
-        setInitiatives(res?.data?.feedList)
-      })
-      .catch((err) => {
-        if (err && err.status === 400) {
-          notification.error({
-            message: "Failed to get feeds",
-          });
-        } else {
-          notification.error({
-            message: `${err?.data?.error?.message}`,
-          });
-        }
-      });
-  }, []);
-
+const Dashboard = ({
+  dashboard,
+  setDashboard,
+  projects,
+  setProjects,
+  competitions,
+  setCompetitions,
+}) => {
+  console.log(dashboard, `competitions`, competitions);
   return (
     <div>
-      <div className="section-73 wf-section">
-        <div className="cloneable-area">
-          <div className="c-hero-slider-2" slider={slider}>
+      <div className="div-block-166 _80">
+        <div className="div-block-401">
+          <img src="/images/ad.JPG" loading="lazy" width={549} alt />
+        </div>
+        <div className="div-block-400">
+          <div className="text-block-158">
+            “Architecture is the learned game, correct and magnificent, of forms
+            assembled in the light”
+          </div>
+          <p className="paragraph-25 right-align">-Le Corbusier</p>
+        </div>
+      </div>
+      <div className="hero-section _5 wf-section">
+        <div className="div-block-377 hide">
+          <div className="div-block-378">
             <div
               data-delay={2000}
-              data-animation="cross"
-              className="hero-slider w-slider"
+              data-animation="slide"
+              className="slider-5 w-slider"
               data-autoplay="true"
               data-easing="ease"
               data-hide-arrows="false"
@@ -173,1270 +46,80 @@ const Dashboard = () => {
               data-infinite="true"
             >
               <div className="w-slider-mask">
-                {sliderData && sliderData?.map((item) => (
-                    <>
-                      {item?._id === slider && (
-                        <div className="hero-slide w-slide" >
-                          {/* <div className="c-hero-slide-content _2" > */}
-                          <div className="c-hero-slide-content" style={{ backgroundImage: `url(${item?.feed?.media?.url})`, backgroundPosition: '0px 0px, 50% 50%', backgroundSize: "cover" , backgroundRepeat: "no-repeat" }}>
-                            <div className="hero-slide-highlight-text">
-                              <span className="w-4 truncate ">{item?.feed?.title}</span>
-                            </div>
-                          </div>
-                          <div className="c-hero-slide-details">
-                            <div className="c-hero-slide-stripes">
-                              <div className="hero-slide-stripe" />
-                              <div className="hero-slide-stripe" />
-                              <div className="hero-slide-stripe" />
-                              <div className="hero-slide-stripe" />
-                              <div className="hero-slide-stripe" />
-                            </div>
-                            <div className="_w-hero-slide-details">
-                              <h2 className="hero-slide-header" >
-                                {item?.feed?.title}
-                              </h2>
-                              <p className="hero-slide-p"> <span
-                                   dangerouslySetInnerHTML={{ __html: item?.feed?.body }}
-                               ></span></p>
-                              <div className="c-slide-cta">
-                                <a
-                                  href="about-us.html"
-                                  target="_blank"
-                                  className="slide-cta w-inline-block"
-                                >
-                                  <div className="slide-cta-text">
-                                    Read More
-                                  </div>
-                                  <div className="slide-cta-curtain" />
-                                </a>
-                              </div>
-                              {/* <div className="hero-slide-bg-no">{item?.id}</div> */}
-                            </div>
-                          </div>
-                        </div>
-                       )}
-                         <div className="hero-slider-arrow w-slider-arrow-left">
-                          <div className="w-icon-slider-left" />
-                         </div>
-                         <div className="hero-slider-arrow w-slider-arrow-right">
-                         <div className="w-icon-slider-right" onClick={() => setNextSlider(item)}/>
-                         </div> 
-                    </>
-                  ))}
-              </div>
-              <div className="hero-slider-nav w-slider-nav w-round" />
-              <div className="c-hero-slider-navbar" slider={slider}>
-                {sliderData &&
-                  sliderData?.map((item) => (
-                    <div className="wo-hero-slider-nav"  onClick={() => setSlider(item?._id)}>
-                      <div className="_w-hero-slider-nav">
-                        {/* <div className="hero-slider-nav-number">.</div> */}
-                        <div className="c-hero-slider-nav-content">
-                          <div
-                            className={`hero-slider-nav-title ${
-                              slider === item?._id ? 'active' : ''
-                            }`}
-                          >
-                            {item?.feed?.title}
-                          </div>
-                        </div>
-                        <div
-                          className={`slider-nav-indicator  ${
-                            slider === item?._id ? 'active' : ''
-                          } `}
-                        />
-                        <div className="hero-slider-nav-curtain" />
-                      </div>
-                    </div>
-                  ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="section wf-section">
-        {/* <img
-          src={require('../../../assets/images/hero-image-black.png')}
-          loading="lazy"
-          sizes="100vw"
-          // srcSet="images/hero-image-black-p-500.png 500w, images/hero-image-black-p-800.png 800w, images/hero-image-black.png 1920w"
-          alt=""
-          // className="image-32243"
-        /> */}
-        <div className="hero-section-div color">
-          <div className="div-block-23425">
-            <div
-              // data-w-id="a8157dd2-842a-d5e3-6645-e2fdfddbc686"
-              // style={{ opacity: 0 }}
-              className="div-block-23427"
-            >
-              <img
-                src={require('../../../assets/images/what.png')}
-                loading="lazy"
-                width={177}
-                // data-w-id="4f65fe85-3e3b-0d23-a573-ba7875358a38"
-                alt=""
-              />
-            </div>
-            <div
-              // data-w-id="eeaa59c4-ab51-b9aa-8f44-710b1d920ddb"
-              // style={{ opacity: 0 }}
-              className="div-block-23428"
-            >
-              <img src="images/why.png" loading="lazy" width={177} alt="" />
-            </div>
-            <div
-              // data-w-id="c5e0ea12-a2bf-0d2a-0d85-b42ef5d00642"
-              // style={{ opacity: 0 }}
-              className="div-block-23429"
-            >
-              <img src="images/how.png" loading="lazy" width={177} alt="" />
-            </div>
-          </div>
-          <div className="div-block-23426">
-            <div
-            // data-w-id="60289a9b-d478-1bf4-883e-b59bc7d52d94"
-            // style={{ opacity: 0 }}
-            >
-              <img
-                src="images/savings.png"
-                loading="lazy"
-                width={560}
-                alt=""
-                className="image-32244"
-              />
-            </div>
-            <div
-              // data-w-id="ab1a5e4a-9964-b92a-42ea-e7fced0934c8"
-              // style={{ opacity: 0 }}
-              className="div-block-23430"
-            >
-              <img
-                src="images/investing.png"
-                loading="lazy"
-                width={560}
-                alt=""
-              />
-            </div>
-            <div
-              // data-w-id="14dfa576-f6b4-4bf0-d727-2cfc7d330431"
-              // style={{ opacity: 0 }}
-              className="div-block-23432"
-            >
-              <img src="images/trading.png" loading="lazy" width={560} alt="" />
-            </div>
-            <div
-              // data-w-id="5957e789-f493-5d6c-bd45-b3517740315b"
-              // style={{ opacity: 0 }}
-              className="div-block-23431"
-            >
-              <img
-                src="images/insurance.png"
-                loading="lazy"
-                width={560}
-                alt=""
-              />
-            </div>
-          </div>
-        </div>
-        <div className="hero-section-div">
-          <div className="div-block-23425">
-            <div
-              // data-w-id="aacd9b33-51ca-68ca-4019-c68ae2c59797"
-              // style={{ opacity: 0 }}
-              className="div-block-23427"
-            >
-              <img
-                src={require('../../../assets/images/why-main-dots.png')}
-                loading="lazy"
-                width={400}
-                // data-w-id="aacd9b33-51ca-68ca-4019-c68ae2c59798"
-                // srcSet="images/why-main-dots-p-500.png 500w, images/why-main-dots.png 654w"
-                // sizes="(max-width: 479px) 100vw, (max-width: 767px) 316.06024169921875px, (max-width: 991px) 395.0753173828125px, (max-width: 1279px) 35vw, (max-width: 1439px) 31vw, (max-width: 1919px) 395.07525634765625px, 21vw"
-                alt=""
-                className="image-32258"
-              />
-            </div>
-            <div
-              // data-w-id="aacd9b33-51ca-68ca-4019-c68ae2c59799"
-              // style={{ opacity: 0 }}
-              className="div-block-23428"
-            >
-              <img
-                src={require('../../../assets/images/what-white.png')}
-                loading="lazy"
-                width={200}
-                // data-w-id="aacd9b33-51ca-68ca-4019-c68ae2c5979a"
-                alt=""
-                className="image-32259"
-              />
-            </div>
-            <div
-              // data-w-id="aacd9b33-51ca-68ca-4019-c68ae2c5979b"
-              // style={{ opacity: 0 }}
-              className="div-block-23429"
-            >
-              <img
-                src={require('../../../assets/images/how-white.png')}
-                loading="lazy"
-                width={200}
-                // data-w-id="aacd9b33-51ca-68ca-4019-c68ae2c5979c"
-                alt=""
-                className="image-32260"
-              />
-            </div>
-          </div>
-          <div className="div-block-23426">
-            <div
-              // data-w-id="aacd9b33-51ca-68ca-4019-c68ae2c5979e"
-              // style={{ opacity: 0 }}
-              className="div-block-23443"
-            >
-              <div className="div-block-23448">
-                <img
-                  src={require('../../../assets/images/saving-ruppe.png')}
-                  loading="lazy"
-                  width={101}
-                  alt=""
-                />
-              </div>
-              <div className="div-block-23446">
-                <h3 className="heading-171">Savings</h3>
-                <div>
-                  <p className="paragraph-139 left">
-                    You are &nbsp;the CEO of your own life, financial freedom is
-                    not only your choice, it is your responsibility.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div
-              data-w-id="aacd9b33-51ca-68ca-4019-c68ae2c597a0"
-              // style={{ opacity: 0 }}
-              className="div-block-23430"
-            >
-              <div className="div-block-23449">
-                <img
-                  src={require('../../../assets/images/investment.png')}
-                  loading="lazy"
-                  width={133}
-                  alt=""
-                />
-              </div>
-              <div className="div-block-23445">
-                <h3 className="heading-171">Investing</h3>
-                <div>
-                  <p className="paragraph-139 left">
-                    You become financially free when your passive income exceeds
-                    your expenses and reap the benefits of the eight wonder:
-                    Compound Interest
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div
-              data-w-id="aacd9b33-51ca-68ca-4019-c68ae2c597a2"
-              // style={{ opacity: 0 }}
-              className="div-block-23432"
-            >
-              <div className="div-block-23447">
-                <img
-                  src={require('../../../assets/images/trading_1.png')}
-                  loading="lazy"
-                  width={131}
-                  alt=""
-                />
-              </div>
-              <div className="div-block-23444">
-                <h3 className="heading-171">Trading</h3>
-                <div>
-                  <p className="paragraph-139 left">
-                    You’re taking steps towards being financially independent
-                    and giving yourself a Plan B to create another source of
-                    income.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div
-              data-w-id="aacd9b33-51ca-68ca-4019-c68ae2c597a4"
-              // style={{ opacity: 0 }}
-              className="div-block-23431"
-            >
-              <div className="div-block-23450">
-                <img
-                  src={require('../../../assets/images/insure.png')}
-                  loading="lazy"
-                  width={98}
-                  alt=""
-                />
-              </div>
-              <div>
-                <h3 className="heading-171">Insurance</h3>
-                <div>
-                  <p className="paragraph-139 left">
-                    You can have peace of mind when you know you are secured
-                    against any unforseen event in life.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="section-4 wf-section">
-        <div className="div-block-23234">
-          <h1 className="heading-18">Our Ventures</h1>
-          <div className="lines-wrapper left">
-            <div className="line-bold" />
-            <div className="line-bold red" />
-          </div>
-        </div>
-        <div className="container-18 w-container">
-          <div className="div-block-324 _1">
-            <div className="div-block-335">
-              <div className="div-block-23456">
-                <div className="div-block-23444">
-                  <h3 className="heading-171 billion">Green Hedge Capital</h3>
-                  <div>
-                    <h4 className="heading-172 billion">
-                      Savings &amp; Investment
-                    </h4>
-                  </div>
-                </div>
-                <div>
-                  <p className="paragraph-139 left bilion">
-                    You’re taking steps towards being financially independent
-                    and giving yourself a Plan B to create another source of
-                    income.
-                  </p>
-                  <p className="paragraph-139 left bilion">
-                    You’re taking steps towards being financially independent
-                    and giving yourself a Plan B to create another source of
-                    income.
-                  </p>
-                  <p className="paragraph-139 left bilion">
-                    ‍You’re taking steps towards being financially independent
-                    and giving yourself a Plan B to create another source of
-                    income. You’re taking steps towards being financially
-                    independent and giving yourself a Plan B to create another
-                    source of income.
-                  </p>
-                  <p className="paragraph-139 left bilion">
-                    ‍You’re taking steps towards being financially independent
-                    and giving yourself a Plan B to create another source of
-                    income.
-                  </p>
-                  <div className="div-block-23475">
-                    <div className="div-block-23476">
-                      <h5 className="heading-176">Read More</h5>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col">
-                <img
-                  src={require('../../../assets/images/billion-p-500.png')}
-                  loading="lazy"
-                  // width={400}
-                  style={{ minWidth: 400 }}
-                  // id="w-node-ad016c1f-e0a7-46af-2628-be15ba7af68d-d50409fb"
-                  // srcSet="images/billion-p-500.png 500w, images/billion-p-1600.png 1600w, images/billion-p-2000.png 2000w, images/billion-p-2600.png 2600w, images/billion-p-3200.png 3200w, images/billion.png 5616w"
-                  // sizes="(max-width: 479px) 100vw, (max-width: 991px) 375px, (max-width: 1439px) 21vw, 282.21875px"
-                  alt=""
-                  className="image-32254"
-                />
-                <img
-                  src={require('../../../assets/images/white-imge-saving-invest-1-p-500.png')}
-                  loading="lazy"
-                  style={{ minWidth: 400 }}
-                  // width={400}
-                  // id="w-node-_51616464-4a2e-58c1-d63f-4d99efc7881b-d50409fb"
-                  // srcSet="images/white-imge-saving-invest-1-p-500.png 500w, images/white-imge-saving-invest-1-p-800.png 800w, images/white-imge-saving-invest-1-p-1080.png 1080w, images/white-imge-saving-invest-1-p-1600.png 1600w, images/white-imge-saving-invest-1-p-2000.png 2000w, images/white-imge-saving-invest-1-p-2600.png 2600w, images/white-imge-saving-invest-1-p-3200.png 3200w, images/white-imge-saving-invest-1.png 5616w"
-                  // sizes="(max-width: 479px) 100vw, (max-width: 991px) 375px, (max-width: 1439px) 14vw, 188.140625px"
-                  alt=""
-                  className="image-32254"
-                />
-              </div>
-              <a
-                // id="w-node-f8220b2e-f87a-d6d7-0c8d-f8d4fda6b194-d50409fb"
-                href="#"
-                className="link-block-48 hideback _2 vertical w-inline-block"
-              >
-                <img
-                  src={require('../../../assets/images/saving-1.png')}
-                  loading="lazy"
-                  sizes="100vw"
-                  // srcSet="images/saving-1-p-500.png 500w, images/saving-1-p-800.png 800w, images/saving-1-p-1080.png 1080w, images/saving-1-p-1600.png 1600w, images/saving-1-p-2000.png 2000w, images/saving-1.png 2616w"
-                  alt=""
-                  className="image-32246 hide"
-                />
-                <div className="div-block-23456">
-                  <div className="div-block-23444">
-                    <h3 className="heading-171">GHC Academy</h3>
-                    <div>
-                      <h4 className="heading-172">Work, Finance &amp; Life</h4>
-                    </div>
-                    <div>
-                      <p className="paragraph-139">
-                        You’re taking steps towards being financially
-                        independent and giving yourself a Plan B to create
-                        another source of income.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </a>
-              <a
-                id="w-node-_0cfd4b4c-aa6e-ffd2-bf91-89dec8c7e7b9-d50409fb"
-                href="#"
-                className="link-block-48 hideback _3 w-inline-block"
-              >
-                <img
-                  src="images/saving-1.png"
-                  loading="lazy"
-                  sizes="100vw"
-                  srcSet="images/saving-1-p-500.png 500w, images/saving-1-p-800.png 800w, images/saving-1-p-1080.png 1080w, images/saving-1-p-1600.png 1600w, images/saving-1-p-2000.png 2000w, images/saving-1.png 2616w"
-                  alt=""
-                  className="image-32246 hide"
-                />
-                <div className="div-block-23456">
-                  <div className="div-block-23444">
-                    <h3 className="heading-171">GHC Foundation</h3>
-                    <div>
-                      <h4 className="heading-172">
-                        Inspire Collaborate &amp; Share
-                      </h4>
-                    </div>
-                    <div>
-                      <p className="paragraph-139">
-                        You’re taking steps towards being financially
-                        independent and giving yourself a Plan B to create
-                        another source of income.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </a>
-              <a
-                id="w-node-e536a287-3f27-2e9d-a3fa-e9b36133daaa-d50409fb"
-                href="#"
-                className="link-block-48 hideback _4 w-inline-block"
-              >
-                <img
-                  src="images/saving-1.png"
-                  loading="lazy"
-                  sizes="100vw"
-                  srcSet="images/saving-1-p-500.png 500w, images/saving-1-p-800.png 800w, images/saving-1-p-1080.png 1080w, images/saving-1-p-1600.png 1600w, images/saving-1-p-2000.png 2000w, images/saving-1.png 2616w"
-                  alt=""
-                  className="image-32246 hide"
-                />
-                <div className="div-block-23456">
-                  <div className="div-block-23444">
-                    <h3 className="heading-171">GHC Life</h3>
-                    <div>
-                      <h4 className="heading-172">Internal Connect</h4>
-                    </div>
-                    <div>
-                      <p className="paragraph-139">
-                        You’re taking steps towards being financially
-                        independent and giving yourself a Plan B to create
-                        another source of income.
-                      </p>
-                    </div>
-                    <div className="div-block-23457">
-                      <div
-                        data-w-id="c92d2c86-8485-d061-caa8-9614345dd830"
-                        className="button-7 about life"
-                      >
-                        <div className="button-text-2">Know more</div>
-                        <img
-                          src="images/next.png"
-                          width={15}
-                          alt="Next Arrow"
-                          className="arrow1"
-                        />
-                        <img
-                          src="images/next.png"
-                          width={15}
-                          style={{
-                            WebkitTransform:
-                              'translate3d(-10PX, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-                            MozTransform:
-                              'translate3d(-10PX, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-                            msTransform:
-                              'translate3d(-10PX, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-                            transform:
-                              'translate3d(-10PX, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-                            opacity: 0,
-                          }}
-                          alt="Next Arrow"
-                          className="arrow2"
-                        />
-                        <div className="button-8 hide" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div className="div-block-23460">
-              <a
-                href="ghc-academy.html"
-                className="link-block-49 w-inline-block"
-              >
-                <div className="div-block-23459">
-                  <div className="div-block-23444 _50">
-                    <h3 className="heading-171 academy">GHC Academy</h3>
-                    <div className="div-block-23513">
-                      <h4 className="heading-172 aca">
-                        Work, Finance &amp; Life
-                      </h4>
-                    </div>
-                    <div className="div-block-23461">
-                      <p className="paragraph-139 aca">
-                        You’re taking steps towards being financially
-                        independent and giving yourself a Plan B to create
-                        another source of income.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="div-block-23458">
-                    <img
-                      src={require('../../../assets/images/academy3.png')}
-                      loading="lazy"
-                      width={250}
-                      // sizes="(max-width: 479px) 100vw, 250px"
-                      // srcSet="images/academy3-p-500.png 500w, images/academy3-p-800.png 800w, images/academy3-p-1080.png 1080w, images/academy3-p-1600.png 1600w, images/academy3.png 5616w"
-                      alt=""
-                      className="image-32251"
-                    />
-                  </div>
-                </div>
-                <div
-                  data-w-id="2a15d978-41d8-9b73-e632-31e13517e6e0"
-                  className="div-block-45 venture"
-                >
-                  <div className="div-block-47 venture">
-                    <img
-                      src={require('../../../assets/images/blog3.jpg')}               
-                      loading="lazy"
-                      width={174}
-                      height={100}
-                      // srcSet="images/blog3-p-500.jpeg 500w, images/blog3.jpg 630w"
-                      // sizes="(max-width: 479px) 100vw, (max-width: 767px) 44vw, (max-width: 991px) 45vw, (max-width: 1439px) 14vw, 189.6875px"
-                      alt=""
-                      className="image-9 venture"
-                    />
-                  </div>
-                  <div className="div-block-46 venture">
-                    <h1 className="heading-164 venture">
-                      <strong className="bold-text-16 venture">
-                        {academy ? academy[0].title : ''}
-                      </strong>
-                    </h1>
-                    <div className="text-block-8 venture">Read More</div>
-                  </div>
-                </div>
-              </a>
-              <a
-                href="ghc-foundation.html"
-                className="link-block-49 w-inline-block"
-              >
-                <div className="div-block-23459">
-                  <div className="div-block-23444 _50">
-                    <h3 className="heading-171 academy">GHC Foundation</h3>
-                    <div>
-                      <h4 className="heading-172 aca">
-                        Inspire Collaborate &amp; Share
-                      </h4>
-                    </div>
-                    <div className="div-block-23462">
-                      <p className="paragraph-139 aca">
-                        You’re taking steps towards being financially
-                        independent and giving yourself a Plan B to create
-                        another source of income.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="div-block-23458">
-                    <img
-                      src={require('../../../assets/images/charity-1.png')}
-                      loading="lazy"
-                      width={250}
-                      // sizes="(max-width: 479px) 100vw, 250px"
-                      // srcSet="images/charity-1-p-500.png 500w, images/charity-1-p-800.png 800w, images/charity-1-p-1080.png 1080w, images/charity-1-p-1600.png 1600w, images/charity-1.png 5616w"
-                      alt=""
-                      className="image-32253"
-                    />
-                  </div>
-                </div>
-                <div
-                  data-w-id="80f32589-f6f1-bfeb-8fa7-ede914f00778"
-                  className="div-block-45 venture"
-                >
-                  <div className="div-block-47 venture">
-                    <img
-                      src={require('../../../assets/images/blog3.jpg')}               
-                      loading="lazy"
-                      width={174}
-                      height={100}
-                      // srcSet="images/blog3-p-500.jpeg 500w, images/blog3.jpg 630w"
-                      // sizes="(max-width: 479px) 100vw, (max-width: 767px) 44vw, (max-width: 991px) 45vw, (max-width: 1439px) 14vw, 189.6875px"
-                      alt=""
-                      className="image-9 venture"
-                    />
-                  </div>
-                  <div className="div-block-46 venture">
-                    <h1 className="heading-164 venture">
-                      <strong className="bold-text-16 venture">
-                        How To Focus On What Matters Every{' '}
-                      </strong>
-                    </h1>
-                    <div className="text-block-8 venture">Read More</div>
-                  </div>
-                </div>
-              </a>
-              <a href="ghc-life.html" className="link-block-49 w-inline-block">
-                <div className="div-block-23459">
-                  <div className="div-block-23444 _50">
-                    <h3 className="heading-171 academy">GHC Life</h3>
-                    <div>
-                      <h4 className="heading-172 aca">Internal Connect</h4>
-                    </div>
-                    <div className="div-block-23463">
-                      <p className="paragraph-139 aca">
-                        You’re taking steps towards being financially
-                        independent and giving yourself a Plan B to create
-                        another source of income.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="div-block-23458">
-                    <img
-                      src={require('../../../assets/images/meeting-1.png')}               
-                      loading="lazy"
-                      width={250}
-                      // sizes="(max-width: 479px) 100vw, 250px"
-                      // srcSet="images/meeting-1-p-500.png 500w, images/meeting-1-p-800.png 800w, images/meeting-1-p-1080.png 1080w, images/meeting-1-p-1600.png 1600w, images/meeting-1-p-2000.png 2000w, images/meeting-1-p-2600.png 2600w, images/meeting-1-p-3200.png 3200w, images/meeting-1.png 5616w"
-                      alt=""
-                      className="image-32252"
-                    />
-                  </div>
-                </div>
-                <div
-                  data-w-id="33c2a1ca-fd43-2cac-c415-0b2cd2463eeb"
-                  className="div-block-45 venture"
-                >
-                  <div className="div-block-47 venture">
-                    <img
-                      src={require('../../../assets/images/blog3.jpg')}               
-                      loading="lazy"
-                      width={174}
-                      height={100}
-                      // srcSet="images/blog3-p-500.jpeg 500w, images/blog3.jpg 630w"
-                      // sizes="(max-width: 479px) 100vw, (max-width: 767px) 44vw, (max-width: 991px) 45vw, (max-width: 1439px) 14vw, 189.6875px"
-                      alt=""
-                      className="image-9 venture"
-                    />
-                  </div>
-                  <div className="div-block-46 venture">
-                    <h1 className="heading-164 venture">
-                      <strong className="bold-text-16 venture">
-                        How To Focus On What Matters Every{' '}
-                      </strong>
-                    </h1>
-                    <div className="text-block-8 venture">Read More</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="About" className="section-71 wf-section">
-        <div className="content-section hide">
-          <div className="div-block-23329">
-            <div className="div-block-23359">
-              <div className="content-3">
-                <div>
-                  <h4 className="heading-166">Our&nbsp;Services</h4>
-                </div>
-                <h1 className="hero-head">What We Do ?</h1>
-                <p className="bio">
-                  Foundation was established with a small idea that was incepted
-                  in the minds of its promoters in the year 1994! We skillfully
-                  guide applicants for their immigration process to any country
-                  they aspire to settle.
-                </p>
-                <div className="div-block-23356 hiding-counter">
-                  <div className="loadbar">
-                    <div
-                      data-w-id="6d465c99-3b6d-97f9-dfc6-72e6517fe76d"
-                      className="bar-wrap _3"
+                <div className="slide-2 w-slide">
+                  <div className="div-block-386">
+                    <a
+                      href="blog-categories.html"
+                      className="link-block-21 w-inline-block"
                     >
-                      <h4 className="count-text _1">Financial planning</h4>
-                      <div className="div-block-23357">
-                        <div className="count">
-                          <span className="counterup">90</span> %
-                        </div>
+                      <div className="white-box">
+                        <p className="hero-slide-p-2">Lorem</p>
+                        <h3 className="heading-34">Heading</h3>
                       </div>
-                    </div>
-                    <div className="bar">
-                      <div
-                        style={{ width: '0%' }}
-                        className="indicator pending _1"
-                      />
-                      <div className="circle _1" />
-                    </div>
+                    </a>
                   </div>
-                  <div className="loadbar">
-                    <div
-                      data-w-id="6d465c99-3b6d-97f9-dfc6-72e6517fe779"
-                      className="bar-wrap study_via"
-                    >
-                      <h4 className="count-text _1">Business modelling</h4>
-                      <div className="div-block-23357">
-                        <div className="count">
-                          <span className="counterup">65</span> %
-                        </div>
+                </div>
+                <div className="w-slide">
+                  <div className="div-block-386 slide-2">
+                    <a href="#" className="link-block-21 w-inline-block">
+                      <div className="white-box">
+                        <h3 className="heading-34">Heading</h3>
+                        <p className="hero-slide-p-2">
+                          Lorem Ipsum is simply dummy text of the printing and
+                          typesetting.
+                        </p>
                       </div>
-                    </div>
-                    <div className="bar">
-                      <div
-                        style={{ width: '0%' }}
-                        className="indicator pending _2"
-                      />
-                      <div className="circle _2" />
-                    </div>
-                  </div>
-                  <div
-                    data-w-id="6d465c99-3b6d-97f9-dfc6-72e6517fe784"
-                    className="loadbar"
-                  >
-                    <div className="bar-wrap _3">
-                      <h4 className="count-text _1">Investment management</h4>
-                      <div className="div-block-23357">
-                        <div className="count">
-                          <span className="counterup">85</span> %
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bar">
-                      <div
-                        style={{ width: '0%' }}
-                        className="indicator pending _3"
-                      />
-                      <div className="circle _3" />
-                    </div>
+                    </a>
                   </div>
                 </div>
               </div>
+              <div className="left-arrow-5 w-slider-arrow-left">
+                <div className="w-icon-slider-left" />
+              </div>
+              <div className="right-arrow-2 w-slider-arrow-right">
+                <div className="w-icon-slider-right" />
+              </div>
+              <div className="slide-nav-3 w-slider-nav w-round" />
             </div>
-            <div className="div-block-23360">
+          </div>
+          <div className="div-block-379">
+            <div className="div-block-380 margin-bottom" />
+            <div className="div-block-381">
               <img
-                src="images/portfolio.jpg"
+                // src={require('../../../assets/js/webflow.js')}
+                href={require('../../../assets/images/flat-lay-photography-of-cup-spoon-macbook-and-book-977877-p-1080.jpeg')}
+                // src={require('../../../assets/images/ad-3.JPG')}
                 loading="lazy"
-                sizes="100vw"
-                srcSet="images/portfolio-p-500.jpeg 500w, images/portfolio.jpg 588w"
-                alt=""
+                width={567}
+                alt
+                className="image-48"
               />
-              <div className="div-block-23424">
-                <a href="#" className="link-block-39 w-inline-block">
-                  <img
-                    src="images/facebook-2_1facebook-2.png"
-                    loading="lazy"
-                    width={30}
-                    alt=""
-                    className="image-23"
-                  />
-                </a>
-                <a href="#" className="twitter w-inline-block">
-                  <img
-                    src="images/twitter-1.png"
-                    loading="lazy"
-                    width={30}
-                    sizes="100vw"
-                    srcSet="images/twitter-1-p-500.png 500w, images/twitter-1.png 512w"
-                    alt=""
-                    className="image-14"
-                  />
-                </a>
-                <a href="#" className="link-block-40 w-inline-block">
-                  <img
-                    src="images/linkedin_1linkedin.png"
-                    loading="lazy"
-                    width={30}
-                    alt=""
-                    className="image-23"
-                  />
-                </a>
-                <a href="#" className="link-block-41 w-inline-block">
-                  <img
-                    src="images/insta.png"
-                    loading="lazy"
-                    width={32}
-                    alt=""
-                    className="image-23"
-                  />
-                </a>
-                <a href="#" className="link-block-42 w-inline-block">
-                  <img
-                    src="images/youtube_1.png"
-                    loading="lazy"
-                    width={32}
-                    alt=""
-                    className="image-23"
-                  />
-                </a>
-              </div>
             </div>
           </div>
-          <div className="container-large">
-            <div className="w-layout-grid content-grid">
-              <div
-                data-w-id="9d8a437c-3351-f242-ad59-86c977532ca6"
-                style={{ opacity: 0 }}
-                className="div-block-188"
-              >
+          <div className="div-block-379 _32">
+            <div className="div-block-384">
+              <div className="div-block-387">
                 <img
-                  src="images/collage.png"
-                  srcSet="images/collage-p-500.png 500w, images/collage-p-800.png 800w, images/collage.png 975w"
-                  sizes="100vw"
-                  width={816}
-                  alt=""
-                  className="content-image"
+                  src={dashboard[0]?.feed?.media?.url}
+                  // src="/images/Phone-Contacts-01.svg"
+                  loading="lazy"
+                  width={80}
+                  alt
+                  className="image-40"
                 />
-              </div>
-              <div
-                data-w-id="9d8a437c-3351-f242-ad59-86c977532ca8"
-                style={{ opacity: 0 }}
-                className="content-wrap"
-              >
-                <h2 className="heading-153">You’re in good hands</h2>
-                <div className="title-line" />
-                <p className="paragraph-large">
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Ipsum has been the industry's standard
-                  dummy text ever since the 1500s, when an unknown printer took
-                  a galley of type and scrambled it to make a type specimen
-                  book. It has survived not only five centuries,
-                  <br />
-                </p>
-                <p className="paragraph-large">
-                  t was popularised in the 1960s with the release of Letraset
-                  sheets containing Lorem Ipsum passages, and more recently
-                  <br />
-                </p>
-                <a href="#" className="button-dark w-inline-block">
-                  <div className="button-text no-space">Know more</div>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div className="bg-block-grey" />
-        </div>
-        <div className="content-section">
-          <div className="div-block-23329">
-            <div className="div-block-23359">
-              <div className="content-3">
-                <div>
-                  <h4 className="heading-166">Our&nbsp;Services</h4>
-                </div>
-                <h1 className="hero-head">What We Do ?</h1>
-                <div className="div-block-23434">
-                  <div className="div-block-23435">
-                    <h4 className="heading-168">Trader</h4>
-                    <div>
-                      <p className="paragraph-134">
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. Lorem Ipsum has been the industry.
-                      </p>
-                    </div>
-                    <div className="div-block-23437">
-                      <h1 className="heading-170">01</h1>
-                    </div>
-                  </div>
-                  <div className="div-block-23436">
-                    <h4 className="heading-169">Investor</h4>
-                    <div>
-                      <p className="paragraph-135">
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. Lorem Ipsum has been the industry.
-                      </p>
-                    </div>
-                    <div className="div-block-23437">
-                      <h1 className="heading-170">02</h1>
-                    </div>
-                  </div>
-                </div>
-                <div className="div-block-23434">
-                  <div className="div-block-23435">
-                    <h4 className="heading-168">Entrepreneur</h4>
-                    <div>
-                      <p className="paragraph-134">
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. Lorem Ipsum has been the industry.
-                      </p>
-                    </div>
-                    <div className="div-block-23437">
-                      <h1 className="heading-170">03</h1>
-                    </div>
-                  </div>
-                  <div className="div-block-23436">
-                    <h4 className="heading-169">Wealth Strategist</h4>
-                    <div>
-                      <p className="paragraph-135">
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. Lorem Ipsum has been the industry
-                      </p>
-                    </div>
-                    <div className="div-block-23437">
-                      <h1 className="heading-170">04</h1>
-                    </div>
-                  </div>
-                </div>
-                <div className="div-block-23434">
-                  <div className="div-block-23435">
-                    <h4 className="heading-168">Life Enthusiast</h4>
-                    <div>
-                      <p className="paragraph-134">
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. Lorem Ipsum has been the industry.
-                      </p>
-                    </div>
-                    <div className="div-block-23437">
-                      <h1 className="heading-170">05</h1>
-                    </div>
-                  </div>
-                  <div className="div-block-23436">
-                    <h4 className="heading-169">Master Connector</h4>
-                    <div>
-                      <p className="paragraph-135">
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. Lorem Ipsum has been the industry.
-                      </p>
-                    </div>
-                    <div className="div-block-23437">
-                      <h1 className="heading-170">06</h1>
-                    </div>
-                  </div>
-                </div>
-                <div className="div-block-23438">
-                  <div className="div-block-23439">
-                    <p className="paragraph-136">All our services</p>
-                  </div>
-                  <div className="div-block-23440">
-                    <p className="paragraph-137"></p>
-                  </div>
+                <div className="div-block-398">
+                  <h3 className="heading-35">Support Our Mission</h3>
+                  <a href="#" className="button-6 w-button">
+                    Support
+                  </a>
                 </div>
               </div>
             </div>
-            <div className="div-block-23360">
-              <div className="div-block-23478">
-                <img
-                  src={require('../../../assets/images/aboutsketch.png')}
-                  loading="lazy"
-                  width={620}
-                  sizes="(max-width: 479px) 92vw, (max-width: 767px) 78vw, 750px"
-                  // srcSet="images/aboutsketch-p-500.png 500w, images/aboutsketch.png 750w"
-                  alt=""
-                  className="image-32257"
-                />
-              </div>
-              <a
-                href="https://m.facebook.com/rasmeet.sethi.9"
-                target="_blank"
-                className="link-block-39 w-inline-block"
-              >
-                <img
-                  src={require('../../../assets/images/facebook-1.png')}
-                  loading="lazy"
-                  width={70}
-                  alt=""
-                  className="image-23"
-                />
-              </a>
-              <a
-                href="https://mobile.twitter.com/greenhedgecap"
-                target="_blank"
-                className="twitter w-inline-block"
-              >
-                <img
-                  src={require('../../../assets/images/twitter.png')}
-                  loading="lazy"
-                  alt=""
-                  className="image-14"
-                />
-              </a>
-              <a href="#" className="link-block-40 w-inline-block">
-                <img
-                  src={require('../../../assets/images/linkedin_2.png')}
-                  loading="lazy"
-                  alt=""
-                  className="image-23"
-                />
-              </a>
-              <a
-                href="https://www.instagram.com/greenhedgecapital"
-                target="_blank"
-                className="link-block-41 w-inline-block"
-              >
-                <img
-                  src={require('../../../assets/images/instagram_1.png')}
-                  loading="lazy"
-                  alt=""
-                  className="image-23"
-                />
-              </a>
-              <a href="#" className="link-block-42 w-inline-block">
-                <img
-                  src={require('../../../assets/images/youtube-1.png')}
-                  loading="lazy"
-                  alt=""
-                  className="image-23"
-                />
-              </a>
-              <div className="div-block-23424 hide">
-                <a
-                  href="https://m.facebook.com/rasmeet.sethi.9"
-                  target="_blank"
-                  className="link-block-39 w-inline-block"
-                >
-                  <img
-                    src="images/facebook-2_1facebook-2.png"
-                    loading="lazy"
-                    width={30}
-                    alt=""
-                    className="image-23"
-                  />
-                </a>
-                <a
-                  href="https://mobile.twitter.com/greenhedgecap"
-                  target="_blank"
-                  className="twitter w-inline-block"
-                >
-                  <img
-                    src="images/twitter-1.png"
-                    loading="lazy"
-                    width={30}
-                    sizes="100vw"
-                    srcSet="images/twitter-1-p-500.png 500w, images/twitter-1.png 512w"
-                    alt=""
-                    className="image-14"
-                  />
-                </a>
-                <a href="#" className="link-block-40 w-inline-block">
-                  <img
-                    src="images/linkedin_1linkedin.png"
-                    loading="lazy"
-                    width={30}
-                    alt=""
-                    className="image-23"
-                  />
-                </a>
-                <a
-                  href="https://www.instagram.com/greenhedgecapital"
-                  target="_blank"
-                  className="link-block-41 w-inline-block"
-                >
-                  <img
-                    src="images/insta.png"
-                    loading="lazy"
-                    width={32}
-                    alt=""
-                    className="image-23"
-                  />
-                </a>
-                <a href="#" className="link-block-42 w-inline-block">
-                  <img
-                    src="images/youtube_1.png"
-                    loading="lazy"
-                    width={32}
-                    alt=""
-                    className="image-23"
-                  />
-                </a>
-              </div>
-            </div>
-          </div>
-          <div className="container-large">
-            <div className="w-layout-grid content-grid">
-              <div
-                data-w-id="e50c5771-2510-f8c6-4ee5-0eaf2e302383"
-                style={{ opacity: 0 }}
-                className="div-block-188"
-              >
-                <img
-                  src="images/collage.png"
-                  srcSet="images/collage-p-500.png 500w, images/collage-p-800.png 800w, images/collage.png 975w"
-                  sizes="100vw"
-                  width={816}
-                  alt=""
-                  className="content-image"
-                />
-              </div>
-              <div
-                data-w-id="e50c5771-2510-f8c6-4ee5-0eaf2e302385"
-                style={{ opacity: 0 }}
-                className="content-wrap"
-              >
-                <h2 className="heading-153">You’re in good hands</h2>
-                <div className="title-line" />
-                <p className="paragraph-large">
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Ipsum has been the industry's standard
-                  dummy text ever since the 1500s, when an unknown printer took
-                  a galley of type and scrambled it to make a type specimen
-                  book. It has survived not only five centuries,
-                  <br />
-                </p>
-                <p className="paragraph-large">
-                  t was popularised in the 1960s with the release of Letraset
-                  sheets containing Lorem Ipsum passages, and more recently
-                  <br />
-                </p>
-                <a href="#" className="button-dark w-inline-block">
-                  <div className="button-text no-space">Know more</div>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div className="bg-block-grey" />
-        </div>
-      </div>
-      <div className="testimonials-wrapper-2">
-        <div className="div-block-23262">
-          <h2 className="heading-20">Our Testimonials</h2>
-          <div className="lines-wrapper">
-            <div className="line-bold" />
-            <div className="line-bold red" />
-          </div>
-        </div>
-        <section className="testimonials-t4 wf-section">
-          <img
-            src="https://uploads-ssl.webflow.com/6129d6d646aff474626fcb8c/6129d6d746aff4d7436fcbab_quote_black.svg"
-            loading="lazy"
-            width={70}
-            alt=""
-            className="quote-icon-t4"
-          />
-          <div className="quote-wrapper-t4-2">
-            <div className="quote-1-subwrapper-t4-2">
-              <p className="quote-t4-2">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse varius enim in eros elementum tristique. Duis
-                cursus, mi quis viverra ornare, eros dolor interdum nulla.
-              </p>
-              <div className="user-name-t4-2">
-                <strong className="bold-text-24">Ana Finley</strong>
-              </div>
-            </div>
-            <div style={{ opacity: 0 }} className="quote-2-subwrapper-t4-2">
-              <p className="quote-t4-2">
-                Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit
-                aut fugit, sed quia consequuntur magni dolores eos qui ratione
-                voluptatem sequi nesciunt.
-              </p>
-              <div className="user-name-t4-2">
-                <strong>Jennie Richards</strong>
-              </div>
-            </div>
-            <div style={{ opacity: 0 }} className="quote-3-subwrapper-t4-2">
-              <p className="quote-t4-2">
-                Nam libero tempore, cum soluta nobis est eligendi optio cumque
-                nihil impedit quo minus id quod maxime placeat facere possimus,
-                omnis voluptas assumenda est.
-              </p>
-              <div className="user-name-t4-2">
-                <strong>Dillon Brooks</strong>
-              </div>
-            </div>
-            <div style={{ opacity: 0 }} className="quote-4-subwrapper-t4-2">
-              <p className="quote-t4-2">
-                Temporibus autem quibusdam et aut officiis debitis aut rerum
-                necessitatibus saepe eveniet ut et voluptates repudiandae sint
-                et molestiae non recusandae.
-              </p>
-              <div className="user-name-t4-2">
-                <strong>Tom Roberts</strong>
-              </div>
-            </div>
-          </div>
-          <div className="users-wrapper-t4">
-            <a
-              data-w-id="04572460-b45b-e029-a857-201ca94c5bd1"
-              style={{
-                WebkitTransform:
-                  'translate3d(0, 0, 0) scale3d(1.3, 1.3, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-                MozTransform:
-                  'translate3d(0, 0, 0) scale3d(1.3, 1.3, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-                msTransform:
-                  'translate3d(0, 0, 0) scale3d(1.3, 1.3, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-                transform:
-                  'translate3d(0, 0, 0) scale3d(1.3, 1.3, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-                borderColor: 'rgb(228,228,228)',
-              }}
-              href="#"
-              className="user-1-t4 w-inline-block"
-            >
-              <img
-                src="https://uploads-ssl.webflow.com/6129d6d646aff474626fcb8c/6129d6d746aff4cece6fcba2_profile_pic_2.jpg"
-                loading="lazy"
-                width={80}
-                alt=""
-                className="user-picture-t4"
-              />
-            </a>
-            <a
-              data-w-id="04572460-b45b-e029-a857-201ca94c5bd3"
-              href="#"
-              className="user-2-t4 w-inline-block"
-            >
-              <img
-                src="https://uploads-ssl.webflow.com/6129d6d646aff474626fcb8c/6129d6d746aff410bc6fcba5_profile_pic_5.jpg"
-                loading="lazy"
-                width={80}
-                alt=""
-                className="user-picture-t4"
-              />
-            </a>
-            <a
-              data-w-id="04572460-b45b-e029-a857-201ca94c5bd5"
-              href="#"
-              className="user-3-t4 w-inline-block"
-            >
-              <img
-                src="https://uploads-ssl.webflow.com/6129d6d646aff474626fcb8c/6129d6d746aff43f966fcba3_profile_pic_4.jpg"
-                loading="lazy"
-                width={80}
-                alt=""
-                className="user-picture-t4"
-              />
-            </a>
-            <a
-              data-w-id="04572460-b45b-e029-a857-201ca94c5bd7"
-              href="#"
-              className="user-4-t4 w-inline-block"
-            >
-              <img
-                src="https://uploads-ssl.webflow.com/6129d6d646aff474626fcb8c/6129d6d746aff4348d6fcb9c_profile_pic_1.jpg"
-                loading="lazy"
-                width={80}
-                alt=""
-                className="user-picture-t4"
-              />
-            </a>
-          </div>
-        </section>
-        <div className="testimonial-section">
-          <div className="container-17">
-            <div className="column-wrap">
+            <div className="div-block-383">
               <div
                 data-delay={2000}
-                data-animation="cross"
-                className="slider-horizontal w-slider"
+                data-animation="slide"
+                className="slider-5 _250 w-slider"
                 data-autoplay="true"
                 data-easing="ease"
                 data-hide-arrows="false"
@@ -1446,697 +129,2054 @@ const Dashboard = () => {
                 data-duration={500}
                 data-infinite="true"
               >
-                <div className="mask-horizontal w-slider-mask">
-                  <div className="slide-horizontal w-slide">
-                    <div className="testimonial-card">
-                      <div className="testimonial-image-wrap">
-                        <img
-                          src="https://uploads-ssl.webflow.com/61517b36d8389f70b6693521/61517b37d8389f8f0f693545_angle.svg"
-                          alt=""
-                          className="horizontal-angle"
-                        />
-                        <img
-                          src="https://uploads-ssl.webflow.com/61517b36d8389f70b6693521/61517b37d8389f4256693546_slide-img-02.jpg"
-                          alt="Testimonial Image"
-                          className="testimonial-image"
-                        />
-                        <a
-                          href="#"
-                          className="play-button w-inline-block w-lightbox"
-                        >
-                          <img
-                            src="https://uploads-ssl.webflow.com/61517b36d8389f70b6693521/61517b37d8389f6ca2693539_play-button%20(1).svg"
-                            alt=""
-                            className="play-icon"
-                          />
-                        </a>
-                      </div>
-                      <div className="horizontal-content-block">
-                        <div className="horizontal-fixed-height">
-                          <img
-                            src="https://uploads-ssl.webflow.com/61517b36d8389f70b6693521/61517b37d8389fbb4369353c_4.svg"
-                            alt=""
-                            className="horizontal-logo"
-                          />
-                          <h4 className="horizontal-quote-h4">
-                            There are many different ways a business can display
-                            customer testimonials — And when determining the
-                            best approach...
-                          </h4>
+                <div className="w-slider-mask">
+                  <div className="slide-2 w-slide">
+                    <div className="div-block-386 _250 bg">
+                      <a
+                        href="blog-categories.html"
+                        className="link-block-21 w-inline-block"
+                      >
+                        <div className="white-box">
+                          <h3 className="heading-34">Heading</h3>
+                          <p className="hero-slide-p-2">
+                            Lorem Ipsum is simply dummy text of the printing and
+                            typesetting.
+                          </p>
                         </div>
-                        <div className="author-block">
-                          <img
-                            src="https://uploads-ssl.webflow.com/61517b36d8389f70b6693521/61517b37d8389f0eb169353b_avatar.png"
-                            alt=""
-                            className="author-image"
-                          />
-                          <div>
-                            <h4 className="author-name">Sam Kennedy</h4>
-                            <div className="author-job">
-                              Marketing Lead, Twitter
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      </a>
                     </div>
                   </div>
-                  <div className="slide-horizontal w-slide">
-                    <div className="testimonial-card">
-                      <div className="testimonial-image-wrap">
-                        <img
-                          src="https://uploads-ssl.webflow.com/61517b36d8389f70b6693521/61517b37d8389f8f0f693545_angle.svg"
-                          alt=""
-                          className="horizontal-angle"
-                        />
-                        <img
-                          src="https://uploads-ssl.webflow.com/61517b36d8389f70b6693521/61517b37d8389f339c693544_slide-img.jpg"
-                          alt="Testimonial Image"
-                          className="testimonial-image"
-                        />
-                        <a
-                          href="#"
-                          className="play-button w-inline-block w-lightbox"
-                        >
-                          <img
-                            src="https://uploads-ssl.webflow.com/61517b36d8389f70b6693521/61517b37d8389f6ca2693539_play-button%20(1).svg"
-                            alt=""
-                            className="play-icon"
-                          />
-                        </a>
-                      </div>
-                      <div className="horizontal-content-block">
-                        <div className="horizontal-fixed-height">
-                          <img
-                            src="https://uploads-ssl.webflow.com/61517b36d8389f70b6693521/61517b37d8389fe034693540_2.svg"
-                            alt=""
-                            className="horizontal-logo"
-                          />
-                          <h4 className="horizontal-quote-h4">
-                            To show the value of what you have to offer, why not
-                            let your happy customers do the talking? It's a
-                            simple but powerful tool for establishing trust...
-                          </h4>
+                  <div className="w-slide">
+                    <div className="div-block-386 slide-2 bg-img">
+                      <a href="#" className="link-block-21 w-inline-block">
+                        <div className="white-box">
+                          <h3 className="heading-34">Heading</h3>
+                          <p className="hero-slide-p-2">
+                            Lorem Ipsum is simply dummy text of the printing and
+                            typesetting.
+                          </p>
                         </div>
-                        <div className="author-block">
-                          <img
-                            src="https://uploads-ssl.webflow.com/61517b36d8389f70b6693521/61517b37d8389f85ed693542_avatar-03.png"
-                            alt=""
-                            className="author-image"
-                          />
-                          <div>
-                            <h4 className="author-name">Thomas Lee</h4>
-                            <div className="author-job">
-                              Marketing Lead, Oculus
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      </a>
                     </div>
                   </div>
                 </div>
-                <div className="left-arrow-6 w-slider-arrow-left">
+                <div className="left-arrow-5 w-slider-arrow-left">
                   <div className="w-icon-slider-left" />
                 </div>
-                <div className="right-arrow-6 w-slider-arrow-right">
+                <div className="right-arrow-2 w-slider-arrow-right">
                   <div className="w-icon-slider-right" />
                 </div>
-                <div className="slide-nav-8 w-slider-nav w-slider-nav-invert w-round" />
+                <div className="slide-nav-3 w-slider-nav w-round" />
               </div>
             </div>
           </div>
-          <section className="testimonials-t4-2 wf-section">
-            <img
-              src="images/quote_sketch-white.svg"
-              loading="lazy"
-              width={70}
-              alt=""
-              className="quote-icon-t4"
-            />
-            <div className="quote-wrapper-t4-3">
-              <div className="quote-1-subwrapper-t4-3">
-                <p className="quote-t4-3">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse varius enim in eros elementum tristique. Duis
-                  cursus, mi quis viverra ornare, eros dolor interdum nulla.
-                </p>
-                <div className="user-name-t4-3">
-                  <strong className="bold-text-31">Ana Finley</strong>, Head of
-                  Marketing at Webflow
+        </div>
+        <div className="div-block-412">
+          <div id="w-node-a15ff49a-25f4-45b5-73f9-285ac6b8183e-5e0e1135">
+            <div
+              data-delay={4000}
+              data-animation="slide"
+              className="slider-5 _2 w-slider"
+              data-autoplay="true"
+              data-easing="ease"
+              data-hide-arrows="false"
+              data-disable-swipe="false"
+              data-autoplay-limit={0}
+              data-nav-spacing={3}
+              data-duration={500}
+              data-infinite="true"
+            >
+              <div className="w-slider-mask">
+                <div
+                  data-w-id="e216f069-1762-980d-deaa-5e059803ef65"
+                  className="slide-2 w-slide"
+                >
+                  <div className="div-block-386">
+                    <a
+                      href="blog-categories.html"
+                      className="link-block-21 w-inline-block"
+                    >
+                      <div style={{ width: '0%' }} className="white-box">
+                        <div className="overflow-hide">
+                          <p
+                            style={{
+                              WebkitTransform:
+                                'translate3d(null, -100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
+                              MozTransform:
+                                'translate3d(null, -100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
+                              msTransform:
+                                'translate3d(null, -100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
+                              transform:
+                                'translate3d(null, -100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
+                            }}
+                            className="hero-slide-p-2"
+                          >
+                            Lorem{' '}
+                          </p>
+                        </div>
+                        <div className="overflow-hide heading">
+                          <h3
+                            style={{
+                              WebkitTransform:
+                                'translate3d(null, -100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
+                              MozTransform:
+                                'translate3d(null, -100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
+                              msTransform:
+                                'translate3d(null, -100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
+                              transform:
+                                'translate3d(null, -100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
+                            }}
+                            className="heading-34"
+                          >
+                            Heading
+                          </h3>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div
+                  data-w-id="e216f069-1762-980d-deaa-5e059803ef6d"
+                  className="slide-2 w-slide"
+                >
+                  <div className="div-block-386 slide-2">
+                    <a
+                      href="blog-categories.html"
+                      className="link-block-21 w-inline-block"
+                    >
+                      <div style={{ width: '0%' }} className="white-box">
+                        <div className="overflow-hide">
+                          <p
+                            style={{
+                              WebkitTransform:
+                                'translate3d(null, -100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
+                              MozTransform:
+                                'translate3d(null, -100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
+                              msTransform:
+                                'translate3d(null, -100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
+                              transform:
+                                'translate3d(null, -100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
+                            }}
+                            className="hero-slide-p-2"
+                          >
+                            Lorem{' '}
+                          </p>
+                        </div>
+                        <div className="overflow-hide heading">
+                          <h3
+                            style={{
+                              WebkitTransform:
+                                'translate3d(null, -100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
+                              MozTransform:
+                                'translate3d(null, -100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
+                              msTransform:
+                                'translate3d(null, -100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
+                              transform:
+                                'translate3d(null, -100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
+                            }}
+                            className="heading-34"
+                          >
+                            Heading
+                          </h3>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
                 </div>
               </div>
-              <div style={{ opacity: 0 }} className="quote-2-subwrapper-t4-2">
-                <p className="quote-t4-3">
-                  Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
-                  odit aut fugit, sed quia consequuntur magni dolores eos qui
-                  ratione voluptatem sequi nesciunt.
-                </p>
-                <div className="user-name-t4-3">
-                  <strong>Jennie Richards</strong>, UX Designer at Shopify
+              <div className="left-arrow-5 w-slider-arrow-left">
+                <div className="w-icon-slider-left" />
+              </div>
+              <div className="right-arrow-2 w-slider-arrow-right">
+                <div className="w-icon-slider-right" />
+              </div>
+              <div className="slide-nav-3 w-slider-nav w-round" />
+            </div>
+          </div>
+          <div className="div-block-414 hide">
+            <div
+              data-delay={4000}
+              data-animation="slide"
+              className="slider-6 w-slider"
+              data-autoplay="true"
+              data-easing="ease"
+              data-hide-arrows="false"
+              data-disable-swipe="false"
+              data-autoplay-limit={0}
+              data-nav-spacing={3}
+              data-duration={500}
+              data-infinite="true"
+            >
+              <div className="mask-4 w-slider-mask">
+                <div className="slide-3 w-slide">
+                  <div className="div-block-413 _1">
+                    <img src={dashboard[1]?.feed?.media?.url} />
+                  </div>
+                </div>
+                <div className="slide-3 w-slide">
+                  <div className="div-block-413">
+                    <img src={dashboard[2]?.feed?.media?.url} />
+                  </div>
                 </div>
               </div>
-              <div style={{ opacity: 0 }} className="quote-3-subwrapper-t4-2">
-                <p className="quote-t4-3">
-                  Nam libero tempore, cum soluta nobis est eligendi optio cumque
-                  nihil impedit quo minus id quod maxime placeat facere
-                  possimus, omnis voluptas assumenda est.
-                </p>
-                <div className="user-name-t4-3">
-                  <strong>Dillon Brooks</strong>, Data Analyst at Weebly
+              <div className="left-arrow-6 w-slider-arrow-left">
+                <div className="w-icon-slider-left" />
+              </div>
+              <div className="right-arrow-3 w-slider-arrow-right">
+                <div className="w-icon-slider-right" />
+              </div>
+              <div className="slide-nav-4 w-slider-nav w-round" />
+            </div>
+          </div>
+          <div
+            id="w-node-_21ee1159-ee13-974e-3aa5-c30a4f2c918a-5e0e1135"
+            className="div-block-414"
+          >
+            <div
+              data-delay={2000}
+              data-animation="slide"
+              className="slider-6 margin w-slider"
+              data-autoplay="true"
+              data-easing="ease"
+              data-hide-arrows="false"
+              data-disable-swipe="false"
+              data-autoplay-limit={0}
+              data-nav-spacing={3}
+              data-duration={500}
+              data-infinite="true"
+            >
+              <div className="mask-4 w-slider-mask">
+                <div className="slide-3 w-slide">
+                  <div className="div-block-413" />
+                </div>
+                <div className="slide-3 w-slide">
+                  <div className="div-block-413" />
                 </div>
               </div>
-              <div style={{ opacity: 0 }} className="quote-4-subwrapper-t4-2">
-                <p className="quote-t4-3">
-                  Temporibus autem quibusdam et aut officiis debitis aut rerum
-                  necessitatibus saepe eveniet ut et voluptates repudiandae sint
-                  et molestiae non recusandae.
-                </p>
-                <div className="user-name-t4-3">
-                  <strong>Tom Roberts</strong>, Software Developer at Wix
+              <div className="left-arrow-6 w-slider-arrow-left">
+                <div className="w-icon-slider-left" />
+              </div>
+              <div className="right-arrow-3 w-slider-arrow-right">
+                <div className="w-icon-slider-right" />
+              </div>
+              <div className="slide-nav-4 w-slider-nav w-round" />
+            </div>
+            <div
+              data-delay={2000}
+              data-animation="slide"
+              className="slider-6 w-slider"
+              data-autoplay="true"
+              data-easing="ease"
+              data-hide-arrows="false"
+              data-disable-swipe="false"
+              data-autoplay-limit={0}
+              data-nav-spacing={3}
+              data-duration={500}
+              data-infinite="true"
+            >
+              <div className="mask-4 w-slider-mask">
+                <div className="slide-3 w-slide">
+                  <div className="div-block-413" />
+                </div>
+                <div className="slide-3 w-slide">
+                  <div className="div-block-413" />
+                </div>
+              </div>
+              <div className="left-arrow-6 w-slider-arrow-left">
+                <div className="w-icon-slider-left" />
+              </div>
+              <div className="right-arrow-3 w-slider-arrow-right">
+                <div className="w-icon-slider-right" />
+              </div>
+              <div className="slide-nav-4 w-slider-nav w-round" />
+            </div>
+          </div>
+          <div
+            id="w-node-e6bf5714-1f59-0d66-ae35-83acc3799b8c-5e0e1135"
+            className="div-block-416"
+          >
+            <div className="div-block-384 _2">
+              <div className="div-block-387">
+                <img
+                  // src="../../../assets/images/Phone-Contacts-01.svg"
+                  src={require('../../../assets/images/architect.jpg')}
+                  loading="lazy"
+                  width={123}
+                  alt
+                  className="image-40"
+                />
+                <div className="div-block-398">
+                  <h3 className="heading-35">Support Our Mission</h3>
+                  <div className="text-block-6 bold center">
+                    <strong className="bold-text-4">
+                      Lorem ipsum dolor sit amet, consectetur.
+                    </strong>
+                  </div>
+                  <a href="#" className="button-6 w-button">
+                    Support
+                  </a>
                 </div>
               </div>
             </div>
-            <div className="users-wrapper-t4-2">
-              <a
-                data-w-id="c9f1c14e-adc8-27e9-975a-bfc26563d0e0"
-                style={{
-                  WebkitTransform:
-                    'translate3d(0, 0, 0) scale3d(1.3, 1.3, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-                  MozTransform:
-                    'translate3d(0, 0, 0) scale3d(1.3, 1.3, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-                  msTransform:
-                    'translate3d(0, 0, 0) scale3d(1.3, 1.3, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-                  transform:
-                    'translate3d(0, 0, 0) scale3d(1.3, 1.3, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-                  borderColor: 'rgb(255,255,255)',
-                }}
-                href="#"
-                className="user-1-t4 w-inline-block"
-              >
-                <img
-                  src="https://uploads-ssl.webflow.com/6129d6d646aff474626fcb8c/6129d6d746aff4cece6fcba2_profile_pic_2.jpg"
-                  loading="lazy"
-                  width={80}
-                  alt=""
-                  className="user-picture-t4-2"
-                />
-              </a>
-              <a
-                data-w-id="c9f1c14e-adc8-27e9-975a-bfc26563d0e2"
-                href="#"
-                className="user-2-t4 w-inline-block"
-              >
-                <img
-                  src="https://uploads-ssl.webflow.com/6129d6d646aff474626fcb8c/6129d6d746aff410bc6fcba5_profile_pic_5.jpg"
-                  loading="lazy"
-                  width={80}
-                  alt=""
-                  className="user-picture-t4-2"
-                />
-              </a>
-              <a
-                data-w-id="c9f1c14e-adc8-27e9-975a-bfc26563d0e4"
-                href="#"
-                className="user-3-t4 w-inline-block"
-              >
-                <img
-                  src="https://uploads-ssl.webflow.com/6129d6d646aff474626fcb8c/6129d6d746aff43f966fcba3_profile_pic_4.jpg"
-                  loading="lazy"
-                  width={80}
-                  alt=""
-                  className="user-picture-t4-2"
-                />
-              </a>
-              <a
-                data-w-id="c9f1c14e-adc8-27e9-975a-bfc26563d0e6"
-                href="#"
-                className="user-4-t4 w-inline-block"
-              >
-                <img
-                  src="https://uploads-ssl.webflow.com/6129d6d646aff474626fcb8c/6129d6d746aff4348d6fcb9c_profile_pic_1.jpg"
-                  loading="lazy"
-                  width={80}
-                  alt=""
-                  className="user-picture-t4-2"
-                />
-              </a>
+            <div className="div-block-417" />
+          </div>
+          <div className="div-block-414 hide">
+            <div
+              data-delay={4000}
+              data-animation="slide"
+              className="slider-6 w-slider"
+              data-autoplay="true"
+              data-easing="ease"
+              data-hide-arrows="false"
+              data-disable-swipe="false"
+              data-autoplay-limit={0}
+              data-nav-spacing={3}
+              data-duration={500}
+              data-infinite="true"
+            >
+              <div className="mask-4 w-slider-mask">
+                <div className="slide-3 w-slide">
+                  <div className="div-block-413" />
+                </div>
+                <div className="slide-3 w-slide">
+                  <div className="div-block-413" />
+                </div>
+              </div>
+              <div className="left-arrow-6 w-slider-arrow-left">
+                <div className="w-icon-slider-left" />
+              </div>
+              <div className="right-arrow-3 w-slider-arrow-right">
+                <div className="w-icon-slider-right" />
+              </div>
+              <div className="slide-nav-4 w-slider-nav w-round" />
             </div>
-          </section>
+          </div>
+          <div className="div-block-414">
+            <div className="div-block-415">
+              <img
+                src={require('../../../assets/images/ads.jpg')}
+                loading="lazy"
+                width={288}
+                alt
+                className="image-51"
+              />
+            </div>
+          </div>
         </div>
       </div>
- <FixedSocialIcons />
-      <div className="fixed-chat-bolt hide">
-        <a
-          href="https://api.whatsapp.com/send?phone=6283283207"
-          target="_blank"
-          className="link-block-36 w-inline-block"
-        >
-          <div className="whatsapp-wrapper">
-            <img
-              src="images/whatsapp-1_1whatsapp-1.png"
-              loading="lazy"
-              alt=""
-            />
-          </div>
-        </a>
+      <div className="background-banner-image wf-section">
+        <div className="div-block-399" />
       </div>
-      <div className="resources-news wf-section">
-        <div className="div-block-48">
-          <div>
-            <h1 className="heading-165">Our Blogs</h1>
-            <div className="lines-wrapper left">
-              <div className="line-bold" />
-              <div className="line-bold red" />
-            </div>
+      <div className="template">
+        <div className="heading-div">
+          <div className="div-block-411">
+            <h2 className="hero-slide-header-2">Projects</h2>
+            <div className="line" />
           </div>
-          <div className="div-block-49">
+          <div
+            data-w-id="38d29e77-bf1b-0e1c-649a-45a2e7decb6a"
+            className="div-block-204"
+          >
             <a
-              data-w-id="d848b648-60eb-5343-7267-d195173d6f0d"
-              href="https://www.ghcacademy.in/"
-              target="_blank"
-              className="link"
+              href="#"
+              data-w-id="38d29e77-bf1b-0e1c-649a-45a2e7decb6b"
+              className="link-block-19 w-inline-block"
             >
-              View more
+              <div className="link-6">View All </div>
+              <img
+                src="../../../assets/images/next.svg"
+                loading="lazy"
+                width={18}
+                alt
+                className="arrow"
+              />
             </a>
           </div>
         </div>
-        <div className="main-wrapper-div positionb">
-          <a href="blog-page.html" className="link-block-43 w-inline-block">            
-            <div
-              data-w-id="d848b648-60eb-5343-7267-d195173d6f10"
-              className="div-block-40"
-            >
-              <div className="div-block-43">
-                <img
-                  src={`${blogs ? blogs[0]?.media?.url : ''}`}
-                  loading="lazy"
-                  width={580}
-                  // sizes="(max-width: 479px) 100vw, (max-width: 767px) 85vw, (max-width: 991px) 86vw, (max-width: 1279px) 45vw, 540px"
-                  // srcSet="images/blog1-main-p-500.png 500w, images/blog1-main.png 630w"
-                  alt=""
-                  className="image-32242"
-                />
-              
+        <div className="wrapper-2">
+          <a
+            href="#"
+            data-w-id="f7f68aa3-b4b3-2206-9a16-8c7e96f76a76"
+            style={{ opacity: 0 }}
+            className="link-block-20 w-inline-block"
+          >
+            <div className="card-box">
+              <img
+                src="../../../assets/images/stock-market.jpg"
+                loading="lazy"
+                width={310}
+                sizes="100vw"
+                srcSet="images/stock-market-p-1080.jpeg 1080w, images/stock-market-p-1600.jpeg 1600w, images/stock-market-p-2000.jpeg 2000w, images/stock-market-p-2600.jpeg 2600w, images/stock-market-p-3200.jpeg 3200w, images/stock-market.jpg 5750w"
+                alt
+                className="image-margin"
+              />
+              <div className="property-content">
+                <div className="text-block-6 bold">
+                  <strong>4 Single Family Homes in Richmond</strong>
+                </div>
+                <div className="text-block-162">
+                  <strong>SPRINGWOOD CRESCENT, RICHMOND</strong>
+                  <br />
+                </div>
               </div>
-              <div className="div-block-42">
-                <div className="text-block-8">{blogs ? blogs && blogs[0] && moment(blogs[0]?.created_at).format("LL") : ''}</div>
-                <h1 className="heading-15">
-                {blogs ? blogs && blogs[0] && blogs[0]?.title : ''}
-                </h1>
+              <div className="div-block-70">
+                <div className="text-block-64">Know More</div>
+                <div className="div-block-208">
+                  <div className="project-txt past">Past Project</div>
+                </div>
+              </div>
+              <div className="div-block-68">
+                <div className="div-block-204">
+                  <h1 className="folllowers contact">Contact us</h1>
+                  <img
+                    src="../../../assets/images/arrow-1.svg"
+                    loading="lazy"
+                    width={18}
+                    alt
+                    className="image-36"
+                  />
+                </div>
               </div>
             </div>
           </a>
-          <div className="div-block-41">
-          {blogs?.slice(1, 4)?.map((item) => 
-           <a
-              href="blogs-by-rasmeet.html"
-              className="link-block-44 w-inline-block"
-            >
-              <div
-                // data-w-id="d848b648-60eb-5343-7267-d195173d6f1e"
-                className="div-block-45"
-              >
-                <div className="div-block-47">
+          <a
+            href="#"
+            data-w-id="2ab06cea-86df-a960-1538-b1364616ed6b"
+            style={{ opacity: 0 }}
+            className="link-block-20 w-inline-block"
+          >
+            <div className="card-box">
+              <img
+                src="../../../assets/images/springwood.jpg"
+                loading="lazy"
+                width={310}
+                sizes="100vw"
+                srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
+                alt
+                className="image-margin"
+              />
+              <div className="property-content">
+                <div className="text-block-6 bold">
+                  <strong>4 Single Family Homes in Richmond</strong>
+                </div>
+                <div className="text-block-162">
+                  <strong>SPRINGWOOD CRESCENT, RICHMOND</strong>
+                  <br />
+                </div>
+              </div>
+              <div className="div-block-70">
+                <div className="text-block-64">Know More</div>
+                <div className="div-block-208">
+                  <div className="project-txt past">Past Project</div>
+                </div>
+              </div>
+              <div className="div-block-68">
+                <div className="div-block-204">
+                  <h1 className="folllowers contact">Contact us</h1>
                   <img
-                   src={`${item ? item?.media?.url : ''}`}
+                    src="../../../assets/images/arrow-1.svg"
                     loading="lazy"
-                    width={309}
-                    // sizes="(max-width: 479px) 100vw, (max-width: 767px) 47vw, (max-width: 991px) 43vw, (max-width: 1279px) 25vw, 284.5px"
-                    // srcSet="images/blog2-p-500.jpeg 500w, images/blog2.jpg 630w"
-                    alt=""
-                    className="image-9"
+                    width={18}
+                    alt
+                    className="image-36"
                   />
                 </div>
-                <div className="div-block-46">
-                  <h1 className="heading-164">
-                    <strong className="bold-text-16">
-                    {item?.title}
-                    </strong>
-                  </h1>
-                  <div className="text-block-8">{moment(item?.created_at).format("LL")}</div>
+              </div>
+            </div>
+          </a>
+          {projects?.map((proj) => (
+            <a
+              href="blog-categories.html"
+              className="main-block w-inline-block"
+            >
+              <img className="image-box" src={proj.media?.url} />
+              <div className="card-box">
+                <div className="div-block-68">
+                  <div className="div-block-204">
+                    <h1 className="folllowers contact">Contact us</h1>
+                    <img
+                      src="../../../assets/images/arrow-1.svg"
+                      loading="lazy"
+                      width={18}
+                      alt
+                      className="image-36"
+                    />
+                  </div>
+                </div>
+                <div className="text-block-162">
+                  <strong className="bold-text-3">{proj?.title}</strong>
+                  <br />
+                </div>
+                <div className="text-block-6 bold">
+                  <strong className={`${styles.truncate_overflow} bold-text-4`}>
+                    <span
+                      className="box"
+                      dangerouslySetInnerHTML={{ __html: proj?.body }}
+                    />
+                  </strong>
+                </div>
+              </div>
+              <div className="div-block-70">
+                <div className="text-block-64">Read More</div>
+                <div className="div-block-208">
+                  <div className="project-txt past">Projects</div>
                 </div>
               </div>
             </a>
-            )}
+          ))}
+          <a
+            href="#"
+            data-w-id="98b5907b-9367-77af-5b4c-9584b7478fdf"
+            style={{ opacity: 0 }}
+            className="link-block-20 w-inline-block"
+          >
+            <div className="card-box">
+              <img
+                src="../../../assets/images/springwood.jpg"
+                loading="lazy"
+                width={310}
+                sizes="100vw"
+                srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
+                alt
+                className="image-margin"
+              />
+              <div className="property-content">
+                <div className="text-block-6 bold">
+                  <strong>4 Single Family Homes in Richmond</strong>
+                </div>
+                <div className="text-block-162">
+                  <strong>SPRINGWOOD CRESCENT, RICHMOND</strong>
+                  <br />
+                </div>
+              </div>
+              <div className="div-block-70">
+                <div className="text-block-64">Know More</div>
+                <div className="div-block-208">
+                  <div className="project-txt past">Past Project</div>
+                </div>
+              </div>
+              <div className="div-block-68">
+                <div className="div-block-204">
+                  <h1 className="folllowers contact">Contact us</h1>
+                  <img
+                    src="../../../assets/images/arrow-1.svg"
+                    loading="lazy"
+                    width={18}
+                    alt
+                    className="image-36"
+                  />
+                </div>
+              </div>
+            </div>
+          </a>
+          <a
+            href="#"
+            data-w-id="c6536dfc-2999-9125-0281-013de4f5fbae"
+            style={{ opacity: 0 }}
+            className="link-block-20 w-inline-block"
+          >
+            <div className="card-box">
+              <img
+                src="../../../assets/images/springwood.jpg"
+                loading="lazy"
+                width={310}
+                sizes="100vw"
+                srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
+                alt
+                className="image-margin"
+              />
+              <div className="property-content">
+                <div className="text-block-6 bold">
+                  <strong>4 Single Family Homes in Richmond</strong>
+                </div>
+                <div className="text-block-162">
+                  <strong>SPRINGWOOD CRESCENT, RICHMOND</strong>
+                  <br />
+                </div>
+              </div>
+              <div className="div-block-70">
+                <div className="text-block-64">Know More</div>
+                <div className="div-block-208">
+                  <div className="project-txt past">Past Project</div>
+                </div>
+              </div>
+              <div className="div-block-68">
+                <div className="div-block-204">
+                  <h1 className="folllowers contact">Contact us</h1>
+                  <img
+                    src="../../../assets/images/arrow-1.svg"
+                    loading="lazy"
+                    width={18}
+                    alt
+                    className="image-36"
+                  />
+                </div>
+              </div>
+            </div>
+          </a>
+          <a
+            href="#"
+            data-w-id="38d29e77-bf1b-0e1c-649a-45a2e7decb86"
+            className="case-study-link w-inline-block"
+          >
+            <div className="portifolio">
+              <img
+                src="../../../assets/images/Better-01.jpg"
+                loading="lazy"
+                sizes="100vw"
+                srcSet="images/Better-01-p-1080.jpeg 1080w, images/Better-01-p-1600.jpeg 1600w, images/Better-01-p-2000.jpeg 2000w, images/Better-01-p-2600.jpeg 2600w, images/Better-01-p-3200.jpeg 3200w, images/Better-01.jpg 4167w"
+                alt
+              />
+              <div className="content-wrapper">
+                <div>
+                  <h1 className="heading-5">Better Mortgage</h1>
+                  <p className="paragraph-2">UI, Coded Template</p>
+                </div>
+                <div>
+                  <img
+                    src="../../../assets/images/eye.svg"
+                    loading="lazy"
+                    width={23}
+                    alt
+                  />
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div className="template">
+        <div className="heading-div">
+          <div className="div-block-410">
+            <h2 className="hero-slide-header-2">Competitions</h2>
+            <div className="line" />
+          </div>
+          <div
+            data-w-id="64ba74b1-c3bc-3ca1-2b51-f4affc83cbe6"
+            className="div-block-204"
+          >
+            <a
+              href="#"
+              data-w-id="64ba74b1-c3bc-3ca1-2b51-f4affc83cbe7"
+              className="link-block-19 w-inline-block"
+            >
+              <div className="link-6">View All </div>
+              <img
+                src="../../../assets/images/next.svg"
+                loading="lazy"
+                width={18}
+                alt
+                className="arrow"
+              />
+            </a>
+          </div>
+        </div>
+        <div className="wrapper-2">
+          <a
+            href="#"
+            data-w-id="64ba74b1-c3bc-3ca1-2b51-f4affc83cbec"
+            className="case-study-link w-inline-block"
+          >
+            <div className="portifolio">
+              <img
+                src="../../../assets/images/policy-01.jpg"
+                loading="lazy"
+                sizes="100vw"
+                srcSet="images/policy-01-p-1080.jpeg 1080w, images/policy-01-p-1600.jpeg 1600w, images/policy-01-p-2000.jpeg 2000w, images/policy-01-p-2600.jpeg 2600w, images/policy-01-p-3200.jpeg 3200w, images/policy-01.jpg 4167w"
+                alt
+                className="image-31"
+              />
+              <div className="content-wrapper">
+                <div>
+                  <h1 className="heading-5">Policy Market</h1>
+                  <p className="paragraph-2">UI, Coded Template</p>
+                </div>
+                <div>
+                  <img
+                    src="../../../assets/images/eye.svg"
+                    loading="lazy"
+                    width={23}
+                    alt
+                  />
+                </div>
+              </div>
+            </div>
+          </a>
+          <a
+            href="#"
+            data-w-id="64ba74b1-c3bc-3ca1-2b51-f4affc83cbf7"
+            className="case-study-link w-inline-block"
+          >
+            <div className="portifolio">
+              <img
+                src="../../../assets/images/Ademrius-01.jpg"
+                loading="lazy"
+                sizes="100vw"
+                srcSet="images/Ademrius-01-p-1080.jpeg 1080w, images/Ademrius-01-p-1600.jpeg 1600w, images/Ademrius-01-p-2000.jpeg 2000w, images/Ademrius-01-p-2600.jpeg 2600w, images/Ademrius-01-p-3200.jpeg 3200w, images/Ademrius-01.jpg 4167w"
+                alt
+              />
+              <div className="content-wrapper">
+                <div>
+                  <h1 className="heading-5">Clinical</h1>
+                  <p className="paragraph-2">UI, Coded Template</p>
+                </div>
+                <div>
+                  <img
+                    src="../../../assets/images/eye.svg"
+                    loading="lazy"
+                    width={23}
+                    alt
+                  />
+                </div>
+              </div>
+            </div>
+          </a>
+          <a
+            href="#"
+            data-w-id="64ba74b1-c3bc-3ca1-2b51-f4affc83cc02"
+            className="case-study-link w-inline-block"
+          >
+            <div className="portifolio">
+              <img
+                src="../../../assets/images/Better-01.jpg"
+                loading="lazy"
+                sizes="100vw"
+                srcSet="images/Better-01-p-1080.jpeg 1080w, images/Better-01-p-1600.jpeg 1600w, images/Better-01-p-2000.jpeg 2000w, images/Better-01-p-2600.jpeg 2600w, images/Better-01-p-3200.jpeg 3200w, images/Better-01.jpg 4167w"
+                alt
+              />
+              <div className="content-wrapper">
+                <div>
+                  <h1 className="heading-5">Better Mortgage</h1>
+                  <p className="paragraph-2">UI, Coded Template</p>
+                </div>
+                <div>
+                  <img
+                    src="../../../assets/images/eye.svg"
+                    loading="lazy"
+                    width={23}
+                    alt
+                  />
+                </div>
+              </div>
+            </div>
+          </a>
+          <a
+            href="#"
+            data-w-id="64ba74b1-c3bc-3ca1-2b51-f4affc83cc0d"
+            className="case-study-link w-inline-block"
+          >
+            <div className="portifolio">
+              <img
+                src="../../../assets/images/expense.jpg"
+                loading="lazy"
+                sizes="100vw"
+                srcSet="images/expense-p-1080.jpeg 1080w, images/expense-p-1600.jpeg 1600w, images/expense-p-2000.jpeg 2000w, images/expense-p-2600.jpeg 2600w, images/expense-p-3200.jpeg 3200w, images/expense.jpg 4167w"
+                alt
+              />
+              <div className="content-wrapper">
+                <div>
+                  <h1 className="heading-5">Expense Management</h1>
+                  <p className="paragraph-2">UI, Coded Template</p>
+                </div>
+                <div>
+                  <img
+                    src="../../../assets/images/eye.svg"
+                    loading="lazy"
+                    width={23}
+                    alt
+                  />
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div className="wrapper-2">
+          <a
+            href="#"
+            data-w-id="431c6afa-1bb6-9c13-c9a4-73c41d25945c"
+            style={{ opacity: 0 }}
+            className="link-block-20 w-inline-block"
+          >
+            <div className="card-box">
+              <img
+                src="../../../assets/images/stock-market.jpg"
+                loading="lazy"
+                width={310}
+                sizes="100vw"
+                srcSet="images/stock-market-p-1080.jpeg 1080w, images/stock-market-p-1600.jpeg 1600w, images/stock-market-p-2000.jpeg 2000w, images/stock-market-p-2600.jpeg 2600w, images/stock-market-p-3200.jpeg 3200w, images/stock-market.jpg 5750w"
+                alt
+                className="image-margin"
+              />
+              <div className="property-content">
+                <div className="text-block-6 bold">
+                  <strong>4 Single Family Homes in Richmond</strong>
+                </div>
+                <div className="text-block-162">
+                  <strong>SPRINGWOOD CRESCENT, RICHMOND</strong>
+                  <br />
+                </div>
+              </div>
+              <div className="div-block-70">
+                <div className="text-block-64">Know More</div>
+                <div className="div-block-208">
+                  <div className="project-txt past">Past Project</div>
+                </div>
+              </div>
+              <div className="div-block-68">
+                <div className="div-block-204">
+                  <h1 className="folllowers contact">Contact us</h1>
+                  <img
+                    src="../../../assets/images/arrow-1.svg"
+                    loading="lazy"
+                    width={18}
+                    alt
+                    className="image-36"
+                  />
+                </div>
+              </div>
+            </div>
+          </a>
+          <a
+            href="#"
+            data-w-id="431c6afa-1bb6-9c13-c9a4-73c41d259472"
+            style={{ opacity: 0 }}
+            className="link-block-20 w-inline-block"
+          >
+            <div className="card-box">
+              <img
+                src="../../../assets/images/springwood.jpg"
+                loading="lazy"
+                width={310}
+                sizes="100vw"
+                srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
+                alt
+                className="image-margin"
+              />
+              <div className="property-content">
+                <div className="text-block-6 bold">
+                  <strong>4 Single Family Homes in Richmond</strong>
+                </div>
+                <div className="text-block-162">
+                  <strong>SPRINGWOOD CRESCENT, RICHMOND</strong>
+                  <br />
+                </div>
+              </div>
+              <div className="div-block-70">
+                <div className="text-block-64">Know More</div>
+                <div className="div-block-208">
+                  <div className="project-txt past">Past Project</div>
+                </div>
+              </div>
+              <div className="div-block-68">
+                <div className="div-block-204">
+                  <h1 className="folllowers contact">Contact us</h1>
+                  <img
+                    src="../../../assets/images/arrow-1.svg"
+                    loading="lazy"
+                    width={18}
+                    alt
+                    className="image-36"
+                  />
+                </div>
+              </div>
+            </div>
+          </a>
+          {competitions?.map((comp) => (
+            <a
+              href="blog-categories.html"
+              className="main-block w-inline-block"
+            >
+              <img className="image-box" src={comp?.media?.url} />
+              <div className="card-box">
+                <div className="div-block-68">
+                  <div className="div-block-204">
+                    <h1 className="folllowers contact">Contact us</h1>
+                    <img
+                      src="../../../assets/images/arrow-1.svg"
+                      loading="lazy"
+                      width={18}
+                      alt
+                      className="image-36"
+                    />
+                  </div>
+                </div>
+                <div className="text-block-162">
+                  <strong className="bold-text-3">{comp?.title}</strong>
+                  <br />
+                </div>
+                <div className="text-block-6 bold">
+                  <strong className={`${styles.truncate_overflow} bold-text-4`}>
+                    <span
+                      className="box"
+                      dangerouslySetInnerHTML={{
+                        __html: comp?.body,
+                      }}
+                    />
+                  </strong>
+                </div>
+              </div>
+              <div className="div-block-70">
+                <div className="text-block-64">Read More</div>
+                <div className="div-block-208">
+                  <div className="project-txt past">Competitions</div>
+                </div>
+              </div>
+            </a>
+          ))}
+
+          <a
+            href="#"
+            data-w-id="431c6afa-1bb6-9c13-c9a4-73c41d2594c7"
+            style={{ opacity: 0 }}
+            className="link-block-20 w-inline-block"
+          >
+            <div className="card-box">
+              <img
+                src="../../../assets/images/springwood.jpg"
+                loading="lazy"
+                width={310}
+                sizes="100vw"
+                srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
+                alt
+                className="image-margin"
+              />
+              <div className="property-content">
+                <div className="text-block-6 bold">
+                  <strong>4 Single Family Homes in Richmond</strong>
+                </div>
+                <div className="text-block-162">
+                  <strong>SPRINGWOOD CRESCENT, RICHMOND</strong>
+                  <br />
+                </div>
+              </div>
+              <div className="div-block-70">
+                <div className="text-block-64">Know More</div>
+                <div className="div-block-208">
+                  <div className="project-txt past">Past Project</div>
+                </div>
+              </div>
+              <div className="div-block-68">
+                <div className="div-block-204">
+                  <h1 className="folllowers contact">Contact us</h1>
+                  <img
+                    src="../../../assets/images/arrow-1.svg"
+                    loading="lazy"
+                    width={18}
+                    alt
+                    className="image-36"
+                  />
+                </div>
+              </div>
+            </div>
+          </a>
+          <a
+            href="#"
+            data-w-id="431c6afa-1bb6-9c13-c9a4-73c41d2594dd"
+            style={{ opacity: 0 }}
+            className="link-block-20 w-inline-block"
+          >
+            <div className="card-box">
+              <img
+                src="../../../assets/images/springwood.jpg"
+                loading="lazy"
+                width={310}
+                sizes="100vw"
+                srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
+                alt
+                className="image-margin"
+              />
+              <div className="property-content">
+                <div className="text-block-6 bold">
+                  <strong>4 Single Family Homes in Richmond</strong>
+                </div>
+                <div className="text-block-162">
+                  <strong>SPRINGWOOD CRESCENT, RICHMOND</strong>
+                  <br />
+                </div>
+              </div>
+              <div className="div-block-70">
+                <div className="text-block-64">Know More</div>
+                <div className="div-block-208">
+                  <div className="project-txt past">Past Project</div>
+                </div>
+              </div>
+              <div className="div-block-68">
+                <div className="div-block-204">
+                  <h1 className="folllowers contact">Contact us</h1>
+                  <img
+                    src="../../../assets/images/arrow-1.svg"
+                    loading="lazy"
+                    width={18}
+                    alt
+                    className="image-36"
+                  />
+                </div>
+              </div>
+            </div>
+          </a>
+          <a
+            href="#"
+            data-w-id="431c6afa-1bb6-9c13-c9a4-73c41d2594f3"
+            className="case-study-link w-inline-block"
+          >
+            <div className="portifolio">
+              <img
+                src="../../../assets/images/Better-01.jpg"
+                loading="lazy"
+                sizes="100vw"
+                srcSet="images/Better-01-p-1080.jpeg 1080w, images/Better-01-p-1600.jpeg 1600w, images/Better-01-p-2000.jpeg 2000w, images/Better-01-p-2600.jpeg 2600w, images/Better-01-p-3200.jpeg 3200w, images/Better-01.jpg 4167w"
+                alt
+              />
+              <div className="content-wrapper">
+                <div>
+                  <h1 className="heading-5">Better Mortgage</h1>
+                  <p className="paragraph-2">UI, Coded Template</p>
+                </div>
+                <div>
+                  <img
+                    src="../../../assets/images/eye.svg"
+                    loading="lazy"
+                    width={23}
+                    alt
+                  />
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div className="services">
+        <div className="div-heading">
+          <h1 className="heading-2">Our services</h1>
+          <div className="line" />
+        </div>
+        <div className="div-block-193">
+          <div className="div-block-373">
+            <div
+              data-w-id="0659dacf-b1f1-8b88-7636-fdfd1206db46"
+              className="div-block-370"
+            >
+              <div>
+                <h3 className="heading-4 black">Service 1</h3>
+                <p className="paragraph-8">
+                  Students will have hands-on training taking place in the yard
+                  and on the road using a tractor-trailer, while under the
+                  instruction of a qualified trainer with great efficiency.
+                </p>
+              </div>
+              <div className="div-block-371">
+                <a
+                  href="#"
+                  data-w-id="0659dacf-b1f1-8b88-7636-fdfd1206db4f"
+                  className="nav-link-2 sign-in down-button _2222 w-inline-block"
+                >
+                  <div className="text-block-65">Read more</div>
+                  <img
+                    src="../../../assets/images/arrow.svg"
+                    loading="lazy"
+                    width={12}
+                    alt
+                    className="arrow"
+                  />
+                  <img
+                    src="../../../assets/images/2nd-line.svg"
+                    loading="lazy"
+                    width={12}
+                    alt
+                    className="linewhite"
+                  />
+                </a>
+              </div>
+            </div>
+            <div
+              data-w-id="d34583ac-3a46-ce41-27a6-fd6826cb04da"
+              className="div-block-370"
+            >
+              <div>
+                <h3 className="heading-4 black">Service 2</h3>
+                <p className="paragraph-8">
+                  Students will have hands-on training taking place in the yard
+                  and on the road using a tractor-trailer, while under the
+                  instruction of a qualified trainer with great efficiency.
+                </p>
+              </div>
+              <div className="div-block-371">
+                <a
+                  href="#"
+                  data-w-id="d34583ac-3a46-ce41-27a6-fd6826cb04e3"
+                  className="nav-link-2 sign-in down-button _2222 w-inline-block"
+                >
+                  <div className="text-block-65">Read more</div>
+                  <img
+                    src="../../../assets/images/arrow.svg"
+                    loading="lazy"
+                    width={12}
+                    alt
+                    className="arrow"
+                  />
+                  <img
+                    src="../../../assets/images/2nd-line.svg"
+                    loading="lazy"
+                    width={12}
+                    alt
+                    className="linewhite"
+                  />
+                </a>
+              </div>
+            </div>
+            <div
+              data-w-id="af2afc25-5f4a-dab5-1db5-4ba61f6f05e8"
+              className="div-block-370"
+            >
+              <div>
+                <h3 className="heading-4 black">Service 3</h3>
+                <p className="paragraph-8">
+                  Students will have hands-on training taking place in the yard
+                  and on the road using a tractor-trailer, while under the
+                  instruction of a qualified trainer with great efficiency.
+                </p>
+              </div>
+              <div className="div-block-371">
+                <a
+                  href="#"
+                  data-w-id="af2afc25-5f4a-dab5-1db5-4ba61f6f05f1"
+                  className="nav-link-2 sign-in down-button _2222 w-inline-block"
+                >
+                  <div className="text-block-65">Read more</div>
+                  <img
+                    src="../../../assets/images/arrow.svg"
+                    loading="lazy"
+                    width={12}
+                    alt
+                    className="arrow"
+                  />
+                  <img
+                    src="../../../assets/images/2nd-line.svg"
+                    loading="lazy"
+                    width={12}
+                    alt
+                    className="linewhite"
+                  />
+                </a>
+              </div>
+            </div>
+            <div
+              data-w-id="a1c06fa8-1ead-760f-fabc-d9b26e54d7f7"
+              className="div-block-370"
+            >
+              <div>
+                <h3 className="heading-4 black">Service 4</h3>
+                <p className="paragraph-8">
+                  Students will have hands-on training taking place in the yard
+                  and on the road using a tractor-trailer, while under the
+                  instruction of a qualified trainer with great efficiency.
+                </p>
+              </div>
+              <div className="div-block-371">
+                <a
+                  href="#"
+                  data-w-id="a1c06fa8-1ead-760f-fabc-d9b26e54d800"
+                  className="nav-link-2 sign-in down-button _2222 w-inline-block"
+                >
+                  <div className="text-block-65">Read more</div>
+                  <img
+                    src="../../../assets/images/arrow.svg"
+                    loading="lazy"
+                    width={12}
+                    alt
+                    className="arrow"
+                  />
+                  <img
+                    src="../../../assets/images/2nd-line.svg"
+                    loading="lazy"
+                    width={12}
+                    alt
+                    className="linewhite"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="div-block-54 _2 _22">
+          <div className="div-block-55 _11">
+            <img
+              src="../../../assets/images/ic-analysis_1ic-analysis.png"
+              loading="lazy"
+              alt
+            />
+            <h3 className="heading-32 _1">1. Analyze</h3>
+            <p className="paragraph-15">
+              We start by analyzing software system requirements and business
+              processes
+            </p>
+          </div>
+          <div className="div-block-55 _11">
+            <img
+              src="../../../assets/images/ic-consulting-1_1ic-consulting-1.png"
+              loading="lazy"
+              alt
+            />
+            <h3 className="heading-32 _1">2. Scope</h3>
+            <p className="paragraph-15">
+              We work with all stakeholders to create a software development
+              plan
+            </p>
+          </div>
+          <div className="div-block-55 _2 _11">
+            <img
+              src="../../../assets/images/ic-prototyping-2_1ic-prototyping-2.png"
+              loading="lazy"
+              alt
+            />
+            <h3 className="heading-32 _1">3. Prototype</h3>
+            <p className="paragraph-15">
+              We design the features and functions as it relates to the user
+              interface
+            </p>
+          </div>
+        </div>
+        <div className="btn-div">
+          <a href="#" className="button-5 w-inline-block">
+            <p className="paragraph-9">View more</p>
+            <img
+              src="../../../assets/images/next.png"
+              width={11}
+              alt
+              className="arrow1"
+            />
+          </a>
+        </div>
+      </div>
+      <div className="template">
+        <div className="heading-div">
+          <div className="div-block-409">
+            <h2 className="hero-slide-header-2">Latest Products</h2>
+            <div className="line" />
+          </div>
+          <div
+            data-w-id="c05d60c0-f468-2744-88ff-015c0cf9504b"
+            className="div-block-204"
+          >
+            <a
+              href="#"
+              data-w-id="c05d60c0-f468-2744-88ff-015c0cf9504c"
+              className="link-block-19 w-inline-block"
+            >
+              <div className="link-6">View All </div>
+              <img
+                src="../../../assets/images/next.svg"
+                loading="lazy"
+                width={18}
+                alt
+                className="arrow"
+              />
+            </a>
+          </div>
+        </div>
+        <div className="wrapper-2">
+          <a
+            href="#"
+            data-w-id="c05d60c0-f468-2744-88ff-015c0cf95051"
+            className="case-study-link w-inline-block"
+          >
+            <div className="portifolio">
+              <img
+                src="../../../assets/images/policy-01.jpg"
+                loading="lazy"
+                sizes="100vw"
+                srcSet="images/policy-01-p-1080.jpeg 1080w, images/policy-01-p-1600.jpeg 1600w, images/policy-01-p-2000.jpeg 2000w, images/policy-01-p-2600.jpeg 2600w, images/policy-01-p-3200.jpeg 3200w, images/policy-01.jpg 4167w"
+                alt
+                className="image-31"
+              />
+              <div className="content-wrapper">
+                <div>
+                  <h1 className="heading-5">Policy Market</h1>
+                  <p className="paragraph-2">UI, Coded Template</p>
+                </div>
+                <div>
+                  <img
+                    src="../../../assets/images/eye.svg"
+                    loading="lazy"
+                    width={23}
+                    alt
+                  />
+                </div>
+              </div>
+            </div>
+          </a>
+          <a
+            href="#"
+            data-w-id="c05d60c0-f468-2744-88ff-015c0cf9505c"
+            className="case-study-link w-inline-block"
+          >
+            <div className="portifolio">
+              <img
+                src="../../../assets/images/Ademrius-01.jpg"
+                loading="lazy"
+                sizes="100vw"
+                srcSet="images/Ademrius-01-p-1080.jpeg 1080w, images/Ademrius-01-p-1600.jpeg 1600w, images/Ademrius-01-p-2000.jpeg 2000w, images/Ademrius-01-p-2600.jpeg 2600w, images/Ademrius-01-p-3200.jpeg 3200w, images/Ademrius-01.jpg 4167w"
+                alt
+              />
+              <div className="content-wrapper">
+                <div>
+                  <h1 className="heading-5">Clinical</h1>
+                  <p className="paragraph-2">UI, Coded Template</p>
+                </div>
+                <div>
+                  <img
+                    src="../../../assets/images/eye.svg"
+                    loading="lazy"
+                    width={23}
+                    alt
+                  />
+                </div>
+              </div>
+            </div>
+          </a>
+          <a
+            href="#"
+            data-w-id="c05d60c0-f468-2744-88ff-015c0cf95067"
+            className="case-study-link w-inline-block"
+          >
+            <div className="portifolio">
+              <img
+                src="../../../assets/images/Better-01.jpg"
+                loading="lazy"
+                sizes="100vw"
+                srcSet="images/Better-01-p-1080.jpeg 1080w, images/Better-01-p-1600.jpeg 1600w, images/Better-01-p-2000.jpeg 2000w, images/Better-01-p-2600.jpeg 2600w, images/Better-01-p-3200.jpeg 3200w, images/Better-01.jpg 4167w"
+                alt
+              />
+              <div className="content-wrapper">
+                <div>
+                  <h1 className="heading-5">Better Mortgage</h1>
+                  <p className="paragraph-2">UI, Coded Template</p>
+                </div>
+                <div>
+                  <img
+                    src="../../../assets/images/eye.svg"
+                    loading="lazy"
+                    width={23}
+                    alt
+                  />
+                </div>
+              </div>
+            </div>
+          </a>
+          <a
+            href="#"
+            data-w-id="c05d60c0-f468-2744-88ff-015c0cf95072"
+            className="case-study-link w-inline-block"
+          >
+            <div className="portifolio">
+              <img
+                src="../../../assets/images/expense.jpg"
+                loading="lazy"
+                sizes="100vw"
+                srcSet="images/expense-p-1080.jpeg 1080w, images/expense-p-1600.jpeg 1600w, images/expense-p-2000.jpeg 2000w, images/expense-p-2600.jpeg 2600w, images/expense-p-3200.jpeg 3200w, images/expense.jpg 4167w"
+                alt
+              />
+              <div className="content-wrapper">
+                <div>
+                  <h1 className="heading-5">Expense Management</h1>
+                  <p className="paragraph-2">UI, Coded Template</p>
+                </div>
+                <div>
+                  <img
+                    src="../../../assets/images/eye.svg"
+                    loading="lazy"
+                    width={23}
+                    alt
+                  />
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div className="wrapper-2">
+          <a
+            href="#"
+            data-w-id="c05d60c0-f468-2744-88ff-015c0cf9507e"
+            style={{ opacity: 0 }}
+            className="link-block-20 w-inline-block"
+          >
+            <div className="card-box">
+              <img
+                src="../../../assets/images/stock-market.jpg"
+                loading="lazy"
+                width={310}
+                sizes="100vw"
+                srcSet="images/stock-market-p-1080.jpeg 1080w, images/stock-market-p-1600.jpeg 1600w, images/stock-market-p-2000.jpeg 2000w, images/stock-market-p-2600.jpeg 2600w, images/stock-market-p-3200.jpeg 3200w, images/stock-market.jpg 5750w"
+                alt
+                className="image-margin"
+              />
+              <div className="property-content">
+                <div className="text-block-6 bold">
+                  <strong>4 Single Family Homes in Richmond</strong>
+                </div>
+                <div className="text-block-162">
+                  <strong>SPRINGWOOD CRESCENT, RICHMOND</strong>
+                  <br />
+                </div>
+              </div>
+              <div className="div-block-70">
+                <div className="text-block-64">Know More</div>
+                <div className="div-block-208">
+                  <div className="project-txt past">Past Project</div>
+                </div>
+              </div>
+              <div className="div-block-68">
+                <div className="div-block-204">
+                  <h1 className="folllowers contact">Contact us</h1>
+                  <img
+                    src="../../../assets/images/arrow-1.svg"
+                    loading="lazy"
+                    width={18}
+                    alt
+                    className="image-36"
+                  />
+                </div>
+              </div>
+            </div>
+          </a>
+          <a
+            href="#"
+            data-w-id="c05d60c0-f468-2744-88ff-015c0cf95094"
+            style={{ opacity: 0 }}
+            className="link-block-20 w-inline-block"
+          >
+            <div className="card-box">
+              <img
+                src="../../../assets/images/springwood.jpg"
+                loading="lazy"
+                width={310}
+                sizes="100vw"
+                srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
+                alt
+                className="image-margin"
+              />
+              <div className="property-content">
+                <div className="text-block-6 bold">
+                  <strong>4 Single Family Homes in Richmond</strong>
+                </div>
+                <div className="text-block-162">
+                  <strong>SPRINGWOOD CRESCENT, RICHMOND</strong>
+                  <br />
+                </div>
+              </div>
+              <div className="div-block-70">
+                <div className="text-block-64">Know More</div>
+                <div className="div-block-208">
+                  <div className="project-txt past">Past Project</div>
+                </div>
+              </div>
+              <div className="div-block-68">
+                <div className="div-block-204">
+                  <h1 className="folllowers contact">Contact us</h1>
+                  <img
+                    src="../../../assets/images/arrow-1.svg"
+                    loading="lazy"
+                    width={18}
+                    alt
+                    className="image-36"
+                  />
+                </div>
+              </div>
+            </div>
+          </a>
+          {dashboard.map((dash, index) =>
+            index < 3 ? (
+              <a
+                href="blog-categories.html"
+                className="main-block w-inline-block"
+              >
+                <img className="image-box bg" src={dash?.feed?.media?.url} />
+                <div className="card-box">
+                  <div className="div-block-68">
+                    <div className="div-block-204">
+                      <h1 className="folllowers contact">Contact us</h1>
+                      <img
+                        src="../../../assets/images/arrow-1.svg"
+                        loading="lazy"
+                        width={18}
+                        alt
+                        className="image-36"
+                      />
+                    </div>
+                  </div>
+                  <div className="text-block-162">
+                    <strong className="bold-text-3">{dash?.feed?.title}</strong>
+                    <br />
+                  </div>
+                  <div className="text-block-6 bold">
+                    <strong
+                      className={`${styles.truncate_overflow} bold-text-4`}
+                    >
+                      <span
+                        className="box"
+                        dangerouslySetInnerHTML={{
+                          __html: dash?.feed?.body,
+                        }}
+                      />
+                    </strong>
+                  </div>
+                </div>
+                <div className="div-block-70">
+                  <div className="text-block-64">Read More</div>
+                  <div className="div-block-208">
+                    <div className="project-txt past">Products</div>
+                  </div>
+                </div>
+              </a>
+            ) : null
+          )}
+          <a
+            href="#"
+            data-w-id="c05d60c0-f468-2744-88ff-015c0cf950e9"
+            style={{ opacity: 0 }}
+            className="link-block-20 w-inline-block"
+          >
+            <div className="card-box">
+              <img
+                src="../../../assets/images/springwood.jpg"
+                loading="lazy"
+                width={310}
+                sizes="100vw"
+                srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
+                alt
+                className="image-margin"
+              />
+              <div className="property-content">
+                <div className="text-block-6 bold">
+                  <strong>4 Single Family Homes in Richmond</strong>
+                </div>
+                <div className="text-block-162">
+                  <strong>SPRINGWOOD CRESCENT, RICHMOND</strong>
+                  <br />
+                </div>
+              </div>
+              <div className="div-block-70">
+                <div className="text-block-64">Know More</div>
+                <div className="div-block-208">
+                  <div className="project-txt past">Past Project</div>
+                </div>
+              </div>
+              <div className="div-block-68">
+                <div className="div-block-204">
+                  <h1 className="folllowers contact">Contact us</h1>
+                  <img
+                    src="../../../assets/images/arrow-1.svg"
+                    loading="lazy"
+                    width={18}
+                    alt
+                    className="image-36"
+                  />
+                </div>
+              </div>
+            </div>
+          </a>
+          <a
+            href="#"
+            data-w-id="c05d60c0-f468-2744-88ff-015c0cf950ff"
+            style={{ opacity: 0 }}
+            className="link-block-20 w-inline-block"
+          >
+            <div className="card-box">
+              <img
+                src="../../../assets/images/springwood.jpg"
+                loading="lazy"
+                width={310}
+                sizes="100vw"
+                srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
+                alt
+                className="image-margin"
+              />
+              <div className="property-content">
+                <div className="text-block-6 bold">
+                  <strong>4 Single Family Homes in Richmond</strong>
+                </div>
+                <div className="text-block-162">
+                  <strong>SPRINGWOOD CRESCENT, RICHMOND</strong>
+                  <br />
+                </div>
+              </div>
+              <div className="div-block-70">
+                <div className="text-block-64">Know More</div>
+                <div className="div-block-208">
+                  <div className="project-txt past">Past Project</div>
+                </div>
+              </div>
+              <div className="div-block-68">
+                <div className="div-block-204">
+                  <h1 className="folllowers contact">Contact us</h1>
+                  <img
+                    src="../../../assets/images/arrow-1.svg"
+                    loading="lazy"
+                    width={18}
+                    alt
+                    className="image-36"
+                  />
+                </div>
+              </div>
+            </div>
+          </a>
+          <a
+            href="#"
+            data-w-id="c05d60c0-f468-2744-88ff-015c0cf95115"
+            className="case-study-link w-inline-block"
+          >
+            <div className="portifolio">
+              <img
+                src="../../../assets/images/Better-01.jpg"
+                loading="lazy"
+                sizes="100vw"
+                srcSet="images/Better-01-p-1080.jpeg 1080w, images/Better-01-p-1600.jpeg 1600w, images/Better-01-p-2000.jpeg 2000w, images/Better-01-p-2600.jpeg 2600w, images/Better-01-p-3200.jpeg 3200w, images/Better-01.jpg 4167w"
+                alt
+              />
+              <div className="content-wrapper">
+                <div>
+                  <h1 className="heading-5">Better Mortgage</h1>
+                  <p className="paragraph-2">UI, Coded Template</p>
+                </div>
+                <div>
+                  <img
+                    src="../../../assets/images/eye.svg"
+                    loading="lazy"
+                    width={23}
+                    alt
+                  />
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div className="div-block">
+        <div className="div-block-2">
+          <div className="div-block-3">
+            <img
+              src="../../../assets/images/about-archi.png"
+              loading="lazy"
+              sizes="(max-width: 479px) 96vw, (max-width: 767px) 45vw, (max-width: 1279px) 46vw, 558px"
+              width={558}
+              srcSet="images/about-archi-p-500.png 500w, images/about-archi-p-800.png 800w, images/about-archi-p-1080.png 1080w, images/about-archi-p-1600.png 1600w, images/about-archi.png 1728w"
+              alt
+              className="image-26"
+            />
+            <div className="div-block-4" />
+            <div className="div-block-5">
+              <h2 className="heading-10">Lorem ipsum</h2>
+            </div>
+          </div>
+          <div
+            data-w-id="e546e88e-4300-c2b2-5ce4-40c6fb0ae65e"
+            className="div-block-6"
+          >
+            <div className="div-block-11">
+              <h1 className="heading-2 left">Who we are</h1>
+              <div className="line" />
+            </div>
+            <p className="paragraph">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Suspendisse varius enim in eros elementum tristique. Duis cursus,
+              mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam
+              libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum
+              lorem imperdiet. Nunc ut sem vitae risus tristique posuere.
+            </p>
+            <p className="paragraph bo">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Suspendisse varius enim in eros elementum tristique. Duis cursus,{' '}
+            </p>
+            <div className="div-block-12">
+              <a
+                onClick={() => {
+                  router.push('/aboutUs');
+                }}
+                className="button-5 w-inline-block"
+              >
+                <p className="paragraph-9">Read more</p>
+                <img
+                  src="../../../assets/images/next.png"
+                  width={11}
+                  alt
+                  className="arrow1"
+                />
+              </a>
+            </div>
           </div>
         </div>
       </div>
-      <div className="section-69 wf-section">
-        <div className="div-block-23262">
-          <h2 className="heading-20 ini">Our Initiatives</h2>
-          <div className="lines-wrapper">
-            <div className="line-bold blacj" />
-            <div className="line-bold red" />
+      <div className="logo-slider-2 wf-section">
+        <div className="container-500 w-container">
+          <div className="div-block-122">
+            <div className="div-block-64 hide">
+              <div>
+                <div
+                  data-delay={4000}
+                  data-animation="slide"
+                  className="slider-4 w-slider"
+                  data-autoplay="false"
+                  data-easing="ease"
+                  data-hide-arrows="false"
+                  data-disable-swipe="false"
+                  data-autoplay-limit={0}
+                  data-nav-spacing={3}
+                  data-duration={500}
+                  data-infinite="true"
+                >
+                  <div className="mask-3 w-slider-mask">
+                    <div className="w-slide">
+                      <div className="div-block-65">
+                        <a href="#" className="link-block-5 w-inline-block">
+                          <img
+                            src="https://uploads-ssl.webflow.com/60013991c502860d753da23a/60052ec09ce2b71aa808df7d_brand-2.png"
+                            loading="lazy"
+                            alt
+                            className="image-11"
+                          />
+                        </a>
+                      </div>
+                    </div>
+                    <div className="w-slide">
+                      <div className="div-block-65">
+                        <a href="#" className="link-block-5 w-inline-block">
+                          <img
+                            src="https://uploads-ssl.webflow.com/60013991c502860d753da23a/60052ec09ce2b71aa808df7d_brand-2.png"
+                            loading="lazy"
+                            alt
+                            className="image-11"
+                          />
+                        </a>
+                      </div>
+                    </div>
+                    <div className="w-slide">
+                      <div className="div-block-65">
+                        <a href="#" className="link-block-5 w-inline-block">
+                          <img
+                            src="https://uploads-ssl.webflow.com/60013991c502860d753da23a/60052ec09ce2b71aa808df7d_brand-2.png"
+                            loading="lazy"
+                            alt
+                            className="image-11"
+                          />
+                        </a>
+                      </div>
+                    </div>
+                    <div className="w-slide">
+                      <div className="div-block-65">
+                        <a href="#" className="link-block-5 w-inline-block">
+                          <img
+                            src="https://uploads-ssl.webflow.com/60013991c502860d753da23a/60052ec09ce2b71aa808df7d_brand-2.png"
+                            loading="lazy"
+                            alt
+                            className="image-11"
+                          />
+                        </a>
+                      </div>
+                    </div>
+                    <div className="w-slide">
+                      <div className="div-block-65">
+                        <a href="#" className="link-block-5 w-inline-block">
+                          <img
+                            src="https://uploads-ssl.webflow.com/60013991c502860d753da23a/60052ec09ce2b71aa808df7d_brand-2.png"
+                            loading="lazy"
+                            alt
+                            className="image-11"
+                          />
+                        </a>
+                      </div>
+                    </div>
+                    <div className="w-slide">
+                      <div className="div-block-65">
+                        <a href="#" className="link-block-5 w-inline-block">
+                          <img
+                            src="https://uploads-ssl.webflow.com/60013991c502860d753da23a/60052ec09ce2b71aa808df7d_brand-2.png"
+                            loading="lazy"
+                            alt
+                            className="image-11"
+                          />
+                        </a>
+                      </div>
+                    </div>
+                    <div className="w-slide">
+                      <div className="div-block-65">
+                        <a href="#" className="link-block-5 w-inline-block">
+                          <img
+                            src="https://uploads-ssl.webflow.com/60013991c502860d753da23a/60052ec09ce2b71aa808df7d_brand-2.png"
+                            loading="lazy"
+                            alt
+                            className="image-11"
+                          />
+                        </a>
+                      </div>
+                    </div>
+                    <div className="w-slide">
+                      <div className="div-block-65">
+                        <a href="#" className="link-block-5 w-inline-block">
+                          <img
+                            src="https://uploads-ssl.webflow.com/60013991c502860d753da23a/60052ec09ce2b71aa808df7d_brand-2.png"
+                            loading="lazy"
+                            alt
+                            className="image-11"
+                          />
+                        </a>
+                      </div>
+                    </div>
+                    <div className="w-slide">
+                      <div className="div-block-65">
+                        <a href="#" className="link-block-5 w-inline-block">
+                          <img
+                            src="https://uploads-ssl.webflow.com/60013991c502860d753da23a/60052ec09ce2b71aa808df7d_brand-2.png"
+                            loading="lazy"
+                            alt
+                            className="image-11"
+                          />
+                        </a>
+                      </div>
+                    </div>
+                    <div className="w-slide">
+                      <div className="div-block-65">
+                        <a href="#" className="link-block-5 w-inline-block">
+                          <img
+                            src="https://uploads-ssl.webflow.com/60013991c502860d753da23a/60052ec09ce2b71aa808df7d_brand-2.png"
+                            loading="lazy"
+                            alt
+                            className="image-11"
+                          />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="left-arrow-4 w-slider-arrow-left">
+                    <div className="w-icon-slider-left" />
+                  </div>
+                  <div className="right-arrow w-slider-arrow-right">
+                    <div className="w-icon-slider-right" />
+                  </div>
+                  <div className="slide-nav-2 w-slider-nav w-round" />
+                </div>
+              </div>
+            </div>
+            <div className="div-block-66">
+              <div className="div-block-255">
+                <div className="div-block-256">
+                  <div className="div-block-69">
+                    <p className="paragraph-24">
+                      If you have any query regarding, feel free to contact us.
+                      We are always available to serve you with our services.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="div-block-23464">
-          <div className="div-block-23468">
-            <div className="div-block-23466">
-              <div>
-                <img
-                  src="images/jax.png"
-                  loading="lazy"
-                  width={181}
-                  height={197}
-                  alt=""
-                  className="image-25"
-                />
-              </div>
-              <div className="div-block-23467">
-                <h4 className="heading-173">Jacksonville Beach, Florida</h4>
-                <div className="div-block-131">
-                  <h3 className="heading-174">
-                    525 3rd St. N. Unit 100
-                    <br />
-                    Jacksonville Beach
-                  </h3>
-                </div>
-                <div className="div-block-23471">
-                  <a
-                    data-w-id="c2a72df0-42b0-cf61-26d3-20a77f384fcb"
-                    href="tel:+03234567890"
-                    className="button-8 nav no-padding show read-more w-inline-block"
+      </div>
+      <div className="form-section wf-section">
+        <div className="container-500 w-container">
+          <div className="div-block-82">
+            <div className="div-block-33">
+              <div
+                data-w-id="317b7fca-608e-a18c-0353-8b11f689b156"
+                className="faq hide"
+              >
+                <div className="div-block-72">
+                  <div
+                    data-w-id="317b7fca-608e-a18c-0353-8b11f689b158"
+                    className="dropdown-faq d_f"
                   >
-                    <p className="paragraph-9 read-more">Read more</p>
-                    <img
-                      src="images/next.png"
-                      width={15}
-                      alt="Next Arrow"
-                      className="arrow1"
-                    />
-                    <img
-                      src="images/next.png"
-                      width={15}
-                      alt="Next Arrow"
-                      className="arrow2 read-more"
-                    />
-                    <div className="button-8 hide" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="div-block-23469">
-            <div className="div-block-23466">
-              <div>
-                <img
-                  src="images/jax.png"
-                  loading="lazy"
-                  width={181}
-                  height={197}
-                  alt=""
-                  className="image-25"
-                />
-              </div>
-              <div className="div-block-23467">
-                <h4 className="heading-173">Jacksonville Beach, Florida</h4>
-                <div className="div-block-131">
-                  <h3 className="heading-174">
-                    525 3rd St. N. Unit 100
-                    <br />
-                    Jacksonville Beach
-                  </h3>
-                </div>
-                <div className="div-block-23471">
-                  <a
-                    data-w-id="06837dc3-7ceb-e97c-52b2-82b46ef4167c"
-                    href="tel:+03234567890"
-                    className="button-8 nav no-padding show read-more w-inline-block"
-                  >
-                    <p className="paragraph-9 read-more">Read more</p>
-                    <img
-                      src="images/next.png"
-                      width={15}
-                      alt="Next Arrow"
-                      className="arrow1"
-                    />
-                    <img
-                      src="images/next.png"
-                      width={15}
-                      alt="Next Arrow"
-                      className="arrow2 read-more"
-                    />
-                    <div className="button-8 hide" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="div-block-23470">
-            <div className="div-block-23466">
-              <div>
-                <img
-                  src="images/jax.png"
-                  loading="lazy"
-                  width={181}
-                  height={197}
-                  alt=""
-                  className="image-25"
-                />
-              </div>
-              <div className="div-block-23467">
-                <h4 className="heading-173">Jacksonville Beach, Florida</h4>
-                <div className="div-block-131">
-                  <h3 className="heading-174">
-                    525 3rd St. N. Unit 100
-                    <br />
-                    Jacksonville Beach
-                  </h3>
-                </div>
-                <div className="div-block-23471">
-                  <a
-                    data-w-id="4489156c-514a-81d4-b1ea-f6d0e07687aa"
-                    href="tel:+03234567890"
-                    className="button-8 nav no-padding show read-more w-inline-block"
-                  >
-                    <p className="paragraph-9 read-more">Read more</p>
-                    <img
-                      src="images/next.png"
-                      width={15}
-                      alt="Next Arrow"
-                      className="arrow1"
-                    />
-                    <img
-                      src="images/next.png"
-                      width={15}
-                      alt="Next Arrow"
-                      className="arrow2 read-more"
-                    />
-                    <div className="button-8 hide" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          {initiatives?.map((item) =>  <a
-            href="blogs-by-rasmeet.html"
-            className="link-block-45 ini w-inline-block"
-          >
-            <div className="div-block-45 ini">
-              <div className="div-block-47 ini">
-                <img
-                src={`${item ? item?.media?.url : ''}`}
-                  loading="lazy"
-                  width={309}
-                  // sizes="(max-width: 479px) 100vw, (max-width: 767px) 95vw, (max-width: 991px) 96vw, (max-width: 1279px) 30vw, 380px"
-                  // srcSet="images/blog3-p-500.jpeg 500w, images/blog3.jpg 630w"
-                  alt=""
-                  className="image-9 ini"
-                />
-              </div>
-              <div className="div-block-46 ini">
-                <h1 className="heading-164 ini">
-                  {item?.title}
-                </h1>
-                <div
-                  data-w-id="af4255af-bc06-8d90-5f3f-2ea87105f214"
-                  className="btn-parent-txt"
-                >
-                  <div className="text-parent initiate">
-                    <div
-                      style={{ color: 'rgb(0,152,70)' }}
-                      className="btn-txt-3 initiate"
-                    >
-                      Read More
+                    <div className="div-block-73">
+                      <h4 className="heading-12">
+                        what is the process for construction ?
+                      </h4>
+                      <div className="div-block-75">
+                        <div className="div-block-76" />
+                        <div className="div-block-77" />
+                      </div>
+                    </div>
+                    <div style={{ height: 0 }} className="answer-10-2">
+                      <div className="div-block-74">
+                        <p className="paragraph-16">
+                          There are many variations of passages of available but
+                          the majority have suffered alteration in that some
+                          form by injected randomised words which don’t look
+                          even as slightly believable now.
+                        </p>
+                      </div>
                     </div>
                   </div>
                   <div
-                    style={{
-                      width: '18PX',
-                      height: '2PX',
-                      WebkitTransform:
-                        'translate3d(0PX, 0PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-                      MozTransform:
-                        'translate3d(0PX, 0PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-                      msTransform:
-                        'translate3d(0PX, 0PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-                      transform:
-                        'translate3d(0PX, 0PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-                    }}
-                    className="a-1 initiate"
+                    data-w-id="317b7fca-608e-a18c-0353-8b11f689b163"
+                    className="dropdown-faq"
                   >
-                    <div className="a-3-2 initiate" />
-                    <div className="a-2 initiate" />
+                    <div className="div-block-73">
+                      <h4 className="heading-12">
+                        what is the process for construction ?
+                      </h4>
+                      <div className="div-block-75">
+                        <div className="div-block-76" />
+                        <div className="div-block-77" />
+                      </div>
+                    </div>
+                    <div style={{ height: 0 }} className="answer-10-2">
+                      <div className="div-block-74">
+                        <p className="paragraph-16">
+                          There are many variations of passages of available but
+                          the majority have suffered alteration in that some
+                          form by injected randomised words which don’t look
+                          even as slightly believable now.
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          </a>
-          )}                  
-        </div>
-      </div>
-      <div className="section-74 section-testimonials wf-section">
-        <div className="container-19 w-container">
-          <div
-            data-delay={4000}
-            data-animation="slide"
-            className="slider-21 w-slider"
-            data-autoplay="true"
-            data-easing="ease-in-out"
-            data-hide-arrows="true"
-            data-disable-swipe="false"
-            data-autoplay-limit={0}
-            data-nav-spacing={3}
-            data-duration={500}
-            data-infinite="true"
-            id="testimonials"
-          >
-            <div className="mask-14 w-slider-mask">
-              <div className="slide-17 w-slide">
-                <div className="div-block-23474">
-                  <img
-                  src={require('../../../assets/images/quote-bottom.svg')} 
-                    loading="lazy"
-                    width={75}
-                    height={52}
-                    alt=""
-                    className="quote-bottom"
-                  />
-                  <img
-                  src={require('../../../assets/images/quote-top.svg')} 
-                    loading="lazy"
-                    width={75}
-                    height={52}
-                    alt=""
-                    className="quote-top"
-                  />
-                  <p className="text-testimonial">
-                    "Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text ever since the 1500s, when an unknown
-                    printer took a galley of type and scrambled it to make a
-                    type specimen book."
-                  </p>
-                  <div className="div-block-15">
-                    <img
-                      src="images/telemarketer.png"
-                      loading="lazy"
-                      width={54}
-                      sizes="(max-width: 479px) 17vw, (max-width: 1279px) 54px, (max-width: 1439px) 4vw, 54px"
-                      srcSet="images/telemarketer-p-500.png 500w, images/telemarketer.png 512w"
-                      alt=""
-                      className="image-charity"
-                    />
-                    <div className="text-block">
-                      Lorem Ipsum is simply dummy
+                  <div
+                    data-w-id="317b7fca-608e-a18c-0353-8b11f689b16e"
+                    className="dropdown-faq"
+                  >
+                    <div className="div-block-73">
+                      <h4 className="heading-12">
+                        what is the process for construction ?
+                      </h4>
+                      <div className="div-block-75">
+                        <div className="div-block-76" />
+                        <div className="div-block-77" />
+                      </div>
+                    </div>
+                    <div style={{ height: 0 }} className="answer-10-2">
+                      <div className="div-block-74">
+                        <p className="paragraph-16">
+                          There are many variations of passages of available but
+                          the majority have suffered alteration in that some
+                          form by injected randomised words which don’t look
+                          even as slightly believable now.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    data-w-id="317b7fca-608e-a18c-0353-8b11f689b179"
+                    className="dropdown-faq"
+                  >
+                    <div className="div-block-73">
+                      <h4 className="heading-12">
+                        what is the process for construction ?
+                      </h4>
+                      <div className="div-block-75">
+                        <div className="div-block-76" />
+                        <div className="div-block-77" />
+                      </div>
+                    </div>
+                    <div style={{ height: 0 }} className="answer-10-2">
+                      <div className="div-block-74">
+                        <p className="paragraph-16">
+                          There are many variations of passages of available but
+                          the majority have suffered alteration in that some
+                          form by injected randomised words which don’t look
+                          even as slightly believable now.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="slide-17 w-slide">
-                <div className="div-block-23474">
-                  <p className="text-testimonial">
-                    "Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text ever since the 1500s, when an unknown
-                    printer took a galley of type and scrambled it to make a
-                    type specimen book."
-                  </p>
-                  <div className="div-block-15">
-                    <img
-                      src="images/telemarketer.png"
-                      loading="lazy"
-                      width={54}
-                      sizes="(max-width: 479px) 17vw, (max-width: 1279px) 54px, (max-width: 1439px) 4vw, 54px"
-                      srcSet="images/telemarketer-p-500.png 500w, images/telemarketer.png 512w"
-                      alt=""
-                      className="image-charity"
-                    />
-                    <div className="text-block">
-                      Lorem Ipsum is simply dummy
-                    </div>
-                  </div>
-                </div>
-                <img
-                  src={require('../../../assets/images/quote-top.svg')} 
-                  loading="lazy"
-                  width={75}
-                  height={52}
-                  alt=""
-                  className="quote-top middle"
-                />
-                <img
-                  src={require('../../../assets/images/quote-bottom.svg')} 
-                  loading="lazy"
-                  width={75}
-                  height={52}
-                  alt=""
-                  className="quote-bottom"
-                />
-              </div>
-              <div className="slide-17 w-slide">
-                <div className="div-block-23474">
-                  <p className="text-testimonial">
-                    "Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text ever since the 1500s, when an unknown
-                    printer took a galley of type and scrambled it to make a
-                    type specimen book."
-                  </p>
-                  <div className="div-block-15">
-                    <img
-                      src="images/telemarketer.png"
-                      loading="lazy"
-                      width={54}
-                      sizes="(max-width: 479px) 17vw, (max-width: 1279px) 54px, (max-width: 1439px) 4vw, 54px"
-                      srcSet="images/telemarketer-p-500.png 500w, images/telemarketer.png 512w"
-                      alt=""
-                      className="image-charity"
-                    />
-                    <div className="text-block">
-                      Lorem Ipsum is simply dummy
-                    </div>
-                  </div>
-                </div>
-                <img
-                  src={require('../../../assets/images/quote-top.svg')} 
-                  loading="lazy"
-                  width={75}
-                  height={52}
-                  alt=""
-                  className="quote-top last"
-                />
-                <img
-                  src={require('../../../assets/images/quote-bottom.svg')} 
-                  loading="lazy"
-                  width={75}
-                  height={52}
-                  alt=""
-                  className="quote-bottom"
-                />
-              </div>
-            </div>
-            <div className="left-arrow-14 w-slider-arrow-left">
-              <img src={require('../../../assets/images/arrow-left.svg')}  loading="lazy" alt="" />
-            </div>
-            <div className="right-arrow-8 w-slider-arrow-right">
               <img
-                src={require('../../../assets/images/arrow-right.svg')}
+                src="../../../assets/images/ad-3.JPG"
                 loading="lazy"
-                alt=""
-                className="arrow-right"
+                width={185}
+                alt
+                className="image-37"
+              />
+              <img
+                src="../../../assets/images/archi-tools.png"
+                loading="lazy"
+                width={400}
+                sizes="(max-width: 479px) 92vw, (max-width: 767px) 56vw, (max-width: 991px) 58vw, 400px"
+                srcSet="images/archi-tools-p-500.png 500w, images/archi-tools-p-800.png 800w, images/archi-tools.png 1728w"
+                alt
+                className="image-37 full"
               />
             </div>
-            <div className="slide-nav-9 w-slider-nav w-slider-nav-invert" />
+            <div className="div-block-78">
+              <div className="div-block-79">
+                <div className="text-block-163">Request a free Quote</div>
+                <div className="w-form">
+                  <form data-name="Email Form" name="email-form">
+                    <div className="div-block-80">
+                      <input
+                        type="text"
+                        className="text-field w-input"
+                        maxLength={256}
+                        name="Your-Name"
+                        data-name="Your Name"
+                        placeholder="Your Name"
+                        id="Name"
+                        required
+                      />
+                    </div>
+                    <div className="div-block-80">
+                      <input
+                        type="email"
+                        className="text-field w-input"
+                        maxLength={256}
+                        name="Email-Address"
+                        data-name="Email Address"
+                        placeholder="Email Address "
+                        id="Email"
+                        required
+                      />
+                    </div>
+                    <div className="div-block-80">
+                      <input
+                        type="tel"
+                        className="text-field w-input"
+                        maxLength={256}
+                        name="Phone-Number"
+                        data-name="Phone Number"
+                        placeholder="Phone Number"
+                        id="Phone"
+                      />
+                    </div>
+                    <div className="div-block-80">
+                      <input
+                        type="tel"
+                        className="text-field w-input"
+                        maxLength={256}
+                        name="Subject"
+                        data-name="Subject"
+                        placeholder="Subject"
+                        id="Subject"
+                      />
+                    </div>
+                    <div className="div-block-80">
+                      <textarea
+                        name="field-3"
+                        maxLength={5000}
+                        id="Message"
+                        placeholder="Message"
+                        className="text-field form-message-box w-input"
+                        defaultValue={''}
+                      />
+                    </div>
+                    <div className="div-block-80 form-btn">
+                      <input
+                        type="submit"
+                        defaultValue="Get a free quote"
+                        data-wait="Please wait..."
+                        className="submit-button w-button"
+                      />
+                      <div className="div-block-81" />
+                    </div>
+                  </form>
+                  <div className="w-form-done">
+                    <div>Thank you! Your submission has been received!</div>
+                  </div>
+                  <div className="w-form-fail">
+                    <div>
+                      Oops! Something went wrong while submitting the form.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
