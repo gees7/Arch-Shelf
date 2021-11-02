@@ -30,8 +30,11 @@ export const getDefaultHeaders = () => ({
   'Content-Type': 'application/json',
 });
 function getPageQuery() {
-  return parse(window && window.location.href && window.location.href.split('?')[1]);
+  return parse(
+    window && window.location.href && window.location.href.split('?')[1]
+  );
 }
+
 /**
  * Returns true if the input apiResponse has errors.
  * @param {*} apiResponse
@@ -203,11 +206,11 @@ export const callApi = (
           return null;
         }
 
-        !options?.disableNotifications &&
-          notification.error({
-            message: 'Something went wrong!',
-            description: errorMessage,
-          });
+        !options?.disableNotifications;
+        // notification.error({
+        //   // message: 'Something went wrong!',
+        //   description: errorMessage,
+        // });
         return reject(err.response);
       });
   });

@@ -8,6 +8,7 @@ import { createWrapper } from 'next-redux-wrapper';
 import store from '../store/store';
 import Security from '../components/security';
 import '../assets/css/global.less';
+import Layout from '../components/layout';
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
@@ -24,9 +25,11 @@ class MyApp extends App {
 
     return (
       <Provider store={store}>
-        <Security>
-          <Component {...pageProps} />
-        </Security>
+        <Layout>
+          <Security>
+            <Component {...pageProps} />
+          </Security>
+        </Layout>
       </Provider>
     );
   }

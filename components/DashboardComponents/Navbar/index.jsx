@@ -1,23 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, Dropdown } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
+import { getDashboardFeed, getFeeds } from '../../../store/api/dashboardApi';
+import Link from 'next/link';
 
-const Navbar = ({
-  dashboard,
-  setDashboard,
-  resources,
-  setResources,
-  projects,
-  setProjects,
-  courses,
-  setCourses,
-  competitions,
-  setCompetitions,
-  breakfast,
-  setBreakfast,
-}) => {
+const Navbar = () => {
   const router = useRouter();
+  const [dashboard, setDashboard] = useState([]);
+  const [resources, setResources] = useState([]);
+  const [projects, setProjects] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const [competitions, setCompetitions] = useState([]);
+  const [breakfast, setBreakfast] = useState([]);
+
+  useEffect(() => {
+    getDashboardFeed().then((res) => {
+      setDashboard(res?.data);
+    });
+    getFeeds({ query: { type: 'resources', limit: '3' } }).then((res) => {
+      setResources(res?.data?.feedList);
+    });
+    getFeeds({ query: { type: 'projects', limit: '3' } }).then((res) => {
+      setProjects(res?.data?.feedList);
+    });
+    getFeeds({ query: { type: 'courses', limit: '3' } }).then((res) => {
+      setCourses(res?.data?.feedList);
+    });
+    getFeeds({ query: { type: 'competitions', limit: '3' } }).then((res) => {
+      setCompetitions(res?.data?.feedList);
+    });
+    getFeeds({ query: { type: 'breakfasts', limit: '3' } }).then((res) => {
+      setBreakfast(res?.data?.feedList);
+    });
+  }, []);
 
   const dropdownResource = (
     <Menu>
@@ -25,12 +41,13 @@ const Navbar = ({
         <Menu.Item>
           <div className="drop-div">
             <img src={item?.media?.url} loading="lazy" width={30} alt />
-            <a
-              onClick={() => router.push('/blogDetails/Details')}
+            <Link
+              href="/blogDetails/[details]"
+              as={`/blogDetails/${item?._id}`}
               className="dropdown-link-2 w-dropdown-link"
             >
-              {item.title}
-            </a>
+              {item?.title}
+            </Link>
           </div>
         </Menu.Item>
       ))}
@@ -238,15 +255,13 @@ const Navbar = ({
         </div>
 
         <div class="container w-container">
-          <a
-            href="index.html"
-            aria-current="page"
-            class="brand w-nav-brand w--current"
-          >
-            <div class="text-block-8">
-              <span class="text-span">ARCH</span> SHELF
-            </div>
-          </a>
+          <Link href="/" as="/" className="dropdown-link-2 w-dropdown-link">
+            <a aria-current="page" class="brand w-nav-brand w--current">
+              <div class="text-block-8">
+                <span class="text-span">ARCH</span> SHELF
+              </div>
+            </a>
+          </Link>
           <nav role="navigation" class="nav-menu w-nav-menu">
             <a
               aria-current="page"
