@@ -42,8 +42,8 @@ const Navbar = () => {
           <div className="drop-div">
             <img src={item?.media?.url} loading="lazy" width={30} alt />
             <Link
-              href="/blogDetails/[details]"
-              as={`/blogDetails/${item?._id}`}
+              href="/resources/[id]"
+              as={`/resources/${item?._id}`}
               className="dropdown-link-2 w-dropdown-link"
             >
               {item?.title}
@@ -60,12 +60,7 @@ const Navbar = () => {
         <Menu.Item>
           <div className="drop-div">
             <img src={item?.media?.url} loading="lazy" width={30} alt />
-            <a
-              onClick={() => router.push('/blogDetails/Details')}
-              className="dropdown-link-2 w-dropdown-link"
-            >
-              {item.title}
-            </a>
+            <a className="dropdown-link-2 w-dropdown-link">{item?.title}</a>
           </div>
         </Menu.Item>
       ))}
@@ -265,14 +260,13 @@ const Navbar = () => {
           <nav role="navigation" class="nav-menu w-nav-menu">
             <a
               aria-current="page"
-              class="nav-link w-nav-link w--current"
+              class="nav-link w-nav-link"
               onClick={() => router.push('/')}
             >
               Home
             </a>
             <div data-hover="true" data-delay="0" class="w-dropdown">
               <div class="w-dropdown-toggle">
-                {/* <div class="w-icon-dropdown-toggle"></div> */}
                 <Dropdown overlay={dropdownResource}>
                   <a
                     className="ant-dropdown-link"
@@ -285,7 +279,6 @@ const Navbar = () => {
             </div>
             <div data-hover="true" data-delay="0" class="w-dropdown">
               <div class="w-dropdown-toggle">
-                {/* <div class="w-icon-dropdown-toggle"></div> */}
                 <Dropdown overlay={dropdownProjects}>
                   <a
                     className="ant-dropdown-link"
