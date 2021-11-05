@@ -1,11 +1,8 @@
 import React from 'react';
-import Navbar from '../../components/DashboardComponents/Navbar';
-import Footer from '../../components/DashboardComponents/Footer';
 
 const index = () => {
   return (
     <div>
-      <Navbar />
       <div>
         <div className="div-block-97 hight">
           <div className="div-heading">
@@ -203,8 +200,6 @@ const index = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };

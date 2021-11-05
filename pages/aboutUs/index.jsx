@@ -1,12 +1,9 @@
 import React from 'react';
-import Navbar from '../../components/DashboardComponents/Navbar';
-import Footer from '../../components/DashboardComponents/Footer';
 
 const AboutUs = () => {
   return (
     <div>
       <div>
-        <Navbar />
         <div className="div-block-97">
           <div className="div-heading">
             <h1 className="heading-2">About Us</h1>
@@ -95,7 +92,6 @@ const AboutUs = () => {
             </div>
           </div>
         </div>
-        <Footer />
       </div>
     </div>
   );

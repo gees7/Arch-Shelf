@@ -1,19 +1,12 @@
 import React from 'react';
 
-const Footer = ({
-  dashboard,
-  setDashboard,
-  projects,
-  setProjects,
-  competitions,
-  setCompetitions,
-}) => {
+const Footer = () => {
   return (
     <div>
       <div className="footercontainer w-container">
         <div className="div-block-376">
           <img
-            src="/images/ad-4.JPG"
+            src={require('../../../assets/images/ad-4.jpg')}
             loading="lazy"
             sizes="(max-width: 479px) 92vw, (max-width: 767px) 95vw, (max-width: 991px) 96vw, (max-width: 1279px) 88vw, 972px"
             srcSet="images/ad-4-p-500.jpeg 500w, images/ad-4.JPG 972w"
@@ -36,16 +29,9 @@ const Footer = ({
         <div className="footer-links-container">
           <div className="divlinks">
             <div className="divnewsletter">
-              <img
-                src="../../../assets/images/message.svg"
-                loading="lazy"
-                width={90}
-                alt
-                className="newsletterimage"
-              />
-              <div className="text-block-8 ft">
-                <span className="text-span">ARCH</span> SHELF
-              </div>
+              <h4 className="footerheading1">
+                <strong>About</strong>
+              </h4>
               <p className="paragraph color">
                 Lorem ipsum dolor sit amet, consectetur&nbsp;elit. Suspendisse
                 varius enim in eros elementum tristique.
