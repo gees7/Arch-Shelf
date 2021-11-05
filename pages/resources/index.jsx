@@ -5,7 +5,7 @@ import Footer from '../../components/DashboardComponents/Footer';
 import { connect} from 'react-redux';
 import { getFeeds } from '../../store/api/dashboardApi';
 import {getCategories} from "../../store/actions/blogActions"
-const Resources = ({categories}) => {
+const Resources = ({categories, getCategories}) => {
   console.log(categories,'categories');
   var mL = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const [resources, setResources] = useState([]);
@@ -14,9 +14,10 @@ const Resources = ({categories}) => {
     getFeeds({ query: { type: 'resources', limit: '3' } }).then((res) => {
       setResources(res?.data?.feedList);
     });
+
+    getCategories({ query: {} });
     
   }, [])
-  getCategories({ query: {} });
 
   return (
     <div>
@@ -52,7 +53,7 @@ const Resources = ({categories}) => {
                       width={380}
                       sizes="(max-width: 479px) 86vw, (max-width: 767px) 89vw, (max-width: 991px) 86vw, (max-width: 1279px) 45vw, (max-width: 1919px) 48vw, 777.765625px"
                       srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
-                      alt
+                      alt=""
                       className="blog-image"
                     />
                   </div>
@@ -69,7 +70,7 @@ const Resources = ({categories}) => {
                         loading="lazy"
                         sizes="(max-width: 1279px) 30px, (max-width: 1919px) 2vw, 1vw"
                         srcSet="images/back-in-time-p-500.png 500w, images/back-in-time.png 512w"
-                        alt
+                        alt=""
                         className="image-53"
                       />
                       <p className="paragraph-detials-medium time">
@@ -117,7 +118,7 @@ const Resources = ({categories}) => {
                         }}
                         sizes="100vw"
                         srcSet="images/cp-molettoparedes-epem-0154_1-p-500.jpeg 500w, images/cp-molettoparedes-epem-0154_1-p-800.jpeg 800w, images/cp-molettoparedes-epem-0154_1-p-1080.jpeg 1080w, images/cp-molettoparedes-epem-0154_1-p-1600.jpeg 1600w, images/cp-molettoparedes-epem-0154_1cp-molettoparedes-epem-0154.jpg 2000w"
-                        alt
+                        alt=""
                         className="image-57"
                       />
                     </div>
@@ -135,9 +136,9 @@ const Resources = ({categories}) => {
                   </div>
                   <div className="div-block-23388">
                     <img
-                      src="https://www.techwyse.com/blog/wp-content/themes/blog-v4/images/Google-Display-Add-infographic-min.jpg"
+                      src="https://assets.website-files.com/615e8b5e6632c8dc750e1133/61651f9a56de5b87a53233c9_ad-3.JPG"
                       loading="lazy"
-                      alt
+                      alt=""
                       className="image-58"
                     />
                   </div>
@@ -162,7 +163,7 @@ const Resources = ({categories}) => {
                         }}
                         sizes="100vw"
                         srcSet="images/cp-molettoparedes-epem-0154_1-p-500.jpeg 500w, images/cp-molettoparedes-epem-0154_1-p-800.jpeg 800w, images/cp-molettoparedes-epem-0154_1-p-1080.jpeg 1080w, images/cp-molettoparedes-epem-0154_1-p-1600.jpeg 1600w, images/cp-molettoparedes-epem-0154_1cp-molettoparedes-epem-0154.jpg 2000w"
-                        alt
+                        alt=""
                         className="image-57"
                       />
                     </div>
@@ -199,7 +200,7 @@ const Resources = ({categories}) => {
                         }}
                         sizes="100vw"
                         srcSet="images/cp-molettoparedes-epem-0154_1-p-500.jpeg 500w, images/cp-molettoparedes-epem-0154_1-p-800.jpeg 800w, images/cp-molettoparedes-epem-0154_1-p-1080.jpeg 1080w, images/cp-molettoparedes-epem-0154_1-p-1600.jpeg 1600w, images/cp-molettoparedes-epem-0154_1cp-molettoparedes-epem-0154.jpg 2000w"
-                        alt
+                        alt=""
                         className="image-57"
                       />
                     </div>
@@ -223,7 +224,7 @@ const Resources = ({categories}) => {
                       width={380}
                       sizes="(max-width: 479px) 86vw, (max-width: 767px) 89vw, (max-width: 991px) 86vw, (max-width: 1279px) 45vw, (max-width: 1919px) 48vw, 777.765625px"
                       srcSet="images/about-archi-p-500.png 500w, images/about-archi-p-800.png 800w, images/about-archi-p-1080.png 1080w, images/about-archi-p-1600.png 1600w, images/about-archi.png 1728w"
-                      alt
+                      alt=""
                       className="blog-image"
                     />
                   </div>
@@ -241,7 +242,7 @@ const Resources = ({categories}) => {
                         loading="lazy"
                         sizes="(max-width: 1279px) 30px, (max-width: 1919px) 2vw, 1vw"
                         srcSet="images/back-in-time-p-500.png 500w, images/back-in-time.png 512w"
-                        alt
+                        alt=""
                         className="image-53"
                       />
                       <p className="paragraph-detials-medium time">
@@ -252,7 +253,7 @@ const Resources = ({categories}) => {
                       <img
                         src="/public/images/team-3.jpg"
                         width={50}
-                        alt
+                        alt=""
                         className="profile-picture"
                       />
                       <div className="normal-wrapper">
@@ -270,7 +271,7 @@ const Resources = ({categories}) => {
                       src="/public/images/archi-tools.png"
                       sizes="(max-width: 479px) 86vw, (max-width: 767px) 89vw, (max-width: 991px) 86vw, (max-width: 1279px) 45vw, (max-width: 1919px) 48vw, 777.765625px"
                       srcSet="images/archi-tools-p-500.png 500w, images/archi-tools-p-800.png 800w, images/archi-tools.png 1728w"
-                      alt
+                      alt=""
                       className="blog-image"
                     />
                   </div>
@@ -288,7 +289,7 @@ const Resources = ({categories}) => {
                         loading="lazy"
                         sizes="(max-width: 1279px) 30px, (max-width: 1919px) 2vw, 1vw"
                         srcSet="images/back-in-time-p-500.png 500w, images/back-in-time.png 512w"
-                        alt
+                        alt=""
                         className="image-53"
                       />
                       <p className="paragraph-detials-medium time">
@@ -299,7 +300,7 @@ const Resources = ({categories}) => {
                       <img
                         src="/public/images/team-1.jpg"
                         width={50}
-                        alt
+                        alt=""
                         className="profile-picture"
                       />
                       <div className="normal-wrapper">
@@ -333,12 +334,12 @@ const Resources = ({categories}) => {
                     >
                       <input
                         type="submit"
-                        defaultValue
+                        defaultValue=""
                         className="search-button w-button"
                       />
                       <img
-                        src="/public/images/search_icon.svg"
-                        alt
+                        src="https://assets.website-files.com/615e8b5e6632c8dc750e1133/61665ff8cfba82d222a04f28_search_icon.svg"
+                        alt=""
                         className="search-icon"
                       />
                     </a>
@@ -367,7 +368,7 @@ const Resources = ({categories}) => {
                         <div className="submit-button-wrap">
                           <input
                             type="submit"
-                            defaultValue
+                            defaultValue=""
                             data-wait="Please wait..."
                             className="submit-button-2 w-button"
                           />
@@ -375,7 +376,7 @@ const Resources = ({categories}) => {
                             src="/public/images/Arrow_1.svg"
                             width={9}
                             height={12}
-                            alt
+                            alt=""
                             className="image-2"
                           />
                         </div>
@@ -399,7 +400,7 @@ const Resources = ({categories}) => {
                           width={90}
                           sizes="(max-width: 479px) 28vw, (max-width: 767px) 20vw, 90px"
                           srcSet="images/about-archi-p-500.png 500w, images/about-archi-p-800.png 800w, images/about-archi-p-1080.png 1080w, images/about-archi-p-1600.png 1600w, images/about-archi.png 1728w"
-                          alt
+                          alt=""
                           className="feature-image"
                         />
                         <div className="title-small">
@@ -413,7 +414,7 @@ const Resources = ({categories}) => {
                           width={90}
                           sizes="(max-width: 479px) 28vw, (max-width: 767px) 20vw, 90px"
                           srcSet="images/archi-tools-p-500.png 500w, images/archi-tools-p-800.png 800w, images/archi-tools.png 1728w"
-                          alt
+                          alt=""
                           className="feature-image"
                         />
                         <div className="title-small">
@@ -425,7 +426,7 @@ const Resources = ({categories}) => {
                         <img
                           src="/public/images/architect.jpg"
                           width={90}
-                          alt
+                          alt=""
                           className="feature-image"
                         />
                         <div className="title-small">
@@ -439,7 +440,7 @@ const Resources = ({categories}) => {
                           width={90}
                           sizes="(max-width: 479px) 28vw, (max-width: 767px) 20vw, 90px"
                           srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
-                          alt
+                          alt=""
                           className="feature-image"
                         />
                         <div className="title-small">
@@ -451,41 +452,15 @@ const Resources = ({categories}) => {
                   </div>
                   <div className="categories-block">
                     <div className="title-large">Filter By Categories</div>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Product</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Engineering</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Saas</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Technology</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Company</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Saas</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Company</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Saas</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Engineering</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Engineering</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Company</div>
-                    </a>
+                    {
+                      categories?.categories?.map(item => (
+                        <span href="#" key={item?._id} className="categories-pill w-inline-block">
+                          <div className="title-small pink">{item?.name}</div>
+                        </span>
+                      ))
+                    }
                   </div>
-                  <img src="/public/images/ad-3.JPG" loading="lazy" alt />
+                  <img src="https://assets.website-files.com/615e8b5e6632c8dc750e1133/61651f9a56de5b87a53233c9_ad-3.JPG" loading="lazy" alt="" />
                 </div>
               </div>
             </div>
@@ -501,6 +476,9 @@ function mapStateToProps(state) {
   const categories = state?.dashboard?.categories;
   return {categories}
 }
+const mapDispatchToProps = (dispatch) => ({
+  getCategories: (payload) => dispatch(getCategories(payload)),
+});
 
 
-export default connect(mapStateToProps)(Resources);
+export default connect(mapStateToProps, mapDispatchToProps)(Resources);

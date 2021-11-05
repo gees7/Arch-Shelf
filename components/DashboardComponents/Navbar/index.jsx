@@ -24,7 +24,7 @@ const Navbar = ({
       {resources?.map((item) => (
         <Menu.Item>
           <div className="drop-div">
-            <img src={item?.media?.url} loading="lazy" width={30} alt />
+            <img src={item?.media?.url} loading="lazy" width={30} alt="" />
             <a
               onClick={() => router.push('/blogDetails/Details')}
               className="dropdown-link-2 w-dropdown-link"
@@ -60,7 +60,7 @@ const Navbar = ({
       {courses?.map((item) => (
         <Menu.Item>
           <div className="drop-div">
-            <img src={item?.media?.url} loading="lazy" width={30} alt />
+            <img src={item?.media?.url} loading="lazy" width={30} alt="" />
             <a
               onClick={() => router.push('/blogDetails/Details')}
               className="dropdown-link-2 w-dropdown-link"
@@ -78,7 +78,7 @@ const Navbar = ({
       {competitions?.map((item) => (
         <Menu.Item>
           <div className="drop-div">
-            <img src={item?.media?.url} loading="lazy" width={30} alt />
+            <img src={item?.media?.url} loading="lazy" width={30} alt="" />
             <a
               onClick={() => router.push('/blogDetails/Details')}
               className="dropdown-link-2 w-dropdown-link"
@@ -96,7 +96,7 @@ const Navbar = ({
       {breakfast?.map((item) => (
         <Menu.Item>
           <div className="drop-div">
-            <img src={item?.media?.url} loading="lazy" width={30} alt />
+            <img src={item?.media?.url} loading="lazy" width={30} alt="" />
             <a
               onClick={() => router.push('/blogDetails/Details')}
               className="dropdown-link-2 w-dropdown-link"
@@ -171,7 +171,7 @@ const Navbar = ({
         data-easing="ease"
         data-easing2="ease"
         role="banner"
-        class="navbar w-nav"
+        className="navbar w-nav"
       >
         <div id="Top-container" className="top-container">
           <div className="top-wrapper">
@@ -204,7 +204,7 @@ const Navbar = ({
                   <img
                     src="/images/twitter.svg"
                     loading="lazy"
-                    alt
+                    alt=""
                     className="image"
                   />
                 </a>
@@ -212,7 +212,7 @@ const Navbar = ({
                   <img
                     src="/images/facebook.svg"
                     loading="lazy"
-                    alt
+                    alt=""
                     className="image"
                   />
                 </a>
@@ -220,7 +220,7 @@ const Navbar = ({
                   <img
                     src="/images/instagram.svg"
                     loading="lazy"
-                    alt
+                    alt=""
                     className="image"
                   />
                 </a>
@@ -228,7 +228,7 @@ const Navbar = ({
                   <img
                     src="/images/linkedin.svg"
                     loading="lazy"
-                    alt
+                    alt=""
                     className="image"
                   />
                 </a>
@@ -237,27 +237,27 @@ const Navbar = ({
           </div>
         </div>
 
-        <div class="container w-container">
+        <div className="container w-container">
           <a
             href="index.html"
             aria-current="page"
-            class="brand w-nav-brand w--current"
+            className="brand w-nav-brand w--current"
           >
-            <div class="text-block-8">
-              <span class="text-span">ARCH</span> SHELF
+            <div className="text-block-8">
+              <span className="text-span">ARCH</span> SHELF
             </div>
           </a>
-          <nav role="navigation" class="nav-menu w-nav-menu">
+          <nav role="navigation" className="nav-menu w-nav-menu">
             <a
               aria-current="page"
-              class="nav-link w-nav-link w--current"
+              className="nav-link w-nav-link w--current"
               onClick={() => router.push('/')}
             >
               Home
             </a>
-            <div data-hover="true" data-delay="0" class="w-dropdown">
-              <div class="w-dropdown-toggle">
-                {/* <div class="w-icon-dropdown-toggle"></div> */}
+            <div data-hover="true" data-delay="0" className="w-dropdown">
+              <div className="w-dropdown-toggle">
+                {/* <div className="w-icon-dropdown-toggle"></div> */}
                 <Dropdown overlay={dropdownResource}>
                   <a
                     className="ant-dropdown-link"
@@ -268,9 +268,9 @@ const Navbar = ({
                 </Dropdown>
               </div>
             </div>
-            <div data-hover="true" data-delay="0" class="w-dropdown">
-              <div class="w-dropdown-toggle">
-                {/* <div class="w-icon-dropdown-toggle"></div> */}
+            <div data-hover="true" data-delay="0" className="w-dropdown">
+              <div className="w-dropdown-toggle">
+                {/* <div className="w-icon-dropdown-toggle"></div> */}
                 <Dropdown overlay={dropdownProjects}>
                   <a
                     className="ant-dropdown-link"
@@ -281,9 +281,9 @@ const Navbar = ({
                 </Dropdown>
               </div>
             </div>
-            <div data-hover="true" data-delay="0" class="w-dropdown">
-              <div class="w-dropdown-toggle">
-                {/* <div class="w-icon-dropdown-toggle"></div> */}
+            <div data-hover="true" data-delay="0" className="w-dropdown">
+              <div className="w-dropdown-toggle">
+                {/* <div className="w-icon-dropdown-toggle"></div> */}
                 <Dropdown overlay={dropdownCourses}>
                   <a
                     className="ant-dropdown-link"
@@ -294,9 +294,9 @@ const Navbar = ({
                 </Dropdown>
               </div>
             </div>
-            <div data-hover="true" data-delay="0" class="w-dropdown">
-              <div class="w-dropdown-toggle">
-                {/* <div class="w-icon-dropdown-toggle"></div> */}
+            <div data-hover="true" data-delay="0" className="w-dropdown">
+              <div className="w-dropdown-toggle">
+                {/* <div className="w-icon-dropdown-toggle"></div> */}
                 <Dropdown overlay={dropdownCompetitions}>
                   <a
                     className="ant-dropdown-link"
@@ -307,9 +307,9 @@ const Navbar = ({
                 </Dropdown>
               </div>
             </div>
-            <div data-hover="true" data-delay="0" class="w-dropdown">
-              <div class="w-dropdown-toggle">
-                {/* <div class="w-icon-dropdown-toggle"></div> */}
+            <div data-hover="true" data-delay="0" className="w-dropdown">
+              <div className="w-dropdown-toggle">
+                {/* <div className="w-icon-dropdown-toggle"></div> */}
                 <Dropdown overlay={dropdownBreakfast}>
                   <a
                     className="ant-dropdown-link"
@@ -320,10 +320,10 @@ const Navbar = ({
                 </Dropdown>
               </div>
             </div>
-            <div data-hover="true" data-delay="0" class="dropdown-2 w-dropdown">
-              <div class="dropdown-toggle-2 w-dropdown-toggle">
-                {/* <div class="icon-28 w-icon-dropdown-toggle"></div> */}
-                <div class="text-block-14">
+            <div data-hover="true" data-delay="0" className="dropdown-2 w-dropdown">
+              <div className="dropdown-toggle-2 w-dropdown-toggle">
+                {/* <div className="icon-28 w-icon-dropdown-toggle"></div> */}
+                <div className="text-block-14">
                   <Dropdown overlay={menu}>
                     <a
                       className="ant-dropdown-link"
@@ -336,8 +336,8 @@ const Navbar = ({
               </div>
             </div>
           </nav>
-          <div class="w-nav-button">
-            <div class="w-icon-nav-menu"></div>
+          <div className="w-nav-button">
+            <div className="w-icon-nav-menu"></div>
           </div>
         </div>
       </div>
