@@ -31,182 +31,129 @@ const Competitions = () => {
             <div className="line" />
           </div>
         </div>
-        <div className="content-section">
-          <div className="container-501">
-            <div className="w-layout-grid blog-grid">
-              <div className="content-left _1">
-                <div className="">
-                  {competitions?.length > 0 ? (
-                    <Spin tip="Loading..." spinning={loading} size="large">
-                      <div className="grid grid-cols-3 gap-4">
-                        {competitions.map((comp) => (
-                          <div className="div-block-200">
-                            <div className="div-block-402">
-                              <img
-                                src={`${comp?.media?.url}`}
-                                loading="lazy"
-                                width={448}
-                                sizes="(max-width: 767px) 94vw, (max-width: 991px) 92vw, (max-width: 1279px) 29vw, (max-width: 1919px) 30vw, 479.984375px"
-                                // srcSet="images/Arch-competitions-p-500.jpeg 500w, images/Arch-competitions.jpg 770w"
-                                alt
-                                className="image-47"
-                              />
-                              <div
-                                // style={{
-                                //   backgroundColor: 'rgba(0, 0, 0, 0.322)',
-                                // }}
-                                className="blog_overlap_heading"
-                              >
-                                <div className="div-block-202">
-                                  <a href="#" className="link-13 _2">
-                                    How to Develop Design Concepts in
-                                    Architecture?
-                                  </a>
-                                  <p className="paragraph-21 _2">
-                                    Here We will solve your most important
-                                    questions about .
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-                            <a
-                              href="#"
-                              className="categories-pill competeion w-inline-block"
-                            >
-                              <div className="title-small pink">
-                                {comp ? comp?.category?.name : 'N/A'}
-                              </div>
+        {competitions?.length > 0 ? (
+          <div className="content-section">
+            <div
+              style={{ maxWidth: '1600px' }}
+              className="flex justify-between m-auto"
+            >
+              <div class="grid-container">
+                {competitions.map((comp) => (
+                  <div class="grid-item">
+                    <div className="div-block-200" style={{ width: '100%' }}>
+                      <div className="div-block-402">
+                        <img
+                          src={`${comp?.media?.url}`}
+                          loading="lazy"
+                          width={448}
+                          sizes="(max-width: 767px) 94vw, (max-width: 991px) 92vw, (max-width: 1279px) 29vw, (max-width: 1919px) 30vw, 479.984375px"
+                          // srcSet="images/Arch-competitions-p-500.jpeg 500w, images/Arch-competitions.jpg 770w"
+                          alt
+                          className="image-47"
+                        />
+                        <div className="blog_overlap_heading">
+                          <div className="div-block-202">
+                            <a href="#" className="link-13 _2">
+                              How to Develop Design Concepts in Architecture?
                             </a>
-                            <div className="sheduled-time">
-                              <div className="setails-wrapper">
-                                <img
-                                  src="images/schedule.png"
-                                  loading="lazy"
-                                  id="w-node-b278a96a-64f6-c459-1dec-cd8b52c66292-612bb55a"
-                                  sizes="(max-width: 1439px) 35px, (max-width: 1919px) 2vw, 35px"
-                                  srcSet="images/schedule-p-500.png 500w, images/schedule.png 512w"
-                                  alt
-                                  className="image-52 _2"
-                                />
-                                <div className="details-headers">
-                                  Start Day -
-                                </div>
-                                <div className="day-time">
-                                  Oct-01-2021 (12:01:38)
-                                </div>
-                              </div>
-                              <div className="setails-wrapper">
-                                <img
-                                  src="images/date.png"
-                                  loading="lazy"
-                                  id="w-node-_2dfeab4f-5192-b9e4-3196-49396a8ac37d-612bb55a"
-                                  sizes="(max-width: 1439px) 35px, (max-width: 1919px) 2vw, 35px"
-                                  srcSet="images/date-p-500.png 500w, images/date.png 512w"
-                                  alt
-                                  className="image-52 _2"
-                                />
-                                <div className="details-headers">
-                                  Submission Deadline -
-                                </div>
-                                <div className="day-time">
-                                  Oct-02-2021 (12:01:38)
-                                </div>
-                              </div>
-                            </div>
-                            <div className="organizer">
-                              <div className="setails-wrapper _2">
-                                <img
-                                  src="images/graphic-designer.png"
-                                  loading="lazy"
-                                  id="w-node-_899ff1ed-6ec6-1b89-e0f7-a06643ce77a3-612bb55a"
-                                  alt
-                                  className="image-52"
-                                />
-                                <div className="details-headers">
-                                  Organizer -
-                                </div>
-                                <div className="day-time">
-                                  Mr. Shivam Tripathi
-                                </div>
-                              </div>
-                            </div>
-                            <div className="price">
-                              <div className="setails-wrapper _2">
-                                <img
-                                  src="images/pricing.png"
-                                  loading="lazy"
-                                  id="w-node-e513dfcb-7332-3a54-6965-298be881f22a-612bb55a"
-                                  sizes="(max-width: 1279px) 30px, (max-width: 1919px) 2vw, 30px"
-                                  srcSet="images/pricing-p-500.png 500w, images/pricing.png 512w"
-                                  alt
-                                  className="image-52 price"
-                                />
-                                <div className="details-headers">Price -</div>
-                                <div className="day-time">10.00 USD</div>
-                              </div>
-                            </div>
-                            <div className="div-block-396">
-                              <Link
-                                href="/resources/[id]"
-                                as={`/resources/${comp?._id}`}
-                                className="dropdown-link-2 w-dropdown-link"
-                              >
-                                <a href="#" className="link-14">
-                                  KNOW MORE
-                                </a>
-                              </Link>
-                            </div>
+                            <p className="paragraph-21 _2">
+                              Here We will solve your most important questions
+                              about .
+                            </p>
                           </div>
-                        ))}
+                        </div>
                       </div>
-                      <Pagination
-                        key={`page-${currentPage}`}
-                        showTotal={(total, range) =>
-                          `${range[0]}-${range[1]} of ${total} items`
-                        }
-                        showSizeChanger
-                        pageSizeOptions={['10', '25', '50', '100']}
-                        onShowSizeChange={(e, p) => {
-                          setLimit(p);
-                          setCurrentPage(1);
-                          setStart(0);
-                        }}
-                        defaultCurrent={1}
-                        current={currentPage}
-                        pageSize={limit}
-                        total={competitions && competitions?.length}
-                        onChange={handleChangePagination}
-                      />
-                    </Spin>
-                  ) : (
-                    'No blog found'
-                  )}
-                </div>
-                <a href="#" className="next-button w-inline-block">
-                  <div className="title-medium">Next page</div>
-                </a>
+                      <div className="flex">
+                        <a className="categories-pill competeion w-inline-block">
+                          <div className="title-small pink text-base">
+                            Current
+                          </div>
+                        </a>
+                      </div>
+                      <div className="sheduled-time">
+                        <div className="setails-wrapper">
+                          <img
+                            src="images/schedule.png"
+                            loading="lazy"
+                            id="w-node-b278a96a-64f6-c459-1dec-cd8b52c66292-612bb55a"
+                            sizes="(max-width: 1439px) 35px, (max-width: 1919px) 2vw, 35px"
+                            srcSet="images/schedule-p-500.png 500w, images/schedule.png 512w"
+                            alt
+                            className="image-52 _2"
+                          />
+                          <div className="details-headers">Start Day -</div>
+                          <div className="day-time">Oct-01-2021 (12:01:38)</div>
+                        </div>
+                        <div className="setails-wrapper">
+                          <img
+                            src="images/date.png"
+                            loading="lazy"
+                            id="w-node-_2dfeab4f-5192-b9e4-3196-49396a8ac37d-612bb55a"
+                            sizes="(max-width: 1439px) 35px, (max-width: 1919px) 2vw, 35px"
+                            srcSet="images/date-p-500.png 500w, images/date.png 512w"
+                            alt
+                            className="image-52 _2"
+                          />
+                          <div className="details-headers">
+                            Submission Deadline -
+                          </div>
+                          <div className="day-time">Oct-02-2021 (12:01:38)</div>
+                        </div>
+                      </div>
+                      <div className="organizer">
+                        <div className="setails-wrapper _2">
+                          <img
+                            src="images/graphic-designer.png"
+                            loading="lazy"
+                            id="w-node-_899ff1ed-6ec6-1b89-e0f7-a06643ce77a3-612bb55a"
+                            alt
+                            className="image-52"
+                          />
+                          <div className="details-headers">Organizer -</div>
+                          <div className="day-time">Mr. Shivam Tripathi</div>
+                        </div>
+                      </div>
+                      <div className="price">
+                        <div className="setails-wrapper _2">
+                          <img
+                            src="images/pricing.png"
+                            loading="lazy"
+                            id="w-node-e513dfcb-7332-3a54-6965-298be881f22a-612bb55a"
+                            sizes="(max-width: 1279px) 30px, (max-width: 1919px) 2vw, 30px"
+                            srcSet="images/pricing-p-500.png 500w, images/pricing.png 512w"
+                            alt
+                            className="image-52 price"
+                          />
+                          <div className="details-headers">Price -</div>
+                          <div className="day-time">10.00 USD</div>
+                        </div>
+                      </div>
+                      <div className="div-block-396 flex">
+                        <Link
+                          href="/resources/[id]"
+                          as={`/resources/${comp?._id}`}
+                          className="dropdown-link-2 w-dropdown-link"
+                        >
+                          <a href="#" className="link-14">
+                            KNOW MORE
+                          </a>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
               <div className="content-right">
                 <div className="stick-wrapper">
                   <form action="/search" className="search w-form">
                     <input
-                      type="search"
                       className="seach-bar w-input"
                       maxLength={256}
-                      name="query"
                       placeholder="Search articles"
-                      id="search"
                       required
                     />
-                    <a
-                      href="#"
-                      className="search-button-wrapper w-inline-block"
-                    >
-                      <input
-                        type="submit"
-                        defaultValue
-                        className="search-button w-button"
-                      />
+                    <a className="search-button-wrapper w-inline-block">
+                      <input className="search-button w-button" />
                       <img
                         src="images/search_icon.svg"
                         alt
@@ -363,8 +310,30 @@ const Competitions = () => {
                 </div>
               </div>
             </div>
+            <Pagination
+              style={{ maxWidth: '1600px' }}
+              className="flex justify-center"
+              key={`page-${currentPage}`}
+              showTotal={(total, range) =>
+                `${range[0]}-${range[1]} of ${total} items`
+              }
+              showSizeChanger
+              pageSizeOptions={['10', '25', '50', '100']}
+              onShowSizeChange={(e, p) => {
+                setLimit(p);
+                setCurrentPage(1);
+                setStart(0);
+              }}
+              defaultCurrent={1}
+              current={currentPage}
+              pageSize={limit}
+              total={competitions && competitions?.length}
+              onChange={handleChangePagination}
+            />
           </div>
-        </div>
+        ) : (
+          'No blog found'
+        )}
       </div>
     </div>
   );
