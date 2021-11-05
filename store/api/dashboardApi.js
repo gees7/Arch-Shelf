@@ -7,3 +7,6 @@ export const getDashboardFeed = () =>
 
 export const getFeeds = ({ query }) =>
   callApi({ uriEndPoint: blog.getFeeds.v1, query });
+
+export const getCategoriesList = ({ query }) =>
+  callApi({ uriEndPoint: blog.getOptions.v1, query });

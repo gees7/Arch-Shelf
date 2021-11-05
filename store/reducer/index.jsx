@@ -8,6 +8,7 @@ import { loadingReducer } from './loadingReducer';
 import { customerReducer } from './customerReducer';
 import { userReducer } from './userReducer';
 import { quoteReducer } from './quoteReducer';
+import { dashboardReducer } from './dashboardReducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -19,4 +20,5 @@ export default combineReducers({
   user: userReducer,
   loading: loadingReducer,
   quotes: quoteReducer,
+  dashboard: dashboardReducer,
 });
