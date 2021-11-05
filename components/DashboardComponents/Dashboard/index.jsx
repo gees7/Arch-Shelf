@@ -1,20 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import FixedSocialIcons from '../../FixedSocialIcons';
 import { getDashboardFeed, getFeeds } from '../../../store/api/dashboardApi';
-import { notification } from 'antd';
 import moment from 'moment';
 import styles from './style.less';
 import router from 'next/router';
+import Link from 'next/link';
 
-const Dashboard = ({
-  dashboard,
-  setDashboard,
-  projects,
-  setProjects,
-  competitions,
-  setCompetitions,
-}) => {
-  console.log(dashboard, `competitions`, competitions);
+const Dashboard = () => {
+  const [dashboard, setDashboard] = useState([]);
+  const [resources, setResources] = useState([]);
+  const [projects, setProjects] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const [competitions, setCompetitions] = useState([]);
+  const [breakfast, setBreakfast] = useState([]);
+
+  useEffect(() => {
+    getDashboardFeed().then((res) => {
+      setDashboard(res?.data);
+    });
+    getFeeds({ query: { type: 'resources', limit: '3' } }).then((res) => {
+      setResources(res?.data?.feedList);
+    });
+    getFeeds({ query: { type: 'projects', limit: '3' } }).then((res) => {
+      setProjects(res?.data?.feedList);
+    });
+    getFeeds({ query: { type: 'courses', limit: '3' } }).then((res) => {
+      setCourses(res?.data?.feedList);
+    });
+    getFeeds({ query: { type: 'competitions', limit: '3' } }).then((res) => {
+      setCompetitions(res?.data?.feedList);
+    });
+    getFeeds({ query: { type: 'breakfasts', limit: '3' } }).then((res) => {
+      setBreakfast(res?.data?.feedList);
+    });
+  }, []);
+
   return (
     <div>
       <div className="div-block-166 _80">
@@ -86,9 +105,7 @@ const Dashboard = ({
             <div className="div-block-380 margin-bottom" />
             <div className="div-block-381">
               <img
-                // src={require('../../../assets/js/webflow.js')}
                 href={require('../../../assets/images/flat-lay-photography-of-cup-spoon-macbook-and-book-977877-p-1080.jpeg')}
-                // src={require('../../../assets/images/ad-3.JPG')}
                 loading="lazy"
                 width={567}
                 alt
@@ -477,132 +494,36 @@ const Dashboard = ({
             data-w-id="38d29e77-bf1b-0e1c-649a-45a2e7decb6a"
             className="div-block-204"
           >
-            <a
-              href="#"
-              data-w-id="38d29e77-bf1b-0e1c-649a-45a2e7decb6b"
-              className="link-block-19 w-inline-block"
+            <Link
+              href="/projects"
+              as="projects"
+              className="dropdown-link-2 w-dropdown-link"
             >
-              <div className="link-6">View All </div>
-              <img
-                src="../../../assets/images/next.svg"
-                loading="lazy"
-                width={18}
-                alt
-                className="arrow"
-              />
-            </a>
+              <a
+                data-w-id="38d29e77-bf1b-0e1c-649a-45a2e7decb6b"
+                className="link-block-19 w-inline-block"
+              >
+                <div className="link-6">View All </div>
+                <img
+                  src={require('../../../assets/images/next.svg')}
+                  loading="lazy"
+                  width={18}
+                  alt
+                  className="arrow"
+                />
+              </a>
+            </Link>
           </div>
         </div>
         <div className="wrapper-2">
-          <a
-            href="#"
-            data-w-id="f7f68aa3-b4b3-2206-9a16-8c7e96f76a76"
-            style={{ opacity: 0 }}
-            className="link-block-20 w-inline-block"
-          >
-            <div className="card-box">
-              <img
-                src="../../../assets/images/stock-market.jpg"
-                loading="lazy"
-                width={310}
-                sizes="100vw"
-                srcSet="images/stock-market-p-1080.jpeg 1080w, images/stock-market-p-1600.jpeg 1600w, images/stock-market-p-2000.jpeg 2000w, images/stock-market-p-2600.jpeg 2600w, images/stock-market-p-3200.jpeg 3200w, images/stock-market.jpg 5750w"
-                alt
-                className="image-margin"
-              />
-              <div className="property-content">
-                <div className="text-block-6 bold">
-                  <strong>4 Single Family Homes in Richmond</strong>
-                </div>
-                <div className="text-block-162">
-                  <strong>SPRINGWOOD CRESCENT, RICHMOND</strong>
-                  <br />
-                </div>
-              </div>
-              <div className="div-block-70">
-                <div className="text-block-64">Know More</div>
-                <div className="div-block-208">
-                  <div className="project-txt past">Past Project</div>
-                </div>
-              </div>
-              <div className="div-block-68">
-                <div className="div-block-204">
-                  <h1 className="folllowers contact">Contact us</h1>
-                  <img
-                    src="../../../assets/images/arrow-1.svg"
-                    loading="lazy"
-                    width={18}
-                    alt
-                    className="image-36"
-                  />
-                </div>
-              </div>
-            </div>
-          </a>
-          <a
-            href="#"
-            data-w-id="2ab06cea-86df-a960-1538-b1364616ed6b"
-            style={{ opacity: 0 }}
-            className="link-block-20 w-inline-block"
-          >
-            <div className="card-box">
-              <img
-                src="../../../assets/images/springwood.jpg"
-                loading="lazy"
-                width={310}
-                sizes="100vw"
-                srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
-                alt
-                className="image-margin"
-              />
-              <div className="property-content">
-                <div className="text-block-6 bold">
-                  <strong>4 Single Family Homes in Richmond</strong>
-                </div>
-                <div className="text-block-162">
-                  <strong>SPRINGWOOD CRESCENT, RICHMOND</strong>
-                  <br />
-                </div>
-              </div>
-              <div className="div-block-70">
-                <div className="text-block-64">Know More</div>
-                <div className="div-block-208">
-                  <div className="project-txt past">Past Project</div>
-                </div>
-              </div>
-              <div className="div-block-68">
-                <div className="div-block-204">
-                  <h1 className="folllowers contact">Contact us</h1>
-                  <img
-                    src="../../../assets/images/arrow-1.svg"
-                    loading="lazy"
-                    width={18}
-                    alt
-                    className="image-36"
-                  />
-                </div>
-              </div>
-            </div>
-          </a>
           {projects?.map((proj) => (
-            <a
-              href="blog-categories.html"
-              className="main-block w-inline-block"
-            >
-              <img className="image-box" src={proj.media?.url} />
+            <div className="main-block w-inline-block">
+              <img
+                className="image-box"
+                src={proj.media?.url}
+                style={{ height: '300px' }}
+              />
               <div className="card-box">
-                <div className="div-block-68">
-                  <div className="div-block-204">
-                    <h1 className="folllowers contact">Contact us</h1>
-                    <img
-                      src="../../../assets/images/arrow-1.svg"
-                      loading="lazy"
-                      width={18}
-                      alt
-                      className="image-36"
-                    />
-                  </div>
-                </div>
                 <div className="text-block-162">
                   <strong className="bold-text-3">{proj?.title}</strong>
                   <br />
@@ -617,132 +538,19 @@ const Dashboard = ({
                 </div>
               </div>
               <div className="div-block-70">
-                <div className="text-block-64">Read More</div>
+                <Link
+                  href="/blogDetails/[details]"
+                  as={`/blogDetails/${proj?._id}`}
+                  className="dropdown-link-2 w-dropdown-link"
+                >
+                  <a className="text-block-64">Read More</a>
+                </Link>
                 <div className="div-block-208">
-                  <div className="project-txt past">Projects</div>
+                  <div className="project-txt past">{proj?.category?.name}</div>
                 </div>
               </div>
-            </a>
+            </div>
           ))}
-          <a
-            href="#"
-            data-w-id="98b5907b-9367-77af-5b4c-9584b7478fdf"
-            style={{ opacity: 0 }}
-            className="link-block-20 w-inline-block"
-          >
-            <div className="card-box">
-              <img
-                src="../../../assets/images/springwood.jpg"
-                loading="lazy"
-                width={310}
-                sizes="100vw"
-                srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
-                alt
-                className="image-margin"
-              />
-              <div className="property-content">
-                <div className="text-block-6 bold">
-                  <strong>4 Single Family Homes in Richmond</strong>
-                </div>
-                <div className="text-block-162">
-                  <strong>SPRINGWOOD CRESCENT, RICHMOND</strong>
-                  <br />
-                </div>
-              </div>
-              <div className="div-block-70">
-                <div className="text-block-64">Know More</div>
-                <div className="div-block-208">
-                  <div className="project-txt past">Past Project</div>
-                </div>
-              </div>
-              <div className="div-block-68">
-                <div className="div-block-204">
-                  <h1 className="folllowers contact">Contact us</h1>
-                  <img
-                    src="../../../assets/images/arrow-1.svg"
-                    loading="lazy"
-                    width={18}
-                    alt
-                    className="image-36"
-                  />
-                </div>
-              </div>
-            </div>
-          </a>
-          <a
-            href="#"
-            data-w-id="c6536dfc-2999-9125-0281-013de4f5fbae"
-            style={{ opacity: 0 }}
-            className="link-block-20 w-inline-block"
-          >
-            <div className="card-box">
-              <img
-                src="../../../assets/images/springwood.jpg"
-                loading="lazy"
-                width={310}
-                sizes="100vw"
-                srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
-                alt
-                className="image-margin"
-              />
-              <div className="property-content">
-                <div className="text-block-6 bold">
-                  <strong>4 Single Family Homes in Richmond</strong>
-                </div>
-                <div className="text-block-162">
-                  <strong>SPRINGWOOD CRESCENT, RICHMOND</strong>
-                  <br />
-                </div>
-              </div>
-              <div className="div-block-70">
-                <div className="text-block-64">Know More</div>
-                <div className="div-block-208">
-                  <div className="project-txt past">Past Project</div>
-                </div>
-              </div>
-              <div className="div-block-68">
-                <div className="div-block-204">
-                  <h1 className="folllowers contact">Contact us</h1>
-                  <img
-                    src="../../../assets/images/arrow-1.svg"
-                    loading="lazy"
-                    width={18}
-                    alt
-                    className="image-36"
-                  />
-                </div>
-              </div>
-            </div>
-          </a>
-          <a
-            href="#"
-            data-w-id="38d29e77-bf1b-0e1c-649a-45a2e7decb86"
-            className="case-study-link w-inline-block"
-          >
-            <div className="portifolio">
-              <img
-                src="../../../assets/images/Better-01.jpg"
-                loading="lazy"
-                sizes="100vw"
-                srcSet="images/Better-01-p-1080.jpeg 1080w, images/Better-01-p-1600.jpeg 1600w, images/Better-01-p-2000.jpeg 2000w, images/Better-01-p-2600.jpeg 2600w, images/Better-01-p-3200.jpeg 3200w, images/Better-01.jpg 4167w"
-                alt
-              />
-              <div className="content-wrapper">
-                <div>
-                  <h1 className="heading-5">Better Mortgage</h1>
-                  <p className="paragraph-2">UI, Coded Template</p>
-                </div>
-                <div>
-                  <img
-                    src="../../../assets/images/eye.svg"
-                    loading="lazy"
-                    width={23}
-                    alt
-                  />
-                </div>
-              </div>
-            </div>
-          </a>
         </div>
       </div>
       <div className="template">
@@ -755,232 +563,28 @@ const Dashboard = ({
             data-w-id="64ba74b1-c3bc-3ca1-2b51-f4affc83cbe6"
             className="div-block-204"
           >
-            <a
-              href="#"
-              data-w-id="64ba74b1-c3bc-3ca1-2b51-f4affc83cbe7"
-              className="link-block-19 w-inline-block"
+            <Link
+              href="/projects"
+              as="projects"
+              className="dropdown-link-2 w-dropdown-link"
             >
-              <div className="link-6">View All </div>
-              <img
-                src="../../../assets/images/next.svg"
-                loading="lazy"
-                width={18}
-                alt
-                className="arrow"
-              />
-            </a>
+              <a
+                data-w-id="38d29e77-bf1b-0e1c-649a-45a2e7decb6b"
+                className="link-block-19 w-inline-block"
+              >
+                <div className="link-6">View All </div>
+                <img
+                  src={require('../../../assets/images/next.svg')}
+                  loading="lazy"
+                  width={18}
+                  alt
+                  className="arrow"
+                />
+              </a>
+            </Link>
           </div>
         </div>
         <div className="wrapper-2">
-          <a
-            href="#"
-            data-w-id="64ba74b1-c3bc-3ca1-2b51-f4affc83cbec"
-            className="case-study-link w-inline-block"
-          >
-            <div className="portifolio">
-              <img
-                src="../../../assets/images/policy-01.jpg"
-                loading="lazy"
-                sizes="100vw"
-                srcSet="images/policy-01-p-1080.jpeg 1080w, images/policy-01-p-1600.jpeg 1600w, images/policy-01-p-2000.jpeg 2000w, images/policy-01-p-2600.jpeg 2600w, images/policy-01-p-3200.jpeg 3200w, images/policy-01.jpg 4167w"
-                alt
-                className="image-31"
-              />
-              <div className="content-wrapper">
-                <div>
-                  <h1 className="heading-5">Policy Market</h1>
-                  <p className="paragraph-2">UI, Coded Template</p>
-                </div>
-                <div>
-                  <img
-                    src="../../../assets/images/eye.svg"
-                    loading="lazy"
-                    width={23}
-                    alt
-                  />
-                </div>
-              </div>
-            </div>
-          </a>
-          <a
-            href="#"
-            data-w-id="64ba74b1-c3bc-3ca1-2b51-f4affc83cbf7"
-            className="case-study-link w-inline-block"
-          >
-            <div className="portifolio">
-              <img
-                src="../../../assets/images/Ademrius-01.jpg"
-                loading="lazy"
-                sizes="100vw"
-                srcSet="images/Ademrius-01-p-1080.jpeg 1080w, images/Ademrius-01-p-1600.jpeg 1600w, images/Ademrius-01-p-2000.jpeg 2000w, images/Ademrius-01-p-2600.jpeg 2600w, images/Ademrius-01-p-3200.jpeg 3200w, images/Ademrius-01.jpg 4167w"
-                alt
-              />
-              <div className="content-wrapper">
-                <div>
-                  <h1 className="heading-5">Clinical</h1>
-                  <p className="paragraph-2">UI, Coded Template</p>
-                </div>
-                <div>
-                  <img
-                    src="../../../assets/images/eye.svg"
-                    loading="lazy"
-                    width={23}
-                    alt
-                  />
-                </div>
-              </div>
-            </div>
-          </a>
-          <a
-            href="#"
-            data-w-id="64ba74b1-c3bc-3ca1-2b51-f4affc83cc02"
-            className="case-study-link w-inline-block"
-          >
-            <div className="portifolio">
-              <img
-                src="../../../assets/images/Better-01.jpg"
-                loading="lazy"
-                sizes="100vw"
-                srcSet="images/Better-01-p-1080.jpeg 1080w, images/Better-01-p-1600.jpeg 1600w, images/Better-01-p-2000.jpeg 2000w, images/Better-01-p-2600.jpeg 2600w, images/Better-01-p-3200.jpeg 3200w, images/Better-01.jpg 4167w"
-                alt
-              />
-              <div className="content-wrapper">
-                <div>
-                  <h1 className="heading-5">Better Mortgage</h1>
-                  <p className="paragraph-2">UI, Coded Template</p>
-                </div>
-                <div>
-                  <img
-                    src="../../../assets/images/eye.svg"
-                    loading="lazy"
-                    width={23}
-                    alt
-                  />
-                </div>
-              </div>
-            </div>
-          </a>
-          <a
-            href="#"
-            data-w-id="64ba74b1-c3bc-3ca1-2b51-f4affc83cc0d"
-            className="case-study-link w-inline-block"
-          >
-            <div className="portifolio">
-              <img
-                src="../../../assets/images/expense.jpg"
-                loading="lazy"
-                sizes="100vw"
-                srcSet="images/expense-p-1080.jpeg 1080w, images/expense-p-1600.jpeg 1600w, images/expense-p-2000.jpeg 2000w, images/expense-p-2600.jpeg 2600w, images/expense-p-3200.jpeg 3200w, images/expense.jpg 4167w"
-                alt
-              />
-              <div className="content-wrapper">
-                <div>
-                  <h1 className="heading-5">Expense Management</h1>
-                  <p className="paragraph-2">UI, Coded Template</p>
-                </div>
-                <div>
-                  <img
-                    src="../../../assets/images/eye.svg"
-                    loading="lazy"
-                    width={23}
-                    alt
-                  />
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div className="wrapper-2">
-          <a
-            href="#"
-            data-w-id="431c6afa-1bb6-9c13-c9a4-73c41d25945c"
-            style={{ opacity: 0 }}
-            className="link-block-20 w-inline-block"
-          >
-            <div className="card-box">
-              <img
-                src="../../../assets/images/stock-market.jpg"
-                loading="lazy"
-                width={310}
-                sizes="100vw"
-                srcSet="images/stock-market-p-1080.jpeg 1080w, images/stock-market-p-1600.jpeg 1600w, images/stock-market-p-2000.jpeg 2000w, images/stock-market-p-2600.jpeg 2600w, images/stock-market-p-3200.jpeg 3200w, images/stock-market.jpg 5750w"
-                alt
-                className="image-margin"
-              />
-              <div className="property-content">
-                <div className="text-block-6 bold">
-                  <strong>4 Single Family Homes in Richmond</strong>
-                </div>
-                <div className="text-block-162">
-                  <strong>SPRINGWOOD CRESCENT, RICHMOND</strong>
-                  <br />
-                </div>
-              </div>
-              <div className="div-block-70">
-                <div className="text-block-64">Know More</div>
-                <div className="div-block-208">
-                  <div className="project-txt past">Past Project</div>
-                </div>
-              </div>
-              <div className="div-block-68">
-                <div className="div-block-204">
-                  <h1 className="folllowers contact">Contact us</h1>
-                  <img
-                    src="../../../assets/images/arrow-1.svg"
-                    loading="lazy"
-                    width={18}
-                    alt
-                    className="image-36"
-                  />
-                </div>
-              </div>
-            </div>
-          </a>
-          <a
-            href="#"
-            data-w-id="431c6afa-1bb6-9c13-c9a4-73c41d259472"
-            style={{ opacity: 0 }}
-            className="link-block-20 w-inline-block"
-          >
-            <div className="card-box">
-              <img
-                src="../../../assets/images/springwood.jpg"
-                loading="lazy"
-                width={310}
-                sizes="100vw"
-                srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
-                alt
-                className="image-margin"
-              />
-              <div className="property-content">
-                <div className="text-block-6 bold">
-                  <strong>4 Single Family Homes in Richmond</strong>
-                </div>
-                <div className="text-block-162">
-                  <strong>SPRINGWOOD CRESCENT, RICHMOND</strong>
-                  <br />
-                </div>
-              </div>
-              <div className="div-block-70">
-                <div className="text-block-64">Know More</div>
-                <div className="div-block-208">
-                  <div className="project-txt past">Past Project</div>
-                </div>
-              </div>
-              <div className="div-block-68">
-                <div className="div-block-204">
-                  <h1 className="folllowers contact">Contact us</h1>
-                  <img
-                    src="../../../assets/images/arrow-1.svg"
-                    loading="lazy"
-                    width={18}
-                    alt
-                    className="image-36"
-                  />
-                </div>
-              </div>
-            </div>
-          </a>
           {competitions?.map((comp) => (
             <a
               href="blog-categories.html"
@@ -1023,126 +627,6 @@ const Dashboard = ({
               </div>
             </a>
           ))}
-
-          <a
-            href="#"
-            data-w-id="431c6afa-1bb6-9c13-c9a4-73c41d2594c7"
-            style={{ opacity: 0 }}
-            className="link-block-20 w-inline-block"
-          >
-            <div className="card-box">
-              <img
-                src="../../../assets/images/springwood.jpg"
-                loading="lazy"
-                width={310}
-                sizes="100vw"
-                srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
-                alt
-                className="image-margin"
-              />
-              <div className="property-content">
-                <div className="text-block-6 bold">
-                  <strong>4 Single Family Homes in Richmond</strong>
-                </div>
-                <div className="text-block-162">
-                  <strong>SPRINGWOOD CRESCENT, RICHMOND</strong>
-                  <br />
-                </div>
-              </div>
-              <div className="div-block-70">
-                <div className="text-block-64">Know More</div>
-                <div className="div-block-208">
-                  <div className="project-txt past">Past Project</div>
-                </div>
-              </div>
-              <div className="div-block-68">
-                <div className="div-block-204">
-                  <h1 className="folllowers contact">Contact us</h1>
-                  <img
-                    src="../../../assets/images/arrow-1.svg"
-                    loading="lazy"
-                    width={18}
-                    alt
-                    className="image-36"
-                  />
-                </div>
-              </div>
-            </div>
-          </a>
-          <a
-            href="#"
-            data-w-id="431c6afa-1bb6-9c13-c9a4-73c41d2594dd"
-            style={{ opacity: 0 }}
-            className="link-block-20 w-inline-block"
-          >
-            <div className="card-box">
-              <img
-                src="../../../assets/images/springwood.jpg"
-                loading="lazy"
-                width={310}
-                sizes="100vw"
-                srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
-                alt
-                className="image-margin"
-              />
-              <div className="property-content">
-                <div className="text-block-6 bold">
-                  <strong>4 Single Family Homes in Richmond</strong>
-                </div>
-                <div className="text-block-162">
-                  <strong>SPRINGWOOD CRESCENT, RICHMOND</strong>
-                  <br />
-                </div>
-              </div>
-              <div className="div-block-70">
-                <div className="text-block-64">Know More</div>
-                <div className="div-block-208">
-                  <div className="project-txt past">Past Project</div>
-                </div>
-              </div>
-              <div className="div-block-68">
-                <div className="div-block-204">
-                  <h1 className="folllowers contact">Contact us</h1>
-                  <img
-                    src="../../../assets/images/arrow-1.svg"
-                    loading="lazy"
-                    width={18}
-                    alt
-                    className="image-36"
-                  />
-                </div>
-              </div>
-            </div>
-          </a>
-          <a
-            href="#"
-            data-w-id="431c6afa-1bb6-9c13-c9a4-73c41d2594f3"
-            className="case-study-link w-inline-block"
-          >
-            <div className="portifolio">
-              <img
-                src="../../../assets/images/Better-01.jpg"
-                loading="lazy"
-                sizes="100vw"
-                srcSet="images/Better-01-p-1080.jpeg 1080w, images/Better-01-p-1600.jpeg 1600w, images/Better-01-p-2000.jpeg 2000w, images/Better-01-p-2600.jpeg 2600w, images/Better-01-p-3200.jpeg 3200w, images/Better-01.jpg 4167w"
-                alt
-              />
-              <div className="content-wrapper">
-                <div>
-                  <h1 className="heading-5">Better Mortgage</h1>
-                  <p className="paragraph-2">UI, Coded Template</p>
-                </div>
-                <div>
-                  <img
-                    src="../../../assets/images/eye.svg"
-                    loading="lazy"
-                    width={23}
-                    alt
-                  />
-                </div>
-              </div>
-            </div>
-          </a>
         </div>
       </div>
       <div className="services">
@@ -1172,7 +656,7 @@ const Dashboard = ({
                 >
                   <div className="text-block-65">Read more</div>
                   <img
-                    src="../../../assets/images/arrow.svg"
+                    src={require('../../../assets/images/arrow.svg')}
                     loading="lazy"
                     width={12}
                     alt
@@ -1208,7 +692,7 @@ const Dashboard = ({
                 >
                   <div className="text-block-65">Read more</div>
                   <img
-                    src="../../../assets/images/arrow.svg"
+                    src={require('../../../assets/images/arrow.svg')}
                     loading="lazy"
                     width={12}
                     alt
@@ -1244,7 +728,7 @@ const Dashboard = ({
                 >
                   <div className="text-block-65">Read more</div>
                   <img
-                    src="../../../assets/images/arrow.svg"
+                    src={require('../../../assets/images/arrow.svg')}
                     loading="lazy"
                     width={12}
                     alt
@@ -1280,7 +764,7 @@ const Dashboard = ({
                 >
                   <div className="text-block-65">Read more</div>
                   <img
-                    src="../../../assets/images/arrow.svg"
+                    src={require('../../../assets/images/arrow.svg')}
                     loading="lazy"
                     width={12}
                     alt
