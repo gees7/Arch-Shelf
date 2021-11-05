@@ -270,7 +270,7 @@ const Navbar = () => {
                 <Dropdown overlay={dropdownResource}>
                   <a
                     className="ant-dropdown-link"
-                    onClick={(e) => e.preventDefault()}
+                    onClick={() => router.push('/resources')}
                   >
                     Resources <DownOutlined />
                   </a>
@@ -282,7 +282,7 @@ const Navbar = () => {
                 <Dropdown overlay={dropdownProjects}>
                   <a
                     className="ant-dropdown-link"
-                    // onClick={(e) => e.preventDefault()}
+                    onClick={() => router.push('/projects')}
                   >
                     Projects <DownOutlined />
                   </a>
@@ -295,7 +295,7 @@ const Navbar = () => {
                 <Dropdown overlay={dropdownCourses}>
                   <a
                     className="ant-dropdown-link"
-                    onClick={(e) => e.preventDefault()}
+                    onClick={() => router.push('/courses')}
                   >
                     Courses <DownOutlined />
                   </a>
@@ -308,7 +308,7 @@ const Navbar = () => {
                 <Dropdown overlay={dropdownCompetitions}>
                   <a
                     className="ant-dropdown-link"
-                    onClick={(e) => e.preventDefault()}
+                    onClick={() => router.push('/competitions')}
                   >
                     Competitions <DownOutlined />
                   </a>
@@ -321,7 +321,7 @@ const Navbar = () => {
                 <Dropdown overlay={dropdownBreakfast}>
                   <a
                     className="ant-dropdown-link"
-                    onClick={(e) => e.preventDefault()}
+                    onClick={() => router.push('/')}
                   >
                     Over Breakfast <DownOutlined />
                   </a>
