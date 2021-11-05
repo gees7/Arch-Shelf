@@ -42,12 +42,12 @@ const Navbar = ({
       {projects?.map((item) => (
         <Menu.Item>
           <div className="drop-div">
-            <img src={item?.media?.url} loading="lazy" width={30} alt />
+            <img src={item?.media?.url} loading="lazy" width={30} />
             <a
               onClick={() => router.push('/blogDetails/Details')}
               className="dropdown-link-2 w-dropdown-link"
             >
-              {item.title}
+              {item?.title}
             </a>
           </div>
         </Menu.Item>
