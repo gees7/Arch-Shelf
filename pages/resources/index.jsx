@@ -1,23 +1,29 @@
-import React,{useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/DashboardComponents/Navbar';
 import Footer from '../../components/DashboardComponents/Footer';
-
-import { connect} from 'react-redux';
-import { getFeeds } from '../../store/api/dashboardApi';
-import {getCategories} from "../../store/actions/blogActions"
-const Resources = ({categories, getCategories}) => {
-  console.log(categories,'categories');
-  var mL = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  const [resources, setResources] = useState([]);
-  
+import Link from 'next/link';
+import { connect } from 'react-redux';
+import { getCategories, getResources } from '../../store/actions/blogActions';
+const Resources = ({ categories, getCategories, resources, getResources }) => {
+  var mL = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
   useEffect(() => {
-    getFeeds({ query: { type: 'resources', limit: '3' } }).then((res) => {
-      setResources(res?.data?.feedList);
-    });
 
+    getResources({ query: { type: 'resources', limit: '6' } });
     getCategories({ query: {} });
-    
-  }, [])
+  }, []);
 
   return (
     <div>
@@ -33,69 +39,67 @@ const Resources = ({categories, getCategories}) => {
           <div className="container-501">
             <div className="w-layout-grid blog-grid">
               <div className="content-left">
-                {
-                  resources?.map((item) => {
-                    const date = new Date(item?.created_at);
-                    var day = date.getDate();
-                    var month = date.getMonth();
-                    var year = date.getFullYear();
+                {resources?.data?.feedList?.map((item, index) => {
+                  const date = new Date(item?.created_at);
+                  var day = date.getDate();
+                  var month = date.getMonth();
+                  var year = date.getFullYear();
 
-                    var finaldate = mL[month] + " " + day + ", " + year;
-                    return (
-                      <a
-                        key={item?._id}
-                  href="blog-detail-page.html"
-                  className="blog-item-2 w-inline-block"
-                >
-                  <div className="blog-image-wrap">
-                    <img
-                      src={item?.media?.url}
-                      width={380}
-                      sizes="(max-width: 479px) 86vw, (max-width: 767px) 89vw, (max-width: 991px) 86vw, (max-width: 1279px) 45vw, (max-width: 1919px) 48vw, 777.765625px"
-                      srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
-                      alt=""
-                      className="blog-image"
-                    />
-                  </div>
-                  <div className="blog-content">
-                    <h3 className="heading-h2">
-                      {item?.title}
-                    </h3>
-                    <p className="paragraph-detials-medium">
-                      {item?.shortDescription}
-                    </p>
-                    <div className="div-block-23369">
-                      <img
-                        src="/public/images/back-in-time.png"
-                        loading="lazy"
-                        sizes="(max-width: 1279px) 30px, (max-width: 1919px) 2vw, 1vw"
-                        srcSet="images/back-in-time-p-500.png 500w, images/back-in-time.png 512w"
-                        alt=""
-                        className="image-53"
-                      />
-                      <p className="paragraph-detials-medium time">
-                        5 Mintues Read
-                      </p>
-                    </div>
-                    <div className="profile-block">
-                      <img
-                        src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1085&q=80         "
-                        width={62}
-                        className="profile-picture"
-                      />
-                      <div className="normal-wrapper">
-                        <div className="title-small">{item?.user?.name}</div>
-                        <p className="paragraph-detials-small">
-                          {finaldate}
-                        </p>
+                  var finaldate = mL[month] + ' ' + day + ', ' + year;
+                  var wordCount = item?.body?.match(/(\w+)/g).length;
+                  var time = Math.round(wordCount / 250);
+                  if(index<resources?.data?.feedList?.length/2) return (
+                    <Link key={item?._id} href={'/resources/' + item?._id}>
+                      <div className="blog-item-2 w-inline-block">
+                        <div className="blog-image-wrap">
+                          <img
+                            src={item?.media?.url}
+                            width={380}
+                            sizes="(max-width: 479px) 86vw, (max-width: 767px) 89vw, (max-width: 991px) 86vw, (max-width: 1279px) 45vw, (max-width: 1919px) 48vw, 777.765625px"
+                            srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
+                            alt=""
+                            className="blog-image"
+                          />
+                        </div>
+                        <div className="blog-content">
+                          <h3 className="heading-h2">{item?.title}</h3>
+                          <p className="paragraph-detials-medium">
+                            {item?.shortDescription}
+                          </p>
+                          <div className="div-block-23369">
+                            <img
+                              src="/public/images/back-in-time.png"
+                              loading="lazy"
+                              sizes="(max-width: 1279px) 30px, (max-width: 1919px) 2vw, 1vw"
+                              srcSet="images/back-in-time-p-500.png 500w, images/back-in-time.png 512w"
+                              alt=""
+                              className="image-53"
+                            />
+                            <p className="paragraph-detials-medium time">
+                              {time} Minutes Read
+                            </p>
+                          </div>
+                          <div className="profile-block">
+                            <img
+                              src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1085&q=80         "
+                              width={62}
+                              className="profile-picture"
+                            />
+                            <div className="normal-wrapper">
+                              <div className="title-small">
+                                {item?.user?.name}
+                              </div>
+                              <p className="paragraph-detials-small">
+                                {finaldate}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </a>
-                    )
-                  })
-                }
-              
+                    </Link>
+                  );
+                })}
+
                 <div className="div-block-23382">
                   <div
                     id="w-node-_2cc27067-6af0-5447-19c8-c594f2b275f4-62ebedc5"
@@ -217,104 +221,66 @@ const Resources = ({categories, getCategories}) => {
                     </div>
                   </div>
                 </div>
-                <a href="#" className="blog-item-2 w-inline-block">
-                  <div className="blog-image-wrap">
-                    <img
-                      src="/public/images/about-archi.png"
-                      width={380}
-                      sizes="(max-width: 479px) 86vw, (max-width: 767px) 89vw, (max-width: 991px) 86vw, (max-width: 1279px) 45vw, (max-width: 1919px) 48vw, 777.765625px"
-                      srcSet="images/about-archi-p-500.png 500w, images/about-archi-p-800.png 800w, images/about-archi-p-1080.png 1080w, images/about-archi-p-1600.png 1600w, images/about-archi.png 1728w"
-                      alt=""
-                      className="blog-image"
-                    />
-                  </div>
-                  <div className="blog-content">
-                    <h3 className="heading-h2">
-                      Lorem ipsum is the dummy content generator
-                    </h3>
-                    <p className="paragraph-detials-medium">
-                      Lorem ipsum is the dummy content generator portfolio
-                      websites Lorem ipsum is the dummy content generator
-                    </p>
-                    <div className="div-block-23369">
-                      <img
-                        src="/public/images/back-in-time.png"
-                        loading="lazy"
-                        sizes="(max-width: 1279px) 30px, (max-width: 1919px) 2vw, 1vw"
-                        srcSet="images/back-in-time-p-500.png 500w, images/back-in-time.png 512w"
-                        alt=""
-                        className="image-53"
-                      />
-                      <p className="paragraph-detials-medium time">
-                        5 Mintues Read
-                      </p>
-                    </div>
-                    <div className="profile-block">
-                      <img
-                        src="/public/images/team-3.jpg"
-                        width={50}
-                        alt=""
-                        className="profile-picture"
-                      />
-                      <div className="normal-wrapper">
-                        <div className="title-small">Lorem ipsum</div>
-                        <p className="paragraph-detials-small">
-                          January 10, 2020
-                        </p>
+                {resources?.data?.feedList?.map((item, index) => {
+                  const date = new Date(item?.created_at);
+                  var day = date.getDate();
+                  var month = date.getMonth();
+                  var year = date.getFullYear();
+
+                  var finaldate = mL[month] + ' ' + day + ', ' + year;
+                  var wordCount = item?.body?.match(/(\w+)/g).length;
+                  var time = Math.round(wordCount / 250);
+                  if(index>=resources?.data?.feedList?.length/2) return (
+                    <Link key={item?._id} href={'/resources/' + item?._id}>
+                      <div className="blog-item-2 w-inline-block">
+                        <div className="blog-image-wrap">
+                          <img
+                            src={item?.media?.url}
+                            width={380}
+                            sizes="(max-width: 479px) 86vw, (max-width: 767px) 89vw, (max-width: 991px) 86vw, (max-width: 1279px) 45vw, (max-width: 1919px) 48vw, 777.765625px"
+                            srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
+                            alt=""
+                            className="blog-image"
+                          />
+                        </div>
+                        <div className="blog-content">
+                          <h3 className="heading-h2">{item?.title}</h3>
+                          <p className="paragraph-detials-medium">
+                            {item?.shortDescription}
+                          </p>
+                          <div className="div-block-23369">
+                            <img
+                              src="/public/images/back-in-time.png"
+                              loading="lazy"
+                              sizes="(max-width: 1279px) 30px, (max-width: 1919px) 2vw, 1vw"
+                              srcSet="images/back-in-time-p-500.png 500w, images/back-in-time.png 512w"
+                              alt=""
+                              className="image-53"
+                            />
+                            <p className="paragraph-detials-medium time">
+                              {time} Minutes Read
+                            </p>
+                          </div>
+                          <div className="profile-block">
+                            <img
+                              src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1085&q=80         "
+                              width={62}
+                              className="profile-picture"
+                            />
+                            <div className="normal-wrapper">
+                              <div className="title-small">
+                                {item?.user?.name}
+                              </div>
+                              <p className="paragraph-detials-small">
+                                {finaldate}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </a>
-                <a href="#" className="blog-item-2 w-inline-block">
-                  <div className="blog-image-wrap">
-                    <img
-                      src="/public/images/archi-tools.png"
-                      sizes="(max-width: 479px) 86vw, (max-width: 767px) 89vw, (max-width: 991px) 86vw, (max-width: 1279px) 45vw, (max-width: 1919px) 48vw, 777.765625px"
-                      srcSet="images/archi-tools-p-500.png 500w, images/archi-tools-p-800.png 800w, images/archi-tools.png 1728w"
-                      alt=""
-                      className="blog-image"
-                    />
-                  </div>
-                  <div className="blog-content">
-                    <h3 className="heading-h2">
-                      Lorem ipsum is the dummy content generator{' '}
-                    </h3>
-                    <p className="paragraph-detials-medium">
-                      Lorem ipsum is the dummy content generator portfolio
-                      websites Lorem ipsum is the dummy content generator
-                    </p>
-                    <div className="div-block-23369">
-                      <img
-                        src="/public/images/back-in-time.png"
-                        loading="lazy"
-                        sizes="(max-width: 1279px) 30px, (max-width: 1919px) 2vw, 1vw"
-                        srcSet="images/back-in-time-p-500.png 500w, images/back-in-time.png 512w"
-                        alt=""
-                        className="image-53"
-                      />
-                      <p className="paragraph-detials-medium time">
-                        5 Mintues Read
-                      </p>
-                    </div>
-                    <div className="profile-block">
-                      <img
-                        src="/public/images/team-1.jpg"
-                        width={50}
-                        alt=""
-                        className="profile-picture"
-                      />
-                      <div className="normal-wrapper">
-                        <div className="title-small">Lorem ipsum</div>
-                        <p className="paragraph-detials-small">
-                          January 10, 2020
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-                <a href="#" className="next-button-2 w-inline-block">
-                  <div className="title-medium-2">Next page</div>
-                </a>
+                    </Link>
+                  );
+                })}
               </div>
               <div className="content-right">
                 <div className="stick-wrapper">
@@ -452,15 +418,21 @@ const Resources = ({categories, getCategories}) => {
                   </div>
                   <div className="categories-block">
                     <div className="title-large">Filter By Categories</div>
-                    {
-                      categories?.categories?.map(item => (
-                        <span href="#" key={item?._id} className="categories-pill w-inline-block">
-                          <div className="title-small pink">{item?.name}</div>
-                        </span>
-                      ))
-                    }
+                    {categories?.categories?.map((item) => (
+                      <span
+                        href="#"
+                        key={item?._id}
+                        className="categories-pill w-inline-block"
+                      >
+                        <div className="title-small pink">{item?.name}</div>
+                      </span>
+                    ))}
                   </div>
-                  <img src="https://assets.website-files.com/615e8b5e6632c8dc750e1133/61651f9a56de5b87a53233c9_ad-3.JPG" loading="lazy" alt="" />
+                  <img
+                    src="https://assets.website-files.com/615e8b5e6632c8dc750e1133/61651f9a56de5b87a53233c9_ad-3.JPG"
+                    loading="lazy"
+                    alt=""
+                  />
                 </div>
               </div>
             </div>
@@ -474,11 +446,12 @@ const Resources = ({categories, getCategories}) => {
 
 function mapStateToProps(state) {
   const categories = state?.dashboard?.categories;
-  return {categories}
+  const resources = state?.dashboard?.resources;
+  return { categories, resources };
 }
 const mapDispatchToProps = (dispatch) => ({
   getCategories: (payload) => dispatch(getCategories(payload)),
+  getResources: (payload) => dispatch(getResources(payload)),
 });
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Resources);
