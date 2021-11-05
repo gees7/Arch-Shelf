@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { getFeeds } from '../../store/api/dashboardApi';
+import { getCompetitions } from '../../store/api/competitionApi';
 import Link from 'next/link';
 import { Pagination, Spin } from 'antd';
+import moment from 'moment';
 
 const Competitions = () => {
   const [competitions, setCompetitions] = useState([]);
@@ -11,17 +12,38 @@ const Competitions = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    getFeeds({ query: { type: 'competitions', limit, start } }).then((res) => {
-      setCompetitions(res?.data?.feedList);
-    });
-  }, []);
+    setLoading(true);
+    const body = {
+      start,
+      limit,
+      // selected,
+      // keywordState,
+    };
+    getCompetitions({ query: body })
+      .then((res) => {
+        setCompetitions(res.data.competitionsList);
+        setLoading(false);
+      })
+      .catch((err) => {
+        if (err && err.status === 422) {
+          notification.error({
+            message: Object.keys(err.data)
+              .map((key) => err.data[key][0])
+              .join(' '),
+          });
+        } else {
+          notification.error({
+            message: 'Failed to get feeds',
+          });
+        }
+      });
+  }, [start, limit]);
 
   function handleChangePagination(current) {
     setStart(limit * (current - 1));
     setCurrentPage(current);
   }
 
-  console.log(`com`, competitions);
   return (
     <div>
       <div>
@@ -43,7 +65,7 @@ const Competitions = () => {
                     <div className="div-block-200" style={{ width: '100%' }}>
                       <div className="div-block-402">
                         <img
-                          src={`${comp?.media?.url}`}
+                          src={`${comp?.media[0]?.url}`}
                           loading="lazy"
                           width={448}
                           sizes="(max-width: 767px) 94vw, (max-width: 991px) 92vw, (max-width: 1279px) 29vw, (max-width: 1919px) 30vw, 479.984375px"
@@ -53,20 +75,26 @@ const Competitions = () => {
                         />
                         <div className="blog_overlap_heading">
                           <div className="div-block-202">
-                            <a href="#" className="link-13 _2">
-                              How to Develop Design Concepts in Architecture?
-                            </a>
-                            <p className="paragraph-21 _2">
+                            <Link
+                              href="/competitions/[id]"
+                              as={`/competitions/${comp?._id}`}
+                              className="dropdown-link-2 w-dropdown-link"
+                            >
+                              <a className="link-13 _2">
+                                {comp ? comp?.title : 'N/A'}
+                              </a>
+                            </Link>
+                            {/* <p className="paragraph-21 _2">
                               Here We will solve your most important questions
                               about .
-                            </p>
+                            </p> */}
                           </div>
                         </div>
                       </div>
                       <div className="flex">
                         <a className="categories-pill competeion w-inline-block">
                           <div className="title-small pink text-base">
-                            Current
+                            {comp ? comp?.status : 'N/A'}
                           </div>
                         </a>
                       </div>
@@ -82,7 +110,14 @@ const Competitions = () => {
                             className="image-52 _2"
                           />
                           <div className="details-headers">Start Day -</div>
-                          <div className="day-time">Oct-01-2021 (12:01:38)</div>
+                          <div className="day-time">
+                            {comp ? moment(comp?.startDay).format('LL') : 'N/A'}{' '}
+                            (
+                            {comp
+                              ? moment(comp?.startDay).format('h:mm:ss')
+                              : 'N/A'}
+                            )
+                          </div>
                         </div>
                         <div className="setails-wrapper">
                           <img
@@ -97,7 +132,16 @@ const Competitions = () => {
                           <div className="details-headers">
                             Submission Deadline -
                           </div>
-                          <div className="day-time">Oct-02-2021 (12:01:38)</div>
+                          <div className="day-time">
+                            {comp
+                              ? moment(comp?.submissionDate).format('LL')
+                              : 'N/A'}{' '}
+                            (
+                            {comp
+                              ? moment(comp?.submissionDate).format('h:mm:ss')
+                              : 'N/A'}
+                            )
+                          </div>
                         </div>
                       </div>
                       <div className="organizer">
@@ -110,7 +154,9 @@ const Competitions = () => {
                             className="image-52"
                           />
                           <div className="details-headers">Organizer -</div>
-                          <div className="day-time">Mr. Shivam Tripathi</div>
+                          <div className="day-time">
+                            {comp ? comp.organizer : 'N/A'}
+                          </div>
                         </div>
                       </div>
                       <div className="price">
@@ -125,18 +171,18 @@ const Competitions = () => {
                             className="image-52 price"
                           />
                           <div className="details-headers">Price -</div>
-                          <div className="day-time">10.00 USD</div>
+                          <div className="day-time">
+                            {comp ? comp.price : 'N/A'} Rs
+                          </div>
                         </div>
                       </div>
                       <div className="div-block-396 flex">
                         <Link
-                          href="/resources/[id]"
-                          as={`/resources/${comp?._id}`}
+                          href="/competitions/[id]"
+                          as={`/competitions/${comp?._id}`}
                           className="dropdown-link-2 w-dropdown-link"
                         >
-                          <a href="#" className="link-14">
-                            KNOW MORE
-                          </a>
+                          <a className="link-14">KNOW MORE</a>
                         </Link>
                       </div>
                     </div>
