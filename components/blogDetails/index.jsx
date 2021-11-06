@@ -1,32 +1,30 @@
-import React,{useEffect, useState} from 'react';
-import Link from "next/link";
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { connect } from 'react-redux';
-import { getResource, getResources} from '../../store/actions/blogActions';
+import { getResource, getResources } from '../../store/actions/blogActions';
 const index = ({ id, resource, resources, getResource, getResources }) => {
-    var mL = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
+  var mL = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
   ];
   const [bdate, setBdate] = useState(null);
   const [readTime, setReadTime] = useState(0);
   useEffect(() => {
     getResources({ query: { type: 'resources', limit: '6' } });
     getResource({ pathParams: { id } });
-  }, [id])
-
+  }, [id]);
 
   useEffect(() => {
-    
     var finaldate;
     var time;
     const date = new Date(resource?.data?.created_at);
@@ -39,9 +37,8 @@ const index = ({ id, resource, resources, getResource, getResources }) => {
     var wordCount = resource?.data?.body?.match(/(\w+)/g).length;
     time = Math.round(wordCount / 250);
     setReadTime(time);
-  }, [resource])
+  }, [resource]);
 
-  console.log(resource,'RESOURCE');
   return (
     <div>
       <div>
@@ -72,10 +69,10 @@ const index = ({ id, resource, resources, getResource, getResources }) => {
                       className="profile-picture"
                     />
                     <div className="normal-wrapper">
-                      <div className="title-small">{resource?.data?.user?.name}</div>
-                      <p className="paragraph-detials-small">
-                        {bdate}
-                      </p>
+                      <div className="title-small">
+                        {resource?.data?.user?.name}
+                      </div>
+                      <p className="paragraph-detials-small">{bdate}</p>
                     </div>
                   </div>
                   <div className="div-block-23369 blog_page">
@@ -92,113 +89,38 @@ const index = ({ id, resource, resources, getResource, getResources }) => {
                     </p>
                   </div>
                 </div>
-                {/* <p className="paragraph-detials-large">
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  <br />
-                  <br />
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  <br />
-                  <br />
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy{' '}
-                </p> */}
+
                 <p
                   dangerouslySetInnerHTML={{ __html: resource?.data?.body }}
                   className="paragraph-detials-large"
                 ></p>
-                {/* <img
-                  src="images/about-archi.png"
-                  width={733}
-                  sizes="(max-width: 991px) 94vw, 733px"
-                  srcSet="images/about-archi-p-500.png 500w, images/about-archi-p-800.png 800w, images/about-archi-p-1080.png 1080w, images/about-archi-p-1600.png 1600w, images/about-archi.png 1728w"
-                  alt
-                  className="image-41"
-                />
-                <p className="paragraph-detials-large">
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content generator portfolio websites.
-                </p> */}
               </div>
               <div className="content-right">
                 <div className="stick-wrapper">
-                  <div className="subscription-2 hide">
-                    <div className="title-large">
-                      Subscribe to our newsletter
-                    </div>
-                    <div className="w-form">
-                      <form
-                        id="email-form"
-                        name="email-form"
-                        data-name="Email Form"
-                        className="form"
-                      >
-                        <input
-                          type="email"
-                          className="text-field-3 w-input"
-                          maxLength={256}
-                          name="name-2"
-                          data-name="Name 2"
-                          placeholder="Email address"
-                          id="name-2"
-                          required
-                        />
-                        <div className="submit-button-wrap">
-                          <input
-                            type="submit"
-                            defaultValue
-                            data-wait="Please wait..."
-                            className="submit-button-2 w-button"
-                          />
-                          <img
-                            src="https://uploads-ssl.webflow.com/616657e01068e329c0da59bf/616657e11068e319feda59e2_Arrow%20(1).svg"
-                            alt
-                            className="image-2"
-                          />
-                        </div>
-                      </form>
-                      <div className="w-form-done">
-                        <div>Thank you! Your submission has been received!</div>
-                      </div>
-                      <div className="w-form-fail">
-                        <div>
-                          Oops! Something went wrong while submitting the form.
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                   <div className="featured-articles">
-                    <div className="title-large">Related articles</div>
+                    <div className="title-large">Featured</div>
                     <div className="featured-block">
                       {resources?.data?.feedList?.map((item) => (
                         <Link
                           href={'/resources/' + item?._id}
                           className="featured-item-2 w-inline-block"
                         >
-                          <>
+                          <a className="featured-item w-inline-block">
                             <img
-                              src={item?.media?.url}
+                              src={`${item?.media?.url}`}
                               width={90}
+                              sizes="(max-width: 479px) 28vw, (max-width: 767px) 20vw, 90px"
+                              // srcSet="images/about-archi-p-500.png 500w, images/about-archi-p-800.png 800w, images/about-archi-p-1080.png 1080w, images/about-archi-p-1600.png 1600w, images/about-archi.png 1728w"
                               alt
-                              className="feature-image-2"
+                              className="feature-image"
                             />
-                            <div className="title-small">{item?.title}</div>
-                          </>
+                            <div className="title-small">
+                              {item ? item?.title : 'N/A'}
+                            </div>
+                          </a>
                         </Link>
                       ))}
                     </div>
-                    <img src="/public/images/ad-3.JPG" loading="lazy" alt />
                   </div>
                 </div>
               </div>
@@ -209,7 +131,6 @@ const index = ({ id, resource, resources, getResource, getResources }) => {
     </div>
   );
 };
-
 
 function mapStateToProps(state) {
   const resources = state?.dashboard?.resources;

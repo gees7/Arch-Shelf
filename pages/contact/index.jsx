@@ -1,12 +1,48 @@
-import React from 'react';
-import Navbar from '../../components/DashboardComponents/Navbar';
-import Footer from '../../components/DashboardComponents/Footer';
+import React, { useState } from 'react';
+import { addQuery } from '../../store/api/queryApi';
+import { notification } from 'antd';
 
 const contactUs = () => {
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [phone, setPhone] = useState();
+  const [message, setMessage] = useState();
+
+  const submit = () => {
+    const body = {
+      name,
+      email,
+      phone,
+      message,
+    };
+    addQuery({ body })
+      .then((res) => {
+        if (res.data._id) {
+          setName('');
+          setEmail('');
+          setPhone('');
+          setMessage('');
+          notification.success({
+            message: `Thank you! Your submission has been received!`,
+          });
+        }
+      })
+      .catch((err) => {
+        if (err && err.status === 400) {
+          notification.error({
+            message: 'Oops! Something went wrong while submitting the form.',
+          });
+        } else {
+          notification.error({
+            message: `${err?.data?.error?.message}`,
+          });
+        }
+      });
+  };
+
   return (
     <div>
       <div>
-        <Navbar />
         <div className="div-block-97">
           <div className="div-heading">
             <h1 className="heading-2">Studio Help Center</h1>
@@ -42,6 +78,8 @@ const contactUs = () => {
                         placeholder="Your full name"
                         id="name"
                         required
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                       />
                       <div className="div-block-250">
                         <div className="half margin-right">
@@ -55,6 +93,8 @@ const contactUs = () => {
                             placeholder="Your Email"
                             id="name-4"
                             required
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                           />
                         </div>
                         <div className="half">
@@ -68,6 +108,8 @@ const contactUs = () => {
                             placeholder="Phone"
                             id="name-3"
                             required
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
                           />
                         </div>
                       </div>
@@ -81,9 +123,14 @@ const contactUs = () => {
                         required
                         className="textarea-3 w-input"
                         defaultValue={''}
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
                       />
                       <div className="div-block-251">
-                        <a href="#" className="button-5 nav size w-button">
+                        <a
+                          onClick={submit}
+                          className="button-5 nav size w-button"
+                        >
                           SEND MESSAGE
                         </a>
                       </div>
@@ -102,10 +149,10 @@ const contactUs = () => {
                   <img
                     src="/public/images/Contact-us-amico.png"
                     loading="lazy"
-                    style={{ opacity: 0 }}
+                    // style={{ opacity: 0 }}
                     data-w-id="0916cdfa-2b33-253e-54af-e3c012b54623"
                     srcSet="images/Contact-us-amico-p-500.png 500w, images/Contact-us-amico-p-800.png 800w, images/Contact-us-amico-p-1080.png 1080w, images/Contact-us-amico.png 2000w"
-                    sizes="(max-width: 479px) 92vw, (max-width: 767px) 63vw, (max-width: 991px) 64vw, (max-width: 1919px) 36vw, 576px"
+                    // sizes="(max-width: 479px) 92vw, (max-width: 767px) 63vw, (max-width: 991px) 64vw, (max-width: 1919px) 36vw, 576px"
                     alt
                     className="image-15"
                   />
@@ -123,7 +170,6 @@ const contactUs = () => {
             </div>
           </div>
         </div>
-        <Footer />
       </div>
     </div>
   );

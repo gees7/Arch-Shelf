@@ -129,13 +129,13 @@ const Navbar = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="dropdown-link-2 w-dropdown-link"
-            onClick={() => router.push('/aboutUs')}
+            onClick={() => router.push('/about')}
           >
             About Us
           </a>
         </div>
       </Menu.Item>
-      <Menu.Item>
+      {/* <Menu.Item>
         <div className="drop-div">
           <a
             target="_blank"
@@ -146,8 +146,8 @@ const Navbar = () => {
             Career
           </a>
         </div>
-      </Menu.Item>
-      <Menu.Item>
+      </Menu.Item> */}
+      {/* <Menu.Item>
         <div className="drop-div">
           <a
             target="_blank"
@@ -158,14 +158,14 @@ const Navbar = () => {
             Services
           </a>
         </div>
-      </Menu.Item>
+      </Menu.Item> */}
       <Menu.Item>
         <div className="drop-div">
           <a
             target="_blank"
             className="dropdown-link-2 w-dropdown-link"
             rel="noopener noreferrer"
-            onClick={() => router.push('/contactUs')}
+            onClick={() => router.push('/contact')}
           >
             Contact Us
           </a>
@@ -208,8 +208,11 @@ const Navbar = () => {
                     defaultValue="Search"
                     className="search-button-2 w-button"
                   />
-                  <a href="#" className="button-7 w-button">
-                    
+                  <a className="button-7 w-button">
+                    <img
+                      src={require('../../../assets/images/search_icon.svg')}
+                      alt
+                    />
                   </a>
                 </form>
                 <a href="#" className="social-link w-inline-block">
@@ -315,9 +318,8 @@ const Navbar = () => {
                 </Dropdown>
               </div>
             </div>
-            <div data-hover="true" data-delay="0" className="w-dropdown">
+            {/* <div data-hover="true" data-delay="0" className="w-dropdown">
               <div className="w-dropdown-toggle">
-                {/* <div className="w-icon-dropdown-toggle"></div> */}
                 <Dropdown overlay={dropdownBreakfast}>
                   <a
                     className="ant-dropdown-link"
@@ -327,8 +329,12 @@ const Navbar = () => {
                   </a>
                 </Dropdown>
               </div>
-            </div>
-            <div data-hover="true" data-delay="0" className="dropdown-2 w-dropdown">
+            </div> */}
+            <div
+              data-hover="true"
+              data-delay="0"
+              className="dropdown-2 w-dropdown"
+            >
               <div className="dropdown-toggle-2 w-dropdown-toggle">
                 {/* <div className="icon-28 w-icon-dropdown-toggle"></div> */}
                 <div className="text-block-14">

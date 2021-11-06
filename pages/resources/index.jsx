@@ -20,7 +20,6 @@ const Resources = ({ categories, getCategories, resources, getResources }) => {
     'December',
   ];
   useEffect(() => {
-
     getResources({ query: { type: 'resources', limit: '6' } });
     getCategories({ query: {} });
   }, []);
@@ -48,56 +47,57 @@ const Resources = ({ categories, getCategories, resources, getResources }) => {
                   var finaldate = mL[month] + ' ' + day + ', ' + year;
                   var wordCount = item?.body?.match(/(\w+)/g).length;
                   var time = Math.round(wordCount / 250);
-                  if(index<resources?.data?.feedList?.length/2) return (
-                    <Link key={item?._id} href={'/resources/' + item?._id}>
-                      <div className="blog-item-2 w-inline-block">
-                        <div className="blog-image-wrap">
-                          <img
-                            src={item?.media?.url}
-                            width={380}
-                            sizes="(max-width: 479px) 86vw, (max-width: 767px) 89vw, (max-width: 991px) 86vw, (max-width: 1279px) 45vw, (max-width: 1919px) 48vw, 777.765625px"
-                            srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
-                            alt=""
-                            className="blog-image"
-                          />
-                        </div>
-                        <div className="blog-content">
-                          <h3 className="heading-h2">{item?.title}</h3>
-                          <p className="paragraph-detials-medium">
-                            {item?.shortDescription}
-                          </p>
-                          <div className="div-block-23369">
+                  if (index < resources?.data?.feedList?.length / 2)
+                    return (
+                      <Link key={item?._id} href={'/resources/' + item?._id}>
+                        <div className="blog-item-2" style={{ width: '90%' }}>
+                          <div className="blog-image-wrap">
                             <img
-                              src="/public/images/back-in-time.png"
-                              loading="lazy"
-                              sizes="(max-width: 1279px) 30px, (max-width: 1919px) 2vw, 1vw"
-                              srcSet="images/back-in-time-p-500.png 500w, images/back-in-time.png 512w"
+                              src={item?.media?.url}
+                              width={380}
+                              sizes="(max-width: 479px) 86vw, (max-width: 767px) 89vw, (max-width: 991px) 86vw, (max-width: 1279px) 45vw, (max-width: 1919px) 48vw, 777.765625px"
+                              srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
                               alt=""
-                              className="image-53"
+                              className="blog-image"
                             />
-                            <p className="paragraph-detials-medium time">
-                              {time} Minutes Read
-                            </p>
                           </div>
-                          <div className="profile-block">
-                            <img
-                              src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1085&q=80         "
-                              width={62}
-                              className="profile-picture"
-                            />
-                            <div className="normal-wrapper">
-                              <div className="title-small">
-                                {item?.user?.name}
-                              </div>
-                              <p className="paragraph-detials-small">
-                                {finaldate}
+                          <div className="blog-content">
+                            <h3 className="heading-h2">{item?.title}</h3>
+                            <p className="paragraph-detials-medium">
+                              {item?.shortDescription}
+                            </p>
+                            <div className="div-block-23369">
+                              <img
+                                src="/public/images/back-in-time.png"
+                                loading="lazy"
+                                sizes="(max-width: 1279px) 30px, (max-width: 1919px) 2vw, 1vw"
+                                srcSet="images/back-in-time-p-500.png 500w, images/back-in-time.png 512w"
+                                alt=""
+                                className="image-53"
+                              />
+                              <p className="paragraph-detials-medium time">
+                                {time} Minutes Read
                               </p>
+                            </div>
+                            <div className="profile-block">
+                              <img
+                                src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1085&q=80         "
+                                width={62}
+                                className="profile-picture"
+                              />
+                              <div className="normal-wrapper">
+                                <div className="title-small">
+                                  {item?.user?.name}
+                                </div>
+                                <p className="paragraph-detials-small">
+                                  {finaldate}
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </Link>
-                  );
+                      </Link>
+                    );
                 })}
 
                 <div className="div-block-23382">
@@ -230,56 +230,57 @@ const Resources = ({ categories, getCategories, resources, getResources }) => {
                   var finaldate = mL[month] + ' ' + day + ', ' + year;
                   var wordCount = item?.body?.match(/(\w+)/g).length;
                   var time = Math.round(wordCount / 250);
-                  if(index>=resources?.data?.feedList?.length/2) return (
-                    <Link key={item?._id} href={'/resources/' + item?._id}>
-                      <div className="blog-item-2 w-inline-block">
-                        <div className="blog-image-wrap">
-                          <img
-                            src={item?.media?.url}
-                            width={380}
-                            sizes="(max-width: 479px) 86vw, (max-width: 767px) 89vw, (max-width: 991px) 86vw, (max-width: 1279px) 45vw, (max-width: 1919px) 48vw, 777.765625px"
-                            srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
-                            alt=""
-                            className="blog-image"
-                          />
-                        </div>
-                        <div className="blog-content">
-                          <h3 className="heading-h2">{item?.title}</h3>
-                          <p className="paragraph-detials-medium">
-                            {item?.shortDescription}
-                          </p>
-                          <div className="div-block-23369">
+                  if (index >= resources?.data?.feedList?.length / 2)
+                    return (
+                      <Link key={item?._id} href={'/resources/' + item?._id}>
+                        <div className="blog-item-2" style={{ width: '90%' }}>
+                          <div className="blog-image-wrap">
                             <img
-                              src="/public/images/back-in-time.png"
-                              loading="lazy"
-                              sizes="(max-width: 1279px) 30px, (max-width: 1919px) 2vw, 1vw"
-                              srcSet="images/back-in-time-p-500.png 500w, images/back-in-time.png 512w"
+                              src={item?.media?.url}
+                              width={380}
+                              sizes="(max-width: 479px) 86vw, (max-width: 767px) 89vw, (max-width: 991px) 86vw, (max-width: 1279px) 45vw, (max-width: 1919px) 48vw, 777.765625px"
+                              srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
                               alt=""
-                              className="image-53"
+                              className="blog-image"
                             />
-                            <p className="paragraph-detials-medium time">
-                              {time} Minutes Read
-                            </p>
                           </div>
-                          <div className="profile-block">
-                            <img
-                              src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1085&q=80         "
-                              width={62}
-                              className="profile-picture"
-                            />
-                            <div className="normal-wrapper">
-                              <div className="title-small">
-                                {item?.user?.name}
-                              </div>
-                              <p className="paragraph-detials-small">
-                                {finaldate}
+                          <div className="blog-content">
+                            <h3 className="heading-h2">{item?.title}</h3>
+                            <p className="paragraph-detials-medium">
+                              {item?.shortDescription}
+                            </p>
+                            <div className="div-block-23369">
+                              <img
+                                src="/public/images/back-in-time.png"
+                                loading="lazy"
+                                sizes="(max-width: 1279px) 30px, (max-width: 1919px) 2vw, 1vw"
+                                srcSet="images/back-in-time-p-500.png 500w, images/back-in-time.png 512w"
+                                alt=""
+                                className="image-53"
+                              />
+                              <p className="paragraph-detials-medium time">
+                                {time} Minutes Read
                               </p>
+                            </div>
+                            <div className="profile-block">
+                              <img
+                                src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1085&q=80         "
+                                width={62}
+                                className="profile-picture"
+                              />
+                              <div className="normal-wrapper">
+                                <div className="title-small">
+                                  {item?.user?.name}
+                                </div>
+                                <p className="paragraph-detials-small">
+                                  {finaldate}
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </Link>
-                  );
+                      </Link>
+                    );
                 })}
               </div>
               <div className="content-right">
