@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { getFeeds } from '../../store/api/dashboardApi';
+import { getCompetitions } from '../../store/api/competitionApi';
 import Link from 'next/link';
 import { Pagination, Spin } from 'antd';
+import moment from 'moment';
 
 const Competitions = () => {
   const [competitions, setCompetitions] = useState([]);
@@ -11,17 +12,38 @@ const Competitions = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    getFeeds({ query: { type: 'competitions', limit, start } }).then((res) => {
-      setCompetitions(res?.data?.feedList);
-    });
-  }, []);
+    setLoading(true);
+    const body = {
+      start,
+      limit,
+      // selected,
+      // keywordState,
+    };
+    getCompetitions({ query: body })
+      .then((res) => {
+        setCompetitions(res.data.competitionsList);
+        setLoading(false);
+      })
+      .catch((err) => {
+        if (err && err.status === 422) {
+          notification.error({
+            message: Object.keys(err.data)
+              .map((key) => err.data[key][0])
+              .join(' '),
+          });
+        } else {
+          notification.error({
+            message: 'Failed to get feeds',
+          });
+        }
+      });
+  }, [start, limit]);
 
   function handleChangePagination(current) {
     setStart(limit * (current - 1));
     setCurrentPage(current);
   }
 
-  console.log(`com`, competitions);
   return (
     <div>
       <div>
@@ -38,12 +60,12 @@ const Competitions = () => {
               className="flex justify-between m-auto"
             >
               <div class="grid-container">
-                {competitions.map((comp) => (
+                {competitions?.map((comp) => (
                   <div class="grid-item">
                     <div className="div-block-200" style={{ width: '100%' }}>
                       <div className="div-block-402">
                         <img
-                          src={`${comp?.media?.url}`}
+                          src={`${comp?.media[0]?.url}`}
                           loading="lazy"
                           width={448}
                           sizes="(max-width: 767px) 94vw, (max-width: 991px) 92vw, (max-width: 1279px) 29vw, (max-width: 1919px) 30vw, 479.984375px"
@@ -53,12 +75,33 @@ const Competitions = () => {
                         />
                         <div className="blog_overlap_heading">
                           <div className="div-block-202">
-                            <a href="#" className="link-13 _2">
-                              How to Develop Design Concepts in Architecture?
-                            </a>
-                            <p className="paragraph-21 _2">
-                              Here We will solve your most important questions
-                              about .
+                            <Link
+                              href="/competitions/[id]"
+                              as={`/competitions/${comp?._id}`}
+                              className="dropdown-link-2 w-dropdown-link"
+                            >
+                              <a className="link-13 _2">
+                                {comp ? comp?.title : 'N/A'}
+                              </a>
+                            </Link>
+                            <p
+                              className="paragraph-21 _2"
+                              style={{
+                                maxWidth: '320px',
+                                whiteSpace: 'nowrap',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                              }}
+                            >
+                              {comp ? (
+                                <span
+                                  dangerouslySetInnerHTML={{
+                                    __html: comp.body,
+                                  }}
+                                ></span>
+                              ) : (
+                                'N/A'
+                              )}
                             </p>
                           </div>
                         </div>
@@ -66,7 +109,7 @@ const Competitions = () => {
                       <div className="flex">
                         <a className="categories-pill competeion w-inline-block">
                           <div className="title-small pink text-base">
-                            Current
+                            {comp ? comp?.status : 'N/A'}
                           </div>
                         </a>
                       </div>
@@ -82,7 +125,14 @@ const Competitions = () => {
                             className="image-52 _2"
                           />
                           <div className="details-headers">Start Day -</div>
-                          <div className="day-time">Oct-01-2021 (12:01:38)</div>
+                          <div className="day-time">
+                            {comp ? moment(comp?.startDay).format('LL') : 'N/A'}{' '}
+                            (
+                            {comp
+                              ? moment(comp?.startDay).format('h:mm:ss')
+                              : 'N/A'}
+                            )
+                          </div>
                         </div>
                         <div className="setails-wrapper">
                           <img
@@ -97,7 +147,16 @@ const Competitions = () => {
                           <div className="details-headers">
                             Submission Deadline -
                           </div>
-                          <div className="day-time">Oct-02-2021 (12:01:38)</div>
+                          <div className="day-time">
+                            {comp
+                              ? moment(comp?.submissionDate).format('LL')
+                              : 'N/A'}{' '}
+                            (
+                            {comp
+                              ? moment(comp?.submissionDate).format('h:mm:ss')
+                              : 'N/A'}
+                            )
+                          </div>
                         </div>
                       </div>
                       <div className="organizer">
@@ -110,7 +169,9 @@ const Competitions = () => {
                             className="image-52"
                           />
                           <div className="details-headers">Organizer -</div>
-                          <div className="day-time">Mr. Shivam Tripathi</div>
+                          <div className="day-time">
+                            {comp ? comp.organizer : 'N/A'}
+                          </div>
                         </div>
                       </div>
                       <div className="price">
@@ -125,18 +186,18 @@ const Competitions = () => {
                             className="image-52 price"
                           />
                           <div className="details-headers">Price -</div>
-                          <div className="day-time">10.00 USD</div>
+                          <div className="day-time">
+                            {comp ? comp.price : 'N/A'} Rs
+                          </div>
                         </div>
                       </div>
                       <div className="div-block-396 flex">
                         <Link
-                          href="/resources/[id]"
-                          as={`/resources/${comp?._id}`}
+                          href="/competitions/[id]"
+                          as={`/competitions/${comp?._id}`}
                           className="dropdown-link-2 w-dropdown-link"
                         >
-                          <a href="#" className="link-14">
-                            KNOW MORE
-                          </a>
+                          <a className="link-14">KNOW MORE</a>
                         </Link>
                       </div>
                     </div>
@@ -161,150 +222,25 @@ const Competitions = () => {
                       />
                     </a>
                   </form>
-                  <div className="subscription hide">
-                    <div className="title-large">
-                      Subscribe to our newsletter
-                    </div>
-                    <div className="w-form">
-                      <form
-                        id="email-form"
-                        name="email-form"
-                        data-name="Email Form"
-                        className="form"
-                      >
-                        <input
-                          type="email"
-                          className="text-field-3 w-input"
-                          maxLength={256}
-                          name="name"
-                          data-name="Name"
-                          placeholder="Email address"
-                          id="name"
-                          required
-                        />
-                        <div className="submit-button-wrap">
-                          <input
-                            type="submit"
-                            defaultValue
-                            data-wait="Please wait..."
-                            className="submit-button-2 w-button"
-                          />
-                          <img
-                            src="images/Arrow_1.svg"
-                            width={9}
-                            height={12}
-                            alt
-                            className="image-2"
-                          />
-                        </div>
-                      </form>
-                      <div className="w-form-done">
-                        <div>Thank you! Your submission has been received!</div>
-                      </div>
-                      <div className="w-form-fail">
-                        <div>
-                          Oops! Something went wrong while submitting the form.
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                   <div className="featured-articles">
                     <div className="title-large">Featured</div>
                     <div className="featured-block">
-                      <a href="#" className="featured-item w-inline-block">
-                        <img
-                          src="images/about-archi.png"
-                          width={90}
-                          sizes="(max-width: 479px) 28vw, (max-width: 767px) 20vw, 90px"
-                          srcSet="images/about-archi-p-500.png 500w, images/about-archi-p-800.png 800w, images/about-archi-p-1080.png 1080w, images/about-archi-p-1600.png 1600w, images/about-archi.png 1728w"
-                          alt
-                          className="feature-image"
-                        />
-                        <div className="title-small">
-                          Lorem ipsum is the dummy content generator portfolio
-                          websites
-                        </div>
-                      </a>
-                      <a href="#" className="featured-item w-inline-block">
-                        <img
-                          src="images/archi-tools.png"
-                          width={90}
-                          sizes="(max-width: 479px) 28vw, (max-width: 767px) 20vw, 90px"
-                          srcSet="images/archi-tools-p-500.png 500w, images/archi-tools-p-800.png 800w, images/archi-tools.png 1728w"
-                          alt
-                          className="feature-image"
-                        />
-                        <div className="title-small">
-                          Lorem ipsum is the dummy content generator portfolio
-                          websites
-                        </div>
-                      </a>
-                      <a href="#" className="featured-item w-inline-block">
-                        <img
-                          src="images/architect.jpg"
-                          width={90}
-                          alt
-                          className="feature-image"
-                        />
-                        <div className="title-small">
-                          Lorem ipsum is the dummy content generator portfolio
-                          websites
-                        </div>
-                      </a>
-                      <a href="#" className="featured-item w-inline-block">
-                        <img
-                          src="images/springwood.jpg"
-                          width={90}
-                          sizes="(max-width: 479px) 28vw, (max-width: 767px) 20vw, 90px"
-                          srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
-                          alt
-                          className="feature-image"
-                        />
-                        <div className="title-small">
-                          Lorem ipsum is the dummy content generator portfolio
-                          websites
-                        </div>
-                      </a>
+                      {competitions?.map((comp) => (
+                        <a className="featured-item w-inline-block">
+                          <img
+                            src={`${comp?.media[0]?.url}`}
+                            width={90}
+                            sizes="(max-width: 479px) 28vw, (max-width: 767px) 20vw, 90px"
+                            // srcSet="images/about-archi-p-500.png 500w, images/about-archi-p-800.png 800w, images/about-archi-p-1080.png 1080w, images/about-archi-p-1600.png 1600w, images/about-archi.png 1728w"
+                            alt
+                            className="feature-image"
+                          />
+                          <div className="title-small">
+                            {comp ? comp?.title : 'N/A'}
+                          </div>
+                        </a>
+                      ))}
                     </div>
-                  </div>
-                  <div className="categories-block hide">
-                    <div className="title-large">Filter By Categories</div>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Product</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Engineering</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Saas</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Technology</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Saas</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Company</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Company</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Company</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Saas</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Saas</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Engineering</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Company</div>
-                    </a>
                   </div>
                   <img src="images/ad-3.JPG" loading="lazy" alt />
                 </div>
