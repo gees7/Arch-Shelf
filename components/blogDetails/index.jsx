@@ -1,6 +1,47 @@
-import React from 'react';
+import React,{useEffect, useState} from 'react';
+import Link from "next/link";
+import { connect } from 'react-redux';
+import { getResource, getResources} from '../../store/actions/blogActions';
+const index = ({ id, resource, resources, getResource, getResources }) => {
+    var mL = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+  ];
+  const [bdate, setBdate] = useState(null);
+  const [readTime, setReadTime] = useState(0);
+  useEffect(() => {
+    getResources({ query: { type: 'resources', limit: '6' } });
+    getResource({ pathParams: { id } });
+  }, [id])
 
-const index = () => {
+
+  useEffect(() => {
+    
+    var finaldate;
+    var time;
+    const date = new Date(resource?.data?.created_at);
+    var day = date.getDate();
+    var month = date.getMonth();
+    var year = date.getFullYear();
+
+    finaldate = mL[month] + ' ' + day + ', ' + year;
+    setBdate(finaldate);
+    var wordCount = resource?.data?.body?.match(/(\w+)/g).length;
+    time = Math.round(wordCount / 250);
+    setReadTime(time);
+  }, [resource])
+
+  console.log(resource,'RESOURCE');
   return (
     <div>
       <div>
@@ -13,29 +54,27 @@ const index = () => {
         <div className="blog-section">
           <div className="container-501">
             <img
-              src="images/architect-drawing-architectural-project-PH4Q7EB-min.jpg"
-              sizes="(max-width: 479px) 94vw, (max-width: 991px) 75vw, (max-width: 1279px) 73vw, (max-width: 1919px) 76vw, 1216px"
-              srcSet="images/architect-drawing-architectural-project-PH4Q7EB-min-p-500.jpeg 500w, images/architect-drawing-architectural-project-PH4Q7EB-min-p-800.jpeg 800w, images/architect-drawing-architectural-project-PH4Q7EB-min.jpg 888w"
-              alt
+              src={resource?.data?.media?.url}
+              // sizes="(max-width: 479px) 94vw, (max-width: 991px) 75vw, (max-width: 1279px) 73vw, (max-width: 1919px) 76vw, 1216px"
+              // srcSet="images/architect-drawing-architectural-project-PH4Q7EB-min-p-500.jpeg 500w, images/architect-drawing-architectural-project-PH4Q7EB-min-p-800.jpeg 800w, images/architect-drawing-architectural-project-PH4Q7EB-min.jpg 888w"
+              alt=""
               className="blog-hero-image"
             />
             <div className="w-layout-grid blog-grid">
               <div className="content-left_blog">
-                <h2 className="blog-h2">
-                  Lorem ipsum is the dummy content generator portfolio websites{' '}
-                </h2>
+                <h2 className="blog-h2">{resource?.data?.title}</h2>
                 <div className="blog-content blog-page">
                   <div className="profile-block blog_page">
                     <img
                       src="images/team-1.jpg"
                       width={62}
-                      alt
+                      alt=""
                       className="profile-picture"
                     />
                     <div className="normal-wrapper">
-                      <div className="title-small">Lorem ipsum</div>
+                      <div className="title-small">{resource?.data?.user?.name}</div>
                       <p className="paragraph-detials-small">
-                        January 10, 2020
+                        {bdate}
                       </p>
                     </div>
                   </div>
@@ -49,11 +88,11 @@ const index = () => {
                       className="image-53"
                     />
                     <p className="paragraph-detials-medium time">
-                      5 Mintues Read
+                      {readTime} Mintues Read
                     </p>
                   </div>
                 </div>
-                <p className="paragraph-detials-large">
+                {/* <p className="paragraph-detials-large">
                   Lorem ipsum is the dummy content generator portfolio websites
                   Lorem ipsum is the dummy content generator portfolio websites
                   Lorem ipsum is the dummy content generator portfolio websites
@@ -71,13 +110,12 @@ const index = () => {
                   Lorem ipsum is the dummy content generator portfolio websites
                   Lorem ipsum is the dummy content generator portfolio websites
                   Lorem ipsum is the dummy{' '}
-                </p>
-                <p className="paragraph-detials-large">
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content{' '}
-                </p>
-                <img
+                </p> */}
+                <p
+                  dangerouslySetInnerHTML={{ __html: resource?.data?.body }}
+                  className="paragraph-detials-large"
+                ></p>
+                {/* <img
                   src="images/about-archi.png"
                   width={733}
                   sizes="(max-width: 991px) 94vw, 733px"
@@ -91,7 +129,7 @@ const index = () => {
                   Lorem ipsum is the dummy content generator portfolio websites
                   Lorem ipsum is the dummy content generator portfolio websites
                   Lorem ipsum is the dummy content generator portfolio websites.
-                </p>
+                </p> */}
               </div>
               <div className="content-right">
                 <div className="stick-wrapper">
@@ -143,54 +181,22 @@ const index = () => {
                   <div className="featured-articles">
                     <div className="title-large">Related articles</div>
                     <div className="featured-block">
-                      <a href="#" className="featured-item-2 w-inline-block">
-                        <img
-                          src="https://uploads-ssl.webflow.com/616657e01068e329c0da59bf/616657e11068e34f23da59db_Feature%201.jpg"
-                          width={90}
-                          alt
-                          className="feature-image-2"
-                        />
-                        <div className="title-small">
-                          Lorem ipsum is the dummy content generator portfolio
-                          websites{' '}
-                        </div>
-                      </a>
-                      <a href="#" className="featured-item-2 w-inline-block">
-                        <img
-                          src="https://uploads-ssl.webflow.com/616657e01068e329c0da59bf/616657e11068e358a9da59d9_Feature%202.jpg"
-                          width={90}
-                          alt
-                          className="feature-image-2"
-                        />
-                        <div className="title-small">
-                          Lorem ipsum is the dummy content generator portfolio
-                          websites{' '}
-                        </div>
-                      </a>
-                      <a href="#" className="featured-item-2 w-inline-block">
-                        <img
-                          src="https://uploads-ssl.webflow.com/616657e01068e329c0da59bf/616657e11068e3e396da59d8_Feature%203.jpg"
-                          width={90}
-                          alt
-                          className="feature-image-2"
-                        />
-                        <div className="title-small">
-                          Lorem ipsum is the dummy content generator portfolio
-                          websites{' '}
-                        </div>
-                      </a>
-                      <a href="#" className="featured-item-2 w-inline-block">
-                        <img
-                          src="https://uploads-ssl.webflow.com/616657e01068e329c0da59bf/616657e11068e36c56da59da_Feature%204.jpg"
-                          width={90}
-                          alt
-                          className="feature-image-2"
-                        />
-                        <div className="title-small">
-                          Lorem ipsum is the dummy content generator portfolio
-                          websites{' '}
-                        </div>
-                      </a>
+                      {resources?.data?.feedList?.map((item) => (
+                        <Link
+                          href={'/resources/' + item?._id}
+                          className="featured-item-2 w-inline-block"
+                        >
+                          <>
+                            <img
+                              src={item?.media?.url}
+                              width={90}
+                              alt
+                              className="feature-image-2"
+                            />
+                            <div className="title-small">{item?.title}</div>
+                          </>
+                        </Link>
+                      ))}
                     </div>
                     <img src="/public/images/ad-3.JPG" loading="lazy" alt />
                   </div>
@@ -204,4 +210,15 @@ const index = () => {
   );
 };
 
-export default index;
+
+function mapStateToProps(state) {
+  const resources = state?.dashboard?.resources;
+  const resource = state?.dashboard?.resource;
+  return { resource, resources };
+}
+const mapDispatchToProps = (dispatch) => ({
+  getResources: (payload) => dispatch(getResources(payload)),
+  getResource: (payload) => dispatch(getResource(payload)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(index);
