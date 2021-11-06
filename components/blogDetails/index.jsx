@@ -2,7 +2,7 @@ import React,{useEffect, useState} from 'react';
 import Link from "next/link";
 import { connect } from 'react-redux';
 import { getResource, getResources} from '../../store/actions/blogActions';
-const index = ({ id, resource, resources, getResource, getResources }) => {
+const index = ({ id, resource, resources, getResource, getResources, type }) => {
     var mL = [
       'January',
       'February',
@@ -20,8 +20,11 @@ const index = ({ id, resource, resources, getResource, getResources }) => {
   const [bdate, setBdate] = useState(null);
   const [readTime, setReadTime] = useState(0);
   useEffect(() => {
-    getResources({ query: { type: 'resources', limit: '6' } });
-    getResource({ pathParams: { id } });
+    if(type === "resources")
+    {
+      getResources({ query: { type: 'resources', limit: '6' } });
+      getResource({ pathParams: { id } });
+    }
   }, [id])
 
 
@@ -41,7 +44,7 @@ const index = ({ id, resource, resources, getResource, getResources }) => {
     setReadTime(time);
   }, [resource])
 
-  console.log(resource,'RESOURCE');
+  // console.log(resource,'RESOURCE');
   return (
     <div>
       <div>
@@ -72,10 +75,10 @@ const index = ({ id, resource, resources, getResource, getResources }) => {
                       className="profile-picture"
                     />
                     <div className="normal-wrapper">
-                      <div className="title-small">{resource?.data?.user?.name}</div>
-                      <p className="paragraph-detials-small">
-                        {bdate}
-                      </p>
+                      <div className="title-small">
+                        {resource?.data?.user?.name}
+                      </div>
+                      <p className="paragraph-detials-small">{bdate}</p>
                     </div>
                   </div>
                   <div className="div-block-23369 blog_page">
@@ -182,20 +185,19 @@ const index = ({ id, resource, resources, getResource, getResources }) => {
                     <div className="title-large">Related articles</div>
                     <div className="featured-block">
                       {resources?.data?.feedList?.map((item) => (
-                        <Link
-                          href={'/resources/' + item?._id}
-                          className="featured-item-2 w-inline-block"
-                        >
-                          <>
-                            <img
-                              src={item?.media?.url}
-                              width={90}
-                              alt
-                              className="feature-image-2"
-                            />
-                            <div className="title-small">{item?.title}</div>
-                          </>
-                        </Link>
+                        <div className="featured-item-2 w-inline-block my-6">
+                          <Link href={'/resources/' + item?._id}>
+                            <div className="cursor-pointer flex items-center">
+                              <img
+                                src={item?.media?.url}
+                                width={90}
+                                alt
+                                className="feature-image-2"
+                              />
+                              <div className="title-small">{item?.title}</div>
+                            </div>
+                          </Link>
+                        </div>
                       ))}
                     </div>
                     <img src="/public/images/ad-3.JPG" loading="lazy" alt />

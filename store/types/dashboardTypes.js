@@ -1,3 +1,5 @@
 export const GET_CATEGORIES = 'GET_CATEGORIES';
 export const GET_RESOURCES = 'GET_RESOURCES';
 export const GET_RESOURCE = 'GET_RESOURCE';
+export const GET_PROJECTS = 'GET_PROJECTS';
+export const GET_PROJECT = 'GET_PROJECT';

@@ -1,9 +1,17 @@
-import { GET_CATEGORIES, GET_RESOURCES, GET_RESOURCE} from '../types/dashboardTypes';
+import {
+  GET_CATEGORIES,
+  GET_RESOURCES,
+  GET_RESOURCE,
+  GET_PROJECTS,
+  GET_PROJECT,
+} from '../types/dashboardTypes';
 
 const initialState = {
   categories: null,
   resources: null,
-  resource:null,
+  resource: null,
+  projects:null,
+  project:null,
   loading: false,
   error: null,
 };
@@ -23,6 +31,16 @@ export const dashboardReducer = (state = initialState, action) => {
       return {
         ...state,
         resource: action.payload,
+      };
+    case GET_PROJECTS:
+      return {
+        ...state,
+        projects: action.payload,
+      };
+    case GET_PROJECT:
+      return {
+        ...state,
+        project: action.payload,
       };
     default:
       return state;

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { connect } from 'react-redux';
 import { getCategories, getResources } from '../../store/actions/blogActions';
 const Resources = ({ categories, getCategories, resources, getResources }) => {
+  const [catId, setCatId] = useState("");
   var mL = [
     'January',
     'February',
@@ -20,10 +21,13 @@ const Resources = ({ categories, getCategories, resources, getResources }) => {
     'December',
   ];
   useEffect(() => {
+    
+    getCategories({ query: { categoryType: 'resources' } });
+  }, [])
+  useEffect(() => {
 
-    getResources({ query: { type: 'resources', limit: '6' } });
-    getCategories({ query: {} });
-  }, []);
+    getResources({ query: { type: 'resources', limit: '6', selected:catId } });
+  }, [catId]);
 
   return (
     <div>
@@ -48,56 +52,57 @@ const Resources = ({ categories, getCategories, resources, getResources }) => {
                   var finaldate = mL[month] + ' ' + day + ', ' + year;
                   var wordCount = item?.body?.match(/(\w+)/g).length;
                   var time = Math.round(wordCount / 250);
-                  if(index<resources?.data?.feedList?.length/2) return (
-                    <Link key={item?._id} href={'/resources/' + item?._id}>
-                      <div className="blog-item-2 w-inline-block">
-                        <div className="blog-image-wrap">
-                          <img
-                            src={item?.media?.url}
-                            width={380}
-                            sizes="(max-width: 479px) 86vw, (max-width: 767px) 89vw, (max-width: 991px) 86vw, (max-width: 1279px) 45vw, (max-width: 1919px) 48vw, 777.765625px"
-                            srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
-                            alt=""
-                            className="blog-image"
-                          />
-                        </div>
-                        <div className="blog-content">
-                          <h3 className="heading-h2">{item?.title}</h3>
-                          <p className="paragraph-detials-medium">
-                            {item?.shortDescription}
-                          </p>
-                          <div className="div-block-23369">
+                  if (index < resources?.data?.feedList?.length / 2)
+                    return (
+                      <Link key={item?._id} href={'/resources/' + item?._id}>
+                        <div className="cursor-pointer blog-item-2 w-inline-block">
+                          <div className="blog-image-wrap">
                             <img
-                              src="/public/images/back-in-time.png"
-                              loading="lazy"
-                              sizes="(max-width: 1279px) 30px, (max-width: 1919px) 2vw, 1vw"
-                              srcSet="images/back-in-time-p-500.png 500w, images/back-in-time.png 512w"
+                              src={item?.media?.url}
+                              width={380}
+                              sizes="(max-width: 479px) 86vw, (max-width: 767px) 89vw, (max-width: 991px) 86vw, (max-width: 1279px) 45vw, (max-width: 1919px) 48vw, 777.765625px"
+                              srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
                               alt=""
-                              className="image-53"
+                              className="blog-image"
                             />
-                            <p className="paragraph-detials-medium time">
-                              {time} Minutes Read
-                            </p>
                           </div>
-                          <div className="profile-block">
-                            <img
-                              src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1085&q=80         "
-                              width={62}
-                              className="profile-picture"
-                            />
-                            <div className="normal-wrapper">
-                              <div className="title-small">
-                                {item?.user?.name}
-                              </div>
-                              <p className="paragraph-detials-small">
-                                {finaldate}
+                          <div className="blog-content">
+                            <h3 className="heading-h2">{item?.title}</h3>
+                            <p className="paragraph-detials-medium">
+                              {item?.shortDescription}
+                            </p>
+                            <div className="div-block-23369">
+                              <img
+                                src="/public/images/back-in-time.png"
+                                loading="lazy"
+                                sizes="(max-width: 1279px) 30px, (max-width: 1919px) 2vw, 1vw"
+                                srcSet="images/back-in-time-p-500.png 500w, images/back-in-time.png 512w"
+                                alt=""
+                                className="image-53"
+                              />
+                              <p className="paragraph-detials-medium time">
+                                {time} Minutes Read
                               </p>
+                            </div>
+                            <div className="profile-block">
+                              <img
+                                src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1085&q=80         "
+                                width={62}
+                                className="profile-picture"
+                              />
+                              <div className="normal-wrapper">
+                                <div className="title-small">
+                                  {item?.user?.name}
+                                </div>
+                                <p className="paragraph-detials-small">
+                                  {finaldate}
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </Link>
-                  );
+                      </Link>
+                    );
                 })}
 
                 <div className="div-block-23382">
@@ -108,7 +113,7 @@ const Resources = ({ categories, getCategories, resources, getResources }) => {
                   >
                     <div className="div-block-23384">
                       <img
-                        src="/public/images/cp-molettoparedes-epem-0154_1cp-molettoparedes-epem-0154.jpg"
+                        src={resources?.data?.feedList[0]?.media?.url}
                         loading="lazy"
                         style={{
                           WebkitTransform:
@@ -121,7 +126,7 @@ const Resources = ({ categories, getCategories, resources, getResources }) => {
                             'translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
                         }}
                         sizes="100vw"
-                        srcSet="images/cp-molettoparedes-epem-0154_1-p-500.jpeg 500w, images/cp-molettoparedes-epem-0154_1-p-800.jpeg 800w, images/cp-molettoparedes-epem-0154_1-p-1080.jpeg 1080w, images/cp-molettoparedes-epem-0154_1-p-1600.jpeg 1600w, images/cp-molettoparedes-epem-0154_1cp-molettoparedes-epem-0154.jpg 2000w"
+                        // srcSet="images/cp-molettoparedes-epem-0154_1-p-500.jpeg 500w, images/cp-molettoparedes-epem-0154_1-p-800.jpeg 800w, images/cp-molettoparedes-epem-0154_1-p-1080.jpeg 1080w, images/cp-molettoparedes-epem-0154_1-p-1600.jpeg 1600w, images/cp-molettoparedes-epem-0154_1cp-molettoparedes-epem-0154.jpg 2000w"
                         alt=""
                         className="image-57"
                       />
@@ -129,12 +134,16 @@ const Resources = ({ categories, getCategories, resources, getResources }) => {
                     <div className="div-block-23385">
                       <div className="div-block-23386">
                         <div className="div-block-23387">
-                          <div>This is some text </div>
-                          <div className="text-block-170">
-                            This is some text{' '}
+                          <div>
+                            {resources?.data?.feedList[0]?.shortDescription}{' '}
                           </div>
+                          {/* <div className="text-block-170">
+                            This is some text{' '}
+                          </div> */}
                         </div>
-                        <h2 className="heading-39">Heading</h2>
+                        <h2 className="heading-39">
+                          {resources?.data?.feedList[0]?.title}
+                        </h2>
                       </div>
                     </div>
                   </div>
@@ -230,56 +239,57 @@ const Resources = ({ categories, getCategories, resources, getResources }) => {
                   var finaldate = mL[month] + ' ' + day + ', ' + year;
                   var wordCount = item?.body?.match(/(\w+)/g).length;
                   var time = Math.round(wordCount / 250);
-                  if(index>=resources?.data?.feedList?.length/2) return (
-                    <Link key={item?._id} href={'/resources/' + item?._id}>
-                      <div className="blog-item-2 w-inline-block">
-                        <div className="blog-image-wrap">
-                          <img
-                            src={item?.media?.url}
-                            width={380}
-                            sizes="(max-width: 479px) 86vw, (max-width: 767px) 89vw, (max-width: 991px) 86vw, (max-width: 1279px) 45vw, (max-width: 1919px) 48vw, 777.765625px"
-                            srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
-                            alt=""
-                            className="blog-image"
-                          />
-                        </div>
-                        <div className="blog-content">
-                          <h3 className="heading-h2">{item?.title}</h3>
-                          <p className="paragraph-detials-medium">
-                            {item?.shortDescription}
-                          </p>
-                          <div className="div-block-23369">
+                  if (index >= resources?.data?.feedList?.length / 2)
+                    return (
+                      <Link key={item?._id} href={'/resources/' + item?._id}>
+                        <div className="cursor-pointer  blog-item-2 w-inline-block">
+                          <div className="blog-image-wrap">
                             <img
-                              src="/public/images/back-in-time.png"
-                              loading="lazy"
-                              sizes="(max-width: 1279px) 30px, (max-width: 1919px) 2vw, 1vw"
-                              srcSet="images/back-in-time-p-500.png 500w, images/back-in-time.png 512w"
+                              src={item?.media?.url}
+                              width={380}
+                              sizes="(max-width: 479px) 86vw, (max-width: 767px) 89vw, (max-width: 991px) 86vw, (max-width: 1279px) 45vw, (max-width: 1919px) 48vw, 777.765625px"
+                              srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
                               alt=""
-                              className="image-53"
+                              className="blog-image"
                             />
-                            <p className="paragraph-detials-medium time">
-                              {time} Minutes Read
-                            </p>
                           </div>
-                          <div className="profile-block">
-                            <img
-                              src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1085&q=80         "
-                              width={62}
-                              className="profile-picture"
-                            />
-                            <div className="normal-wrapper">
-                              <div className="title-small">
-                                {item?.user?.name}
-                              </div>
-                              <p className="paragraph-detials-small">
-                                {finaldate}
+                          <div className="blog-content">
+                            <h3 className="heading-h2">{item?.title}</h3>
+                            <p className="paragraph-detials-medium">
+                              {item?.shortDescription}
+                            </p>
+                            <div className="div-block-23369">
+                              <img
+                                src="/public/images/back-in-time.png"
+                                loading="lazy"
+                                sizes="(max-width: 1279px) 30px, (max-width: 1919px) 2vw, 1vw"
+                                srcSet="images/back-in-time-p-500.png 500w, images/back-in-time.png 512w"
+                                alt=""
+                                className="image-53"
+                              />
+                              <p className="paragraph-detials-medium time">
+                                {time} Minutes Read
                               </p>
+                            </div>
+                            <div className="profile-block">
+                              <img
+                                src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1085&q=80         "
+                                width={62}
+                                className="profile-picture"
+                              />
+                              <div className="normal-wrapper">
+                                <div className="title-small">
+                                  {item?.user?.name}
+                                </div>
+                                <p className="paragraph-detials-small">
+                                  {finaldate}
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </Link>
-                  );
+                      </Link>
+                    );
                 })}
               </div>
               <div className="content-right">
@@ -360,71 +370,39 @@ const Resources = ({ categories, getCategories, resources, getResources }) => {
                   <div className="featured-articles">
                     <div className="title-large">Featured</div>
                     <div className="featured-block">
-                      <a href="#" className="featured-item w-inline-block">
-                        <img
-                          src="/public/images/about-archi.png"
-                          width={90}
-                          sizes="(max-width: 479px) 28vw, (max-width: 767px) 20vw, 90px"
-                          srcSet="images/about-archi-p-500.png 500w, images/about-archi-p-800.png 800w, images/about-archi-p-1080.png 1080w, images/about-archi-p-1600.png 1600w, images/about-archi.png 1728w"
-                          alt=""
-                          className="feature-image"
-                        />
-                        <div className="title-small">
-                          Lorem ipsum is the dummy content generator portfolio
-                          websites
-                        </div>
-                      </a>
-                      <a href="#" className="featured-item w-inline-block">
-                        <img
-                          src="/public/images/archi-tools.png"
-                          width={90}
-                          sizes="(max-width: 479px) 28vw, (max-width: 767px) 20vw, 90px"
-                          srcSet="images/archi-tools-p-500.png 500w, images/archi-tools-p-800.png 800w, images/archi-tools.png 1728w"
-                          alt=""
-                          className="feature-image"
-                        />
-                        <div className="title-small">
-                          Lorem ipsum is the dummy content generator portfolio
-                          websites
-                        </div>
-                      </a>
-                      <a href="#" className="featured-item w-inline-block">
-                        <img
-                          src="/public/images/architect.jpg"
-                          width={90}
-                          alt=""
-                          className="feature-image"
-                        />
-                        <div className="title-small">
-                          Lorem ipsum is the dummy content generator portfolio
-                          websites
-                        </div>
-                      </a>
-                      <a href="#" className="featured-item w-inline-block">
-                        <img
-                          src="/public/images/springwood.jpg"
-                          width={90}
-                          sizes="(max-width: 479px) 28vw, (max-width: 767px) 20vw, 90px"
-                          srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
-                          alt=""
-                          className="feature-image"
-                        />
-                        <div className="title-small">
-                          Lorem ipsum is the dummy content generator portfolio
-                          websites
-                        </div>
-                      </a>
+                      {resources?.data?.feedList?.map((item, index) => {
+                        if (index < 4)
+                          return (
+                            <Link
+                              key={item?._id + '1234'}
+                              href={'/resources/' + item?._id}
+                            >
+                              <div className="cursor-pointer  featured-item w-inline-block">
+                                <img
+                                  src={item?.media?.url}
+                                  width={90}
+                                  // sizes="(max-width: 479px) 28vw, (max-width: 767px) 20vw, 90px"
+                                  alt=""
+                                  className="feature-image"
+                                />
+                                <div className="title-small">{item?.title}</div>
+                              </div>
+                            </Link>
+                          );
+                      })}
                     </div>
                   </div>
                   <div className="categories-block">
                     <div className="title-large">Filter By Categories</div>
                     {categories?.categories?.map((item) => (
                       <span
-                        href="#"
                         key={item?._id}
-                        className="categories-pill w-inline-block"
+                        className="categories-pill w-inline-block cursor-pointer"
+                        onClick={() => setCatId(item?._id)}
                       >
-                        <div className="title-small pink">{item?.name}</div>
+                        <div className="title-small pink">
+                          {item?.name}
+                        </div>
                       </span>
                     ))}
                   </div>
