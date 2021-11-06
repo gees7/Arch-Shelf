@@ -60,7 +60,7 @@ const Competitions = () => {
               className="flex justify-between m-auto"
             >
               <div class="grid-container">
-                {competitions.map((comp) => (
+                {competitions?.map((comp) => (
                   <div class="grid-item">
                     <div className="div-block-200" style={{ width: '100%' }}>
                       <div className="div-block-402">
@@ -84,10 +84,25 @@ const Competitions = () => {
                                 {comp ? comp?.title : 'N/A'}
                               </a>
                             </Link>
-                            {/* <p className="paragraph-21 _2">
-                              Here We will solve your most important questions
-                              about .
-                            </p> */}
+                            <p
+                              className="paragraph-21 _2"
+                              style={{
+                                maxWidth: '320px',
+                                whiteSpace: 'nowrap',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                              }}
+                            >
+                              {comp ? (
+                                <span
+                                  dangerouslySetInnerHTML={{
+                                    __html: comp.body,
+                                  }}
+                                ></span>
+                              ) : (
+                                'N/A'
+                              )}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -207,150 +222,25 @@ const Competitions = () => {
                       />
                     </a>
                   </form>
-                  <div className="subscription hide">
-                    <div className="title-large">
-                      Subscribe to our newsletter
-                    </div>
-                    <div className="w-form">
-                      <form
-                        id="email-form"
-                        name="email-form"
-                        data-name="Email Form"
-                        className="form"
-                      >
-                        <input
-                          type="email"
-                          className="text-field-3 w-input"
-                          maxLength={256}
-                          name="name"
-                          data-name="Name"
-                          placeholder="Email address"
-                          id="name"
-                          required
-                        />
-                        <div className="submit-button-wrap">
-                          <input
-                            type="submit"
-                            defaultValue
-                            data-wait="Please wait..."
-                            className="submit-button-2 w-button"
-                          />
-                          <img
-                            src="images/Arrow_1.svg"
-                            width={9}
-                            height={12}
-                            alt
-                            className="image-2"
-                          />
-                        </div>
-                      </form>
-                      <div className="w-form-done">
-                        <div>Thank you! Your submission has been received!</div>
-                      </div>
-                      <div className="w-form-fail">
-                        <div>
-                          Oops! Something went wrong while submitting the form.
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                   <div className="featured-articles">
                     <div className="title-large">Featured</div>
                     <div className="featured-block">
-                      <a href="#" className="featured-item w-inline-block">
-                        <img
-                          src="images/about-archi.png"
-                          width={90}
-                          sizes="(max-width: 479px) 28vw, (max-width: 767px) 20vw, 90px"
-                          srcSet="images/about-archi-p-500.png 500w, images/about-archi-p-800.png 800w, images/about-archi-p-1080.png 1080w, images/about-archi-p-1600.png 1600w, images/about-archi.png 1728w"
-                          alt
-                          className="feature-image"
-                        />
-                        <div className="title-small">
-                          Lorem ipsum is the dummy content generator portfolio
-                          websites
-                        </div>
-                      </a>
-                      <a href="#" className="featured-item w-inline-block">
-                        <img
-                          src="images/archi-tools.png"
-                          width={90}
-                          sizes="(max-width: 479px) 28vw, (max-width: 767px) 20vw, 90px"
-                          srcSet="images/archi-tools-p-500.png 500w, images/archi-tools-p-800.png 800w, images/archi-tools.png 1728w"
-                          alt
-                          className="feature-image"
-                        />
-                        <div className="title-small">
-                          Lorem ipsum is the dummy content generator portfolio
-                          websites
-                        </div>
-                      </a>
-                      <a href="#" className="featured-item w-inline-block">
-                        <img
-                          src="images/architect.jpg"
-                          width={90}
-                          alt
-                          className="feature-image"
-                        />
-                        <div className="title-small">
-                          Lorem ipsum is the dummy content generator portfolio
-                          websites
-                        </div>
-                      </a>
-                      <a href="#" className="featured-item w-inline-block">
-                        <img
-                          src="images/springwood.jpg"
-                          width={90}
-                          sizes="(max-width: 479px) 28vw, (max-width: 767px) 20vw, 90px"
-                          srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
-                          alt
-                          className="feature-image"
-                        />
-                        <div className="title-small">
-                          Lorem ipsum is the dummy content generator portfolio
-                          websites
-                        </div>
-                      </a>
+                      {competitions?.map((comp) => (
+                        <a className="featured-item w-inline-block">
+                          <img
+                            src={`${comp?.media[0]?.url}`}
+                            width={90}
+                            sizes="(max-width: 479px) 28vw, (max-width: 767px) 20vw, 90px"
+                            // srcSet="images/about-archi-p-500.png 500w, images/about-archi-p-800.png 800w, images/about-archi-p-1080.png 1080w, images/about-archi-p-1600.png 1600w, images/about-archi.png 1728w"
+                            alt
+                            className="feature-image"
+                          />
+                          <div className="title-small">
+                            {comp ? comp?.title : 'N/A'}
+                          </div>
+                        </a>
+                      ))}
                     </div>
-                  </div>
-                  <div className="categories-block hide">
-                    <div className="title-large">Filter By Categories</div>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Product</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Engineering</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Saas</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Technology</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Saas</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Company</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Company</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Company</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Saas</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Saas</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Engineering</div>
-                    </a>
-                    <a href="#" className="categories-pill w-inline-block">
-                      <div className="title-small pink">Company</div>
-                    </a>
                   </div>
                   <img src="images/ad-3.JPG" loading="lazy" alt />
                 </div>
