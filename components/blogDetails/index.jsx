@@ -1,5 +1,5 @@
-import React,{useEffect, useState} from 'react';
-import Link from "next/link";
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { connect } from 'react-redux';
 import { getResource, getResources, getProject, getProjects} from '../../store/actions/blogActions';
 const index = ({
@@ -125,94 +125,16 @@ const index = ({
                     </p>
                   </div>
                 </div>
-                {/* <p className="paragraph-detials-large">
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  <br />
-                  <br />
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  <br />
-                  <br />
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy{' '}
-                </p> */}
+
                 <p
                   dangerouslySetInnerHTML={{ __html: data?.body }}
                   className="paragraph-detials-large"
                 ></p>
-                {/* <img
-                  src="images/about-archi.png"
-                  width={733}
-                  sizes="(max-width: 991px) 94vw, 733px"
-                  srcSet="images/about-archi-p-500.png 500w, images/about-archi-p-800.png 800w, images/about-archi-p-1080.png 1080w, images/about-archi-p-1600.png 1600w, images/about-archi.png 1728w"
-                  alt
-                  className="image-41"
-                />
-                <p className="paragraph-detials-large">
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content generator portfolio websites
-                  Lorem ipsum is the dummy content generator portfolio websites.
-                </p> */}
               </div>
               <div className="content-right">
                 <div className="stick-wrapper">
-                  <div className="subscription-2 hide">
-                    <div className="title-large">
-                      Subscribe to our newsletter
-                    </div>
-                    <div className="w-form">
-                      <form
-                        id="email-form"
-                        name="email-form"
-                        data-name="Email Form"
-                        className="form"
-                      >
-                        <input
-                          type="email"
-                          className="text-field-3 w-input"
-                          maxLength={256}
-                          name="name-2"
-                          data-name="Name 2"
-                          placeholder="Email address"
-                          id="name-2"
-                          required
-                        />
-                        <div className="submit-button-wrap">
-                          <input
-                            type="submit"
-                            defaultValue
-                            data-wait="Please wait..."
-                            className="submit-button-2 w-button"
-                          />
-                          <img
-                            src="https://uploads-ssl.webflow.com/616657e01068e329c0da59bf/616657e11068e319feda59e2_Arrow%20(1).svg"
-                            alt
-                            className="image-2"
-                          />
-                        </div>
-                      </form>
-                      <div className="w-form-done">
-                        <div>Thank you! Your submission has been received!</div>
-                      </div>
-                      <div className="w-form-fail">
-                        <div>
-                          Oops! Something went wrong while submitting the form.
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                   <div className="featured-articles">
-                    <div className="title-large">Related articles</div>
+                    <div className="title-large">Featured</div>
                     <div className="featured-block">
                       {dataList?.map((item) => (
                         <div className="featured-item-2 w-inline-block my-6">
@@ -230,7 +152,6 @@ const index = ({
                         </div>
                       ))}
                     </div>
-                    <img src="/public/images/ad-3.JPG" loading="lazy" alt />
                   </div>
                 </div>
               </div>
@@ -241,7 +162,6 @@ const index = ({
     </div>
   );
 };
-
 
 function mapStateToProps(state) {
   const resources = state?.dashboard?.resources;

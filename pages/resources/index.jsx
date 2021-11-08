@@ -55,7 +55,7 @@ const Resources = ({ categories, getCategories, resources, getResources }) => {
                   if (index < resources?.data?.feedList?.length / 2)
                     return (
                       <Link key={item?._id} href={'/resources/' + item?._id}>
-                        <div className="cursor-pointer blog-item-2 w-inline-block">
+                        <div className="blog-item-2 cursor-pointer" style={{ width: '90%' }}>
                           <div className="blog-image-wrap">
                             <img
                               src={item?.media?.url}
@@ -242,7 +242,7 @@ const Resources = ({ categories, getCategories, resources, getResources }) => {
                   if (index >= resources?.data?.feedList?.length / 2)
                     return (
                       <Link key={item?._id} href={'/resources/' + item?._id}>
-                        <div className="cursor-pointer  blog-item-2 w-inline-block">
+                        <div className="blog-item-2 cursor-pointer" style={{ width: '90%' }}>
                           <div className="blog-image-wrap">
                             <img
                               src={item?.media?.url}
