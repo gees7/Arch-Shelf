@@ -1,5 +1,5 @@
 import { getCategoriesList, getFeeds, getFeed } from '../api/dashboardApi';
-import { GET_CATEGORIES, GET_RESOURCES, GET_RESOURCE} from '../types/dashboardTypes';
+import { GET_CATEGORIES, GET_RESOURCES, GET_RESOURCE, GET_PROJECTS, GET_PROJECT} from '../types/dashboardTypes';
 
 export const getCategories = (payload) => async (dispatch) => {
   const res = await getCategoriesList(payload);
@@ -21,11 +21,31 @@ export const getResources = (payload) => async (dispatch) => {
   }
 };
 
+export const getProjects = (payload) => async (dispatch) => {
+  const res = await getFeeds(payload);
+  if (res) {
+    dispatch({
+      type: GET_PROJECTS,
+      payload: res,
+    });
+  }
+};
+
 export const getResource = (payload) => async (dispatch) => {
   const res = await getFeed(payload);
   if (res) {
     dispatch({
       type: GET_RESOURCE,
+      payload: res,
+    });
+  }
+};
+
+export const getProject = (payload) => async (dispatch) => {
+  const res = await getFeed(payload);
+  if (res) {
+    dispatch({
+      type: GET_PROJECT,
       payload: res,
     });
   }

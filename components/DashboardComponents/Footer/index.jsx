@@ -9,7 +9,7 @@ const Footer = () => {
             src={require('../../../assets/images/ad-4.jpg')}
             loading="lazy"
             sizes="(max-width: 479px) 92vw, (max-width: 767px) 95vw, (max-width: 991px) 96vw, (max-width: 1279px) 88vw, 972px"
-            srcSet="images/ad-4-p-500.jpeg 500w, images/ad-4.JPG 972w"
+            // srcSet="images/ad-4-p-500.jpeg 500w, images/ad-4.JPG 972w"
             alt
           />
         </div>
