@@ -60,7 +60,13 @@ const Navbar = () => {
         <Menu.Item>
           <div className="drop-div">
             <img src={item?.media?.url} loading="lazy" width={30} alt />
-            <a className="dropdown-link-2 w-dropdown-link">{item?.title}</a>
+            <Link
+              href="/projects/[id]"
+              as={`/projects/${item?._id}`}
+              className="dropdown-link-2 w-dropdown-link"
+            >
+              {item?.title}
+            </Link>
           </div>
         </Menu.Item>
       ))}
@@ -73,12 +79,13 @@ const Navbar = () => {
         <Menu.Item>
           <div className="drop-div">
             <img src={item?.media?.url} loading="lazy" width={30} alt="" />
-            <a
-              onClick={() => router.push('/blogDetails/Details')}
+            <Link
+              href="/courses/[id]"
+              as={`/courses/${item?._id}`}
               className="dropdown-link-2 w-dropdown-link"
             >
               {item.title}
-            </a>
+            </Link>
           </div>
         </Menu.Item>
       ))}
@@ -91,12 +98,13 @@ const Navbar = () => {
         <Menu.Item>
           <div className="drop-div">
             <img src={item?.media?.url} loading="lazy" width={30} alt="" />
-            <a
-              onClick={() => router.push('/blogDetails/Details')}
+            <Link
+              href="/competitions/[id]"
+              as={`/competitions/${item?._id}`}
               className="dropdown-link-2 w-dropdown-link"
             >
               {item.title}
-            </a>
+            </Link>
           </div>
         </Menu.Item>
       ))}
@@ -109,17 +117,35 @@ const Navbar = () => {
         <Menu.Item>
           <div className="drop-div">
             <img src={item?.media?.url} loading="lazy" width={30} alt="" />
-            <a
-              onClick={() => router.push('/blogDetails/Details')}
+            <Link
+              href="/competitions/[id]"
+              as={`/competitions/${item?._id}`}
               className="dropdown-link-2 w-dropdown-link"
             >
               {item.title}
-            </a>
+            </Link>
           </div>
         </Menu.Item>
       ))}
     </Menu>
   );
+  // const dropdownBreakfast = (
+  //   <Menu>
+  //     {breakfast?.map((item) => (
+  //       <Menu.Item>
+  //         <div className="drop-div">
+  //           <img src={item?.media?.url} loading="lazy" width={30} alt="" />
+  //           <a
+  //             onClick={() => router.push('/blogDetails/Details')}
+  //             className="dropdown-link-2 w-dropdown-link"
+  //           >
+  //             {item.title}
+  //           </a>
+  //         </div>
+  //       </Menu.Item>
+  //     ))}
+  //   </Menu>
+  // );
 
   const menu = (
     <Menu>
@@ -328,7 +354,11 @@ const Navbar = () => {
                 </Dropdown>
               </div>
             </div>
-            <div data-hover="true" data-delay="0" className="dropdown-2 w-dropdown">
+            <div
+              data-hover="true"
+              data-delay="0"
+              className="dropdown-2 w-dropdown"
+            >
               <div className="dropdown-toggle-2 w-dropdown-toggle">
                 {/* <div className="icon-28 w-icon-dropdown-toggle"></div> */}
                 <div className="text-block-14">

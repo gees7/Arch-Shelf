@@ -1,32 +1,30 @@
-import React,{useEffect, useState} from 'react';
-import Link from "next/link";
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { connect } from 'react-redux';
-import { getResource, getResources} from '../../store/actions/blogActions';
+import { getResource, getResources } from '../../store/actions/blogActions';
 const index = ({ id, resource, resources, getResource, getResources }) => {
-    var mL = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
+  var mL = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
   ];
   const [bdate, setBdate] = useState(null);
   const [readTime, setReadTime] = useState(0);
   useEffect(() => {
     getResources({ query: { type: 'resources', limit: '6' } });
     getResource({ pathParams: { id } });
-  }, [id])
-
+  }, [id]);
 
   useEffect(() => {
-    
     var finaldate;
     var time;
     const date = new Date(resource?.data?.created_at);
@@ -39,9 +37,9 @@ const index = ({ id, resource, resources, getResource, getResources }) => {
     var wordCount = resource?.data?.body?.match(/(\w+)/g).length;
     time = Math.round(wordCount / 250);
     setReadTime(time);
-  }, [resource])
+  }, [resource]);
 
-  console.log(resource,'RESOURCE');
+  console.log(resource, 'RESOURCE');
   return (
     <div>
       <div>
@@ -72,10 +70,10 @@ const index = ({ id, resource, resources, getResource, getResources }) => {
                       className="profile-picture"
                     />
                     <div className="normal-wrapper">
-                      <div className="title-small">{resource?.data?.user?.name}</div>
-                      <p className="paragraph-detials-small">
-                        {bdate}
-                      </p>
+                      <div className="title-small">
+                        {resource?.data?.user?.name}
+                      </div>
+                      <p className="paragraph-detials-small">{bdate}</p>
                     </div>
                   </div>
                   <div className="div-block-23369 blog_page">
@@ -209,7 +207,6 @@ const index = ({ id, resource, resources, getResource, getResources }) => {
     </div>
   );
 };
-
 
 function mapStateToProps(state) {
   const resources = state?.dashboard?.resources;

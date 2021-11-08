@@ -14,9 +14,6 @@ const Projects = () => {
   return (
     <>
       <div>
-        <Navbar />
-      </div>
-      <div>
         <div className="div-block-97">
           <div className="div-heading">
             <h1 className="heading-2">Projects</h1>
@@ -1578,10 +1575,6 @@ const Projects = () => {
             </div>
           </div>
         </div>
-      </div>
-
-      <div>
-        <Footer />
       </div>
     </>
   );
