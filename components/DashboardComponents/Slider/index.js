@@ -42,12 +42,12 @@ const Slider = ({ dashboard }) => {
                         <div className="white-box">
                           <div className="overflow-hide">
                             <p className="hero-slide-p-2">
-                              {dashboard[0]?.feed?.category?.name}
+                              {dashboard[0]?.feed?.category?.name || 'N/A'}
                             </p>
                           </div>
                           <div className="overflow-hide heading">
                             <h3 className="heading-34">
-                              {dashboard[0]?.feed?.title}
+                              {dashboard[0]?.feed?.title || 'N/A'}
                             </h3>
                           </div>
                         </div>
@@ -84,6 +84,7 @@ const Slider = ({ dashboard }) => {
                       backgroundPosition: '0px 0px, 50% 50%',
                       backgroundSize: 'cover',
                       backgroundRepeat: 'no-repeat',
+                      backgroundColor: '#dddddd',
                     }}
                   />
                   <Link
@@ -94,12 +95,12 @@ const Slider = ({ dashboard }) => {
                       <div className="white-box">
                         <div className="overflow-hide">
                           <p className="hero-slide-p-2">
-                            {dashboard[1]?.feed?.category?.name}
+                            {dashboard[1]?.feed?.category?.name || 'N/A'}
                           </p>
                         </div>
                         <div className="overflow-hide heading">
                           <h3 className="heading-34">
-                            {dashboard[1]?.feed?.title}
+                            {dashboard[1]?.feed?.title || 'N/A'}
                           </h3>
                         </div>
                       </div>
@@ -130,6 +131,7 @@ const Slider = ({ dashboard }) => {
                       backgroundPosition: '0px 0px, 50% 50%',
                       backgroundSize: 'cover',
                       backgroundRepeat: 'no-repeat',
+                      backgroundColor: '#dddddd',
                     }}
                   />
                   <Link
@@ -140,12 +142,12 @@ const Slider = ({ dashboard }) => {
                       <div className="white-box">
                         <div className="overflow-hide">
                           <p className="hero-slide-p-2">
-                            {dashboard[2]?.feed?.category?.name}
+                            {dashboard[2]?.feed?.category?.name || 'N/A'}
                           </p>
                         </div>
                         <div className="overflow-hide heading">
                           <h3 className="heading-34">
-                            {dashboard[2]?.feed?.title}
+                            {dashboard[2]?.feed?.title || 'N/A'}
                           </h3>
                         </div>
                       </div>
@@ -190,6 +192,7 @@ const Slider = ({ dashboard }) => {
                     backgroundPosition: '0px 0px, 50% 50%',
                     backgroundSize: 'cover',
                     backgroundRepeat: 'no-repeat',
+                    backgroundColor: '#dddddd',
                   }}
                 />
                 <Link
@@ -200,12 +203,12 @@ const Slider = ({ dashboard }) => {
                     <div className="white-box">
                       <div className="overflow-hide">
                         <p className="hero-slide-p-2">
-                          {dashboard[3]?.feed?.category?.name}
+                          {dashboard[3]?.feed?.category?.name || 'N/A'}
                         </p>
                       </div>
                       <div className="overflow-hide heading">
                         <h3 className="heading-34">
-                          {dashboard[3]?.feed?.title}
+                          {dashboard[3]?.feed?.title || 'N/A'}
                         </h3>
                       </div>
                     </div>

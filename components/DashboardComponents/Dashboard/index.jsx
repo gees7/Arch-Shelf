@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getDashboardFeed, getFeeds } from '../../../store/api/dashboardApi';
-import moment from 'moment';
+import { getCompetitions } from '../../../store/api/competitionApi';
 import styles from './style.less';
 import router from 'next/router';
 import Link from 'next/link';
@@ -27,8 +27,8 @@ const Dashboard = () => {
     getFeeds({ query: { type: 'courses', limit: '3' } }).then((res) => {
       setCourses(res?.data?.feedList);
     });
-    getFeeds({ query: { type: 'competitions', limit: '3' } }).then((res) => {
-      setCompetitions(res?.data?.feedList);
+    getCompetitions({ query: { limit: '3' } }).then((res) => {
+      setCompetitions(res?.data?.competitionsList);
     });
     getFeeds({ query: { type: 'breakfasts', limit: '3' } }).then((res) => {
       setBreakfast(res?.data?.feedList);
@@ -84,44 +84,68 @@ const Dashboard = () => {
             </Link>
           </div>
         </div>
-        <div className="wrapper-2">
-          {projects?.map((proj) => (
-            <div className="main-block w-inline-block">
-              <img
-                className="image-box"
-                src={proj.media?.url}
-                style={{ height: '300px' }}
-              />
-              <div className="card-box">
-                <div className="text-block-162">
-                  <strong className="bold-text-3">{proj?.title}</strong>
-                  <br />
+        {projects.length > 0 ? (
+          <div className="wrapper-2">
+            {projects?.map((proj) => (
+              <div className="main-block w-inline-block">
+                <img
+                  className="image-box"
+                  src={proj.media?.url}
+                  style={{ height: '300px', width: '100%' }}
+                />
+                <div className="card-box">
+                  <div
+                    className="text-block-162"
+                    style={{
+                      width: '90%',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}
+                  >
+                    <strong className="bold-text-3">{proj?.title}</strong>
+                    <br />
+                  </div>
+                  <div className="text-block-6 bold">
+                    <strong
+                      className={`${styles.truncate_overflow} bold-text-4`}
+                    >
+                      <span
+                        className="box"
+                        dangerouslySetInnerHTML={{ __html: proj?.body }}
+                      />
+                    </strong>
+                  </div>
                 </div>
-                <div className="text-block-6 bold">
-                  <strong className={`${styles.truncate_overflow} bold-text-4`}>
-                    <span
-                      className="box"
-                      dangerouslySetInnerHTML={{ __html: proj?.body }}
-                    />
-                  </strong>
+                <div className="div-block-70">
+                  <Link
+                    href="/projects/[id]"
+                    as={`/projects/${proj?._id}`}
+                    className="dropdown-link-2 w-dropdown-link"
+                  >
+                    <a className="text-block-64">Read More</a>
+                  </Link>
+                  <div className="div-block-208">
+                    <div className="project-txt past">
+                      {proj?.category?.name}
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="div-block-70">
-                <Link
-                  href="/blogDetails/[details]"
-                  as={`/blogDetails/${proj?._id}`}
-                  className="dropdown-link-2 w-dropdown-link"
-                >
-                  <a className="text-block-64">Read More</a>
-                </Link>
-                <div className="div-block-208">
-                  <div className="project-txt past">{proj?.category?.name}</div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex items-center justify-center flex-col">
+            <img
+              src={require('../../../assets/images/empty.png')}
+              className="m-8"
+              style={{ width: '200px' }}
+            />
+            <p className="mb-12">No blog found</p>
+          </div>
+        )}
       </div>
+
       <div className="template">
         <div className="heading-div">
           <div className="div-block-410">
@@ -153,56 +177,68 @@ const Dashboard = () => {
             </Link>
           </div>
         </div>
-        <div className="wrapper-2">
-          {competitions?.map((comp) => (
-            <a
-              href="blog-categories.html"
-              className="main-block w-inline-block"
-            >
-              <img
-                className="image-box"
-                src={comp?.media?.url}
-                style={{ height: '300px' }}
-              />
-              <div className="card-box">
-                <div className="div-block-68">
-                  <div className="div-block-204">
-                    <h1 className="folllowers contact">Contact us</h1>
-                    <img
-                      src="../../../assets/images/arrow-1.svg"
-                      loading="lazy"
-                      width={18}
-                      alt
-                      className="image-36"
-                    />
+        {competitions?.length > 0 ? (
+          <div className="wrapper-2">
+            {competitions?.map((comp) => (
+              <div className="main-block w-inline-block">
+                <img
+                  className="image-box"
+                  src={comp?.media[0]?.url}
+                  style={{ height: '300px', width: '100%' }}
+                />
+                <div className="card-box">
+                  <div
+                    className="text-block-162"
+                    style={{
+                      width: '90%',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}
+                  >
+                    <strong className="bold-text-3">{comp?.title}</strong>
+                    <br />
+                  </div>
+                  <div className="text-block-6 bold">
+                    <strong
+                      className={`${styles.truncate_overflow} bold-text-4`}
+                    >
+                      <span
+                        className="box"
+                        dangerouslySetInnerHTML={{
+                          __html: comp?.body,
+                        }}
+                      />
+                    </strong>
                   </div>
                 </div>
-                <div className="text-block-162">
-                  <strong className="bold-text-3">{comp?.title}</strong>
-                  <br />
-                </div>
-                <div className="text-block-6 bold">
-                  <strong className={`${styles.truncate_overflow} bold-text-4`}>
-                    <span
-                      className="box"
-                      dangerouslySetInnerHTML={{
-                        __html: comp?.body,
-                      }}
-                    />
-                  </strong>
+                <div className="div-block-70">
+                  <Link
+                    href="/competitions/[id]"
+                    as={`/competitions/${comp?._id}`}
+                    className="dropdown-link-2 w-dropdown-link"
+                  >
+                    <a className="text-block-64">Read More</a>
+                  </Link>
+                  <div className="div-block-208">
+                    <div className="project-txt past">{comp?.status}</div>
+                  </div>
                 </div>
               </div>
-              <div className="div-block-70">
-                <div className="text-block-64">Read More</div>
-                <div className="div-block-208">
-                  <div className="project-txt past">Competitions</div>
-                </div>
-              </div>
-            </a>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex items-center justify-center flex-col">
+            <img
+              src={require('../../../assets/images/empty.png')}
+              className="m-8"
+              style={{ width: '200px' }}
+            />
+            <p className="mb-12">No blog found</p>
+          </div>
+        )}
       </div>
-      <div className="services">
+      <div className="services " style={{ paddingBottom: '0px' }}>
         <div className="div-heading">
           <h1 className="heading-2">Our services</h1>
           <div className="line" />
@@ -356,7 +392,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="btn-div">
+        {/* <div className="btn-div">
           <Link
             href="/resources"
             as="resources"
@@ -372,7 +408,7 @@ const Dashboard = () => {
               />
             </a>
           </Link>
-        </div>
+        </div> */}
       </div>
       <div className="template">
         <div className="heading-div">
@@ -405,55 +441,78 @@ const Dashboard = () => {
             </Link>
           </div>
         </div>
-        <div className="wrapper-2">
-          {dashboard.map((dash, index) =>
-            index < 3 ? (
-              <a className="main-block w-inline-block">
-                <img
-                  className="image-box bg"
-                  src={dash?.feed?.media?.url}
-                  style={{ height: '300px' }}
-                />
-                <div className="card-box">
-                  <div className="div-block-68">
-                    <div className="div-block-204">
-                      <h1 className="folllowers contact">Contact us</h1>
-                      <img
-                        src="../../../assets/images/arrow-1.svg"
-                        loading="lazy"
-                        width={18}
-                        alt
-                        className="image-36"
-                      />
+        {dashboard.length > 0 ? (
+          <div className="wrapper-2">
+            {dashboard.map((dash, index) =>
+              index < 3 ? (
+                <a className="main-block w-inline-block">
+                  <img
+                    className="image-box bg"
+                    src={dash?.feed?.media?.url}
+                    style={{ height: '300px', width: '100%' }}
+                  />
+                  <div className="card-box">
+                    <div className="div-block-68">
+                      <div className="div-block-204">
+                        <h1 className="folllowers contact">Contact us</h1>
+                        <img
+                          src="../../../assets/images/arrow-1.svg"
+                          loading="lazy"
+                          width={18}
+                          alt
+                          className="image-36"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      className="text-block-162"
+                      style={{
+                        width: '90%',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                      }}
+                    >
+                      <strong className="bold-text-3">
+                        {dash?.feed?.title}
+                      </strong>
+                      <br />
+                    </div>
+                    <div className="text-block-6 bold">
+                      <strong
+                        className={`${styles.truncate_overflow} bold-text-4`}
+                      >
+                        <span
+                          className="box"
+                          dangerouslySetInnerHTML={{
+                            __html: dash?.feed?.body,
+                          }}
+                        />
+                      </strong>
                     </div>
                   </div>
-                  <div className="text-block-162">
-                    <strong className="bold-text-3">{dash?.feed?.title}</strong>
-                    <br />
+                  <div className="div-block-70">
+                    <div className="text-block-64">Read More</div>
+                    <div className="div-block-208">
+                      <div className="project-txt past">
+                        {dash?.feed?.category?.name}
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-block-6 bold">
-                    <strong
-                      className={`${styles.truncate_overflow} bold-text-4`}
-                    >
-                      <span
-                        className="box"
-                        dangerouslySetInnerHTML={{
-                          __html: dash?.feed?.body,
-                        }}
-                      />
-                    </strong>
-                  </div>
-                </div>
-                <div className="div-block-70">
-                  <div className="text-block-64">Read More</div>
-                  <div className="div-block-208">
-                    <div className="project-txt past">Products</div>
-                  </div>
-                </div>
-              </a>
-            ) : null
-          )}
-        </div>
+                </a>
+              ) : null
+            )}
+          </div>
+        ) : (
+          <div className="flex items-center justify-center flex-col">
+            <img
+              src={require('../../../assets/images/empty.png')}
+              className="m-8"
+              style={{ width: '200px' }}
+            />
+            <p className="mb-12">No blog found</p>
+          </div>
+        )}
       </div>
       <div className="div-block">
         <div className="div-block-2">

@@ -39,12 +39,23 @@ const Navbar = () => {
     <Menu>
       {resources?.map((item) => (
         <Menu.Item>
-          <div className="drop-div">
-            <img src={item?.media?.url} loading="lazy" width={30} alt />
+          <div className="drop-div p-2 border-b">
+            <img
+              src={item?.media?.url}
+              loading="lazy"
+              width={40}
+              style={{
+                height: '40px',
+                borderRadius: '8px',
+                marginRight: '12px',
+              }}
+              alt
+            />
             <Link
               href="/resources/[id]"
               as={`/resources/${item?._id}`}
-              className="dropdown-link-2 w-dropdown-link"
+              className="dropdown-link-2 w-dropdown-link truncate"
+              style={{ width: '140px' }}
             >
               {item?.title}
             </Link>
@@ -58,12 +69,23 @@ const Navbar = () => {
     <Menu>
       {projects?.map((item) => (
         <Menu.Item>
-          <div className="drop-div">
-            <img src={item?.media?.url} loading="lazy" width={30} alt />
+          <div className="drop-div p-2 border-b">
+            <img
+              src={item?.media?.url}
+              loading="lazy"
+              width={40}
+              style={{
+                height: '40px',
+                borderRadius: '8px',
+                marginRight: '12px',
+              }}
+              alt
+            />
             <Link
               href="/projects/[id]"
               as={`/projects/${item?._id}`}
-              className="dropdown-link-2 w-dropdown-link"
+              className="dropdown-link-2 w-dropdown-link truncate"
+              style={{ width: '140px' }}
             >
               {item?.title}
             </Link>
@@ -77,14 +99,25 @@ const Navbar = () => {
     <Menu>
       {courses?.map((item) => (
         <Menu.Item>
-          <div className="drop-div">
-            <img src={item?.media?.url} loading="lazy" width={30} alt="" />
+          <div className="drop-div p-2 border-b">
+            <img
+              src={item?.media?.url}
+              loading="lazy"
+              width={40}
+              style={{
+                height: '40px',
+                borderRadius: '8px',
+                marginRight: '12px',
+              }}
+              alt=""
+            />
             <Link
               href="/courses/[id]"
               as={`/courses/${item?._id}`}
-              className="dropdown-link-2 w-dropdown-link"
+              className="dropdown-link-2 w-dropdown-link truncate"
+              style={{ width: '140px' }}
             >
-              {item.title}
+              {item?.title}
             </Link>
           </div>
         </Menu.Item>
@@ -96,14 +129,25 @@ const Navbar = () => {
     <Menu>
       {competitions?.map((item) => (
         <Menu.Item>
-          <div className="drop-div">
-            <img src={item?.media?.url} loading="lazy" width={30} alt="" />
+          <div className="drop-div p-2 border-b">
+            <img
+              src={item?.media?.url}
+              loading="lazy"
+              width={40}
+              style={{
+                height: '40px',
+                borderRadius: '8px',
+                marginRight: '12px',
+              }}
+              alt=""
+            />
             <Link
               href="/competitions/[id]"
               as={`/competitions/${item?._id}`}
-              className="dropdown-link-2 w-dropdown-link"
+              className="dropdown-link-2 w-dropdown-link truncate"
+              style={{ width: '140px' }}
             >
-              {item.title}
+              {item?.title}
             </Link>
           </div>
         </Menu.Item>
@@ -115,57 +159,40 @@ const Navbar = () => {
     <Menu>
       {breakfast?.map((item) => (
         <Menu.Item>
-          <div className="drop-div">
-            <img src={item?.media?.url} loading="lazy" width={30} alt="" />
+          <div className="drop-div p-2 border-b">
             <Link
-              href="/competitions/[id]"
-              as={`/competitions/${item?._id}`}
-              className="dropdown-link-2 w-dropdown-link"
+              href="/breakfasts/[id]"
+              as={`/breakfasts/${item?._id}`}
+              className="dropdown-link-2 w-dropdown-link truncate"
+              style={{ width: '140px' }}
             >
-              {item.title}
+              {item?.title}
             </Link>
           </div>
         </Menu.Item>
       ))}
     </Menu>
   );
-  // const dropdownBreakfast = (
-  //   <Menu>
-  //     {breakfast?.map((item) => (
-  //       <Menu.Item>
-  //         <div className="drop-div">
-  //           <img src={item?.media?.url} loading="lazy" width={30} alt="" />
-  //           <a
-  //             onClick={() => router.push('/blogDetails/Details')}
-  //             className="dropdown-link-2 w-dropdown-link"
-  //           >
-  //             {item.title}
-  //           </a>
-  //         </div>
-  //       </Menu.Item>
-  //     ))}
-  //   </Menu>
-  // );
 
   const menu = (
     <Menu>
       <Menu.Item>
-        <div className="drop-div">
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            className="dropdown-link-2 w-dropdown-link"
-            onClick={() => router.push('/about')}
+        <div className="drop-div p-2 border-b">
+          <Link
+            href="/about"
+            as="/about"
+            className="dropdown-link-2 w-dropdown-link truncate"
+            style={{ width: '140px' }}
           >
-            About Us
-          </a>
+            About us
+          </Link>
         </div>
       </Menu.Item>
       {/* <Menu.Item>
-        <div className="drop-div">
+        <div className="drop-div p-2 border-b">
           <a
             target="_blank"
-            className="dropdown-link-2 w-dropdown-link"
+            className="dropdown-link-2 w-dropdown-link truncate"
             rel="noopener noreferrer"
             href="https://www.antgroup.com"
           >
@@ -174,10 +201,10 @@ const Navbar = () => {
         </div>
       </Menu.Item> */}
       {/* <Menu.Item>
-        <div className="drop-div">
+        <div className="drop-div p-2 border-b">
           <a
             target="_blank"
-            className="dropdown-link-2 w-dropdown-link"
+            className="dropdown-link-2 w-dropdown-link truncate"
             rel="noopener noreferrer"
             href="https://www.antgroup.com"
           >
@@ -185,16 +212,17 @@ const Navbar = () => {
           </a>
         </div>
       </Menu.Item> */}
+
       <Menu.Item>
-        <div className="drop-div">
-          <a
-            target="_blank"
-            className="dropdown-link-2 w-dropdown-link"
-            rel="noopener noreferrer"
-            onClick={() => router.push('/contact')}
+        <div className="drop-div p-2 border-b">
+          <Link
+            href="/contact"
+            as="/contact"
+            className="dropdown-link-2 w-dropdown-link truncate"
+            style={{ width: '140px' }}
           >
-            Contact Us
-          </a>
+            Contact us
+          </Link>
         </div>
       </Menu.Item>
     </Menu>
@@ -278,24 +306,28 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div class="container w-container">
-          <Link href="/" as="/" className="dropdown-link-2 w-dropdown-link">
-            <a aria-current="page" class="brand w-nav-brand w--current">
-              <div class="text-block-8">
-                <span class="text-span">ARCH</span> SHELF
+        <div className="container w-container">
+          <Link
+            href="/"
+            as="/"
+            className="dropdown-link-2 w-dropdown-link truncate"
+          >
+            <a aria-current="page" className="brand w-nav-brand w--current">
+              <div className="text-block-8">
+                <span className="text-span">ARCH</span> SHELF
               </div>
             </a>
           </Link>
-          <nav role="navigation" class="nav-menu w-nav-menu">
+          <nav role="navigation" className="nav-menu w-nav-menu">
             <a
               aria-current="page"
-              class="nav-link w-nav-link"
+              className="nav-link w-nav-link"
               onClick={() => router.push('/')}
             >
               Home
             </a>
-            <div data-hover="true" data-delay="0" class="w-dropdown">
-              <div class="w-dropdown-toggle">
+            <div data-hover="true" data-delay="0" className="w-dropdown">
+              <div className="w-dropdown-toggle">
                 <Dropdown overlay={dropdownResource}>
                   <a
                     className="ant-dropdown-link"
@@ -306,8 +338,8 @@ const Navbar = () => {
                 </Dropdown>
               </div>
             </div>
-            <div data-hover="true" data-delay="0" class="w-dropdown">
-              <div class="w-dropdown-toggle">
+            <div data-hover="true" data-delay="0" className="w-dropdown">
+              <div className="w-dropdown-toggle">
                 <Dropdown overlay={dropdownProjects}>
                   <a
                     className="ant-dropdown-link"

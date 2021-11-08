@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 const AboutUs = () => {
   return (
@@ -38,9 +39,13 @@ const AboutUs = () => {
                 </p>
               </div>
               <div className="div-block-395">
-                <a href="#" className="button-8 w-button">
-                  Know More
-                </a>
+                <Link
+                  href="/contact"
+                  as="/contact"
+                  className="dropdown-link-2 w-dropdown-link"
+                >
+                  <a className="button-8 w-button">Contact us</a>
+                </Link>
               </div>
             </div>
             <div className="div-block-390">
@@ -77,9 +82,13 @@ const AboutUs = () => {
                 </p>
               </div>
               <div className="div-block-395">
-                <a href="#" className="button-8 w-button">
-                  Contact us
-                </a>
+                <Link
+                  href="/contact"
+                  as="/contact"
+                  className="dropdown-link-2 w-dropdown-link"
+                >
+                  <a className="button-8 w-button">Contact us</a>
+                </Link>
               </div>
             </div>
             <div className="div-block-394">

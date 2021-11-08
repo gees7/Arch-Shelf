@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 const Footer = () => {
   return (
@@ -41,17 +42,19 @@ const Footer = () => {
               <h4 className="footerheading1">
                 <strong>Quick Links</strong>
               </h4>
-              <a
-                href="index.html"
-                aria-current="page"
-                className="homelink w--current"
+              <Link href="/" as="/" className="dropdown-link-2 w-dropdown-link">
+                <a aria-current="page" className="homelink w--current">
+                  Home
+                </a>
+              </Link>
+              <Link
+                href="/about"
+                as="/about"
+                className="dropdown-link-2 w-dropdown-link"
               >
-                Home
-              </a>
-              <a href="about-us.html" className="homelink">
-                About
-              </a>
-              <a href="#" className="homelink">
+                <a className="homelink">About</a>
+              </Link>
+              {/* <a href="#" className="homelink">
                 Team
               </a>
               <a href="#" className="homelink">
@@ -59,53 +62,65 @@ const Footer = () => {
               </a>
               <a href="#" className="homelink">
                 Career
-              </a>
+              </a> */}
             </div>
             <div className="footerdiv1 _1 _2">
               <h4 className="footerheading1">
                 <strong>Information</strong>
               </h4>
-              <a href="#" className="homelink">
-                Privacy policy
-              </a>
-              <a href="#" className="homelink">
-                Terms &amp; condition
-              </a>
-              <a href="contact-us.html" className="homelink">
-                Contact
-              </a>
+              <Link href="/" as="/" className="dropdown-link-2 w-dropdown-link">
+                <a className="homelink">Privacy policy</a>
+              </Link>
+              <Link href="/" as="/" className="dropdown-link-2 w-dropdown-link">
+                <a className="homelink"> Terms &amp; condition</a>
+              </Link>
+              <Link
+                href="/contact"
+                as="/contact"
+                className="dropdown-link-2 w-dropdown-link"
+              >
+                <a className="homelink"> Contact</a>
+              </Link>
             </div>
             <div className="footerdiv1 _3">
               <h4 className="footerheading1">Resources</h4>
-              <a href="#" className="homelink">
-                Resources
-              </a>
-              <a href="#" className="homelink">
-                Projects
-              </a>
-              <a href="#" className="homelink">
-                Courses
-              </a>
-              <a href="competitions.html" className="homelink">
-                Competitions
-              </a>
-              <a href="#" className="homelink">
+              <Link
+                href="/resources"
+                as="/resources"
+                className="dropdown-link-2 w-dropdown-link"
+              >
+                <a className="homelink">Resources</a>
+              </Link>
+              <Link
+                href="/projects"
+                as="/projects"
+                className="dropdown-link-2 w-dropdown-link"
+              >
+                <a className="homelink">Projects</a>
+              </Link>
+              <Link
+                href="/courses"
+                as="/courses"
+                className="dropdown-link-2 w-dropdown-link"
+              >
+                <a className="homelink">Courses</a>
+              </Link>
+              <Link
+                href="/competitions"
+                as="/competitions"
+                className="dropdown-link-2 w-dropdown-link"
+              >
+                <a className="homelink">Competitions</a>
+              </Link>
+              {/* <a className="homelink">
                 Travel
-              </a>
+              </a> */}
             </div>
           </div>
         </div>
         <div className="bottomdiv">
           <div className="copyrightdiv">
-            <p className="paragraph color">
-              Copyright © archshelf
-              <a
-                href="https://webflow.com/"
-                target="_blank"
-                className="bottomlink"
-              />
-              <br />
-            </p>
+            <p className="paragraph color">Copyright © archshelf</p>
           </div>
         </div>
       </div>
