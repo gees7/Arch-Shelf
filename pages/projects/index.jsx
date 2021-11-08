@@ -9,7 +9,7 @@ import Area from '../../components/Area';
 import Materials from '../../components/Materials';
 import Year from '../../components/Year';
 import Manufacturers from '../../components/Manufacturers';
-
+import Link from 'next/link'
 import { connect } from 'react-redux';
 import { getProjects } from '../../store/actions/blogActions';
 const Projects = ({projects, getProjects }) => {
@@ -21,7 +21,6 @@ const Projects = ({projects, getProjects }) => {
   const Content = () => {
     let data = [];
     for (let i = 0; i < projects?.length; i=i+6) {
-      console.log("jjj "+i);
 
       data.push(
         <div key={i}>
@@ -229,17 +228,16 @@ const Projects = ({projects, getProjects }) => {
                           loading="lazy"
                           alt
                         />
-                        <a
-                          href="projects-detail-page.html"
-                          className="link-block-23 w-inline-block"
-                        >
-                          <p className="hero-slide-p-2 project-sub-head">
-                            {projects[i]?.category?.name}
-                          </p>
-                          <h3 className="heading-34 project-head">
-                            {projects[i]?.title}
-                          </h3>
-                        </a>
+                        <Link href={'/projects/' + projects[i]?._id}>
+                          <div className="link-block-23 w-inline-block cursor-pointer">
+                            <p className="hero-slide-p-2 project-sub-head">
+                              {projects[i]?.category?.name}
+                            </p>
+                            <h3 className="heading-34 project-head">
+                              {projects[i]?.title}
+                            </h3>
+                          </div>
+                        </Link>
                       </div>
                     </div>
                     {/* <div className="w-slide">
@@ -297,17 +295,16 @@ const Projects = ({projects, getProjects }) => {
                           alt
                           className="image-54"
                         />
-                        <a
-                          href="#"
-                          className="link-block-23 short-box w-inline-block"
-                        >
-                          <p className="hero-slide-p-2 project-sub-head">
-                            {projects[i + 1]?.category?.name}
-                          </p>
-                          <h3 className="heading-34 project-head">
-                            {projects[i + 1]?.title}
-                          </h3>
-                        </a>
+                        <Link href={'/projects/' + projects[i + 1]?._id}>
+                          <div className="link-block-23 short-box w-inline-block cursor-pointer">
+                            <p className="hero-slide-p-2 project-sub-head">
+                              {projects[i + 1]?.category?.name}
+                            </p>
+                            <h3 className="heading-34 project-head">
+                              {projects[i + 1]?.title}
+                            </h3>
+                          </div>
+                        </Link>
                       </div>
                     </div>
                     <div className="w-slide">
@@ -361,17 +358,16 @@ const Projects = ({projects, getProjects }) => {
                           loading="lazy"
                           alt
                         />
-                        <a
-                          href="#"
-                          className="link-block-23 short-box w-inline-block"
-                        >
-                          <p className="hero-slide-p-2 project-sub-head">
-                            {projects[i + 2]?.category?.name}
-                          </p>
-                          <h3 className="heading-34 project-head">
-                            {projects[i + 2]?.title}
-                          </h3>
-                        </a>
+                        <Link href={'/projects/' + projects[i + 2]?._id}>
+                          <div className="link-block-23 short-box w-inline-block cursor-pointer">
+                            <p className="hero-slide-p-2 project-sub-head">
+                              {projects[i + 2]?.category?.name}
+                            </p>
+                            <h3 className="heading-34 project-head">
+                              {projects[i + 2]?.title}
+                            </h3>
+                          </div>
+                        </Link>
                       </div>
                     </div>
                     <div className="w-slide">
@@ -428,17 +424,16 @@ const Projects = ({projects, getProjects }) => {
                             loading="lazy"
                             alt
                           />
-                          <a
-                            href="#"
-                            className="link-block-23 short-box w-inline-block"
-                          >
-                            <p className="hero-slide-p-2 project-sub-head">
-                              {projects[i + 3]?.category?.name}
-                            </p>
-                            <h3 className="heading-34 project-head">
-                              {projects[i + 3]?.title}
-                            </h3>
-                          </a>
+                          <Link href={'/projects/' + projects[i + 3]?._id}>
+                            <div className="link-block-23 short-box w-inline-block cursor-pointer">
+                              <p className="hero-slide-p-2 project-sub-head">
+                                {projects[i + 3]?.category?.name}
+                              </p>
+                              <h3 className="heading-34 project-head">
+                                {projects[i + 3]?.title}
+                              </h3>
+                            </div>
+                          </Link>
                         </div>
                       </div>
                       {/* <div className="w-slide">
@@ -493,17 +488,16 @@ const Projects = ({projects, getProjects }) => {
                               loading="lazy"
                               alt
                             />
-                            <a
-                              href="#"
-                              className="link-block-23 short-box w-inline-block"
-                            >
-                              <p className="hero-slide-p-2 project-sub-head">
-                                {projects[i + 4]?.category?.name}
-                              </p>
-                              <h3 className="heading-34 project-head">
-                                {projects[i + 4]?.title}
-                              </h3>
-                            </a>
+                            <Link href={'/projects/' + projects[i + 4]?._id}>
+                              <div className="link-block-23 short-box w-inline-block cursor-pointer">
+                                <p className="hero-slide-p-2 project-sub-head">
+                                  {projects[i + 4]?.category?.name}
+                                </p>
+                                <h3 className="heading-34 project-head">
+                                  {projects[i + 4]?.title}
+                                </h3>
+                              </div>
+                            </Link>
                           </div>
                         </div>
                         {/* <div className="w-slide">
@@ -564,17 +558,16 @@ const Projects = ({projects, getProjects }) => {
                               loading="lazy"
                               alt
                             />
-                            <a
-                              href="#"
-                              className="link-block-23 short-box w-inline-block"
-                            >
-                              <p className="hero-slide-p-2 project-sub-head">
-                                {projects[i + 5]?.category?.name}
-                              </p>
-                              <h3 className="heading-34 project-head">
-                                {projects[i + 5]?.title}
-                              </h3>
-                            </a>
+                            <Link href={'/projects/' + projects[i + 5]?._id}>
+                              <div className="link-block-23 short-box w-inline-block cursor-pointer">
+                                <p className="hero-slide-p-2 project-sub-head">
+                                  {projects[i + 5]?.category?.name}
+                                </p>
+                                <h3 className="heading-34 project-head">
+                                  {projects[i + 5]?.title}
+                                </h3>
+                              </div>
+                            </Link>
                           </div>
                         </div>
                         {/* <div className="w-slide">

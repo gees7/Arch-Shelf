@@ -1,8 +1,18 @@
 import React,{useEffect, useState} from 'react';
 import Link from "next/link";
 import { connect } from 'react-redux';
-import { getResource, getResources} from '../../store/actions/blogActions';
-const index = ({ id, resource, resources, getResource, getResources, type }) => {
+import { getResource, getResources, getProject, getProjects} from '../../store/actions/blogActions';
+const index = ({
+  id,
+  resource,
+  resources,
+  getResource,
+  getResources,
+  project,
+  projects,
+  getProject,
+  getProjects,
+  type }) => {
     var mL = [
       'January',
       'February',
@@ -19,30 +29,50 @@ const index = ({ id, resource, resources, getResource, getResources, type }) => 
   ];
   const [bdate, setBdate] = useState(null);
   const [readTime, setReadTime] = useState(0);
+  const [data, setData] = useState(null);
+  const [dataList, setDataList] = useState(null);
   useEffect(() => {
     if(type === "resources")
     {
-      getResources({ query: { type: 'resources', limit: '6' } });
+      getResources({ query: { type: 'resources', limit: '4' } });
       getResource({ pathParams: { id } });
+    }
+    if (type === 'projects') {
+      getProjects({ query: { type: 'projects', limit: '4' } });
+      getProject({ pathParams: { id } });
     }
   }, [id])
 
+  useEffect(() => {
+    
+    if (type === 'resources') {
+      setData(resource?.data);
+      setDataList(resources?.data?.feedList);
+    }
+    if (type === 'projects') {
+      setData(project?.data);
+      setDataList(projects?.data?.feedList);
+    }
+  }, [resource,project,resources,projects])
 
   useEffect(() => {
     
-    var finaldate;
-    var time;
-    const date = new Date(resource?.data?.created_at);
-    var day = date.getDate();
-    var month = date.getMonth();
-    var year = date.getFullYear();
+    if (data) {
+      var finaldate;
+      var time;
+      const date = new Date(data?.created_at);
+      var day = date.getDate();
+      var month = date.getMonth();
+      var year = date.getFullYear();
 
-    finaldate = mL[month] + ' ' + day + ', ' + year;
-    setBdate(finaldate);
-    var wordCount = resource?.data?.body?.match(/(\w+)/g).length;
-    time = Math.round(wordCount / 250);
-    setReadTime(time);
-  }, [resource])
+      finaldate = mL[month] + ' ' + day + ', ' + year;
+      setBdate(finaldate);
+      var wordCount = data?.body?.match(/(\w+)/g).length;
+      time = Math.round(wordCount / 250);
+      setReadTime(time);
+    }
+
+  }, [data])
 
   // console.log(resource,'RESOURCE');
   return (
@@ -57,7 +87,7 @@ const index = ({ id, resource, resources, getResource, getResources, type }) => 
         <div className="blog-section">
           <div className="container-501">
             <img
-              src={resource?.data?.media?.url}
+              src={data?.media?.url}
               // sizes="(max-width: 479px) 94vw, (max-width: 991px) 75vw, (max-width: 1279px) 73vw, (max-width: 1919px) 76vw, 1216px"
               // srcSet="images/architect-drawing-architectural-project-PH4Q7EB-min-p-500.jpeg 500w, images/architect-drawing-architectural-project-PH4Q7EB-min-p-800.jpeg 800w, images/architect-drawing-architectural-project-PH4Q7EB-min.jpg 888w"
               alt=""
@@ -65,7 +95,7 @@ const index = ({ id, resource, resources, getResource, getResources, type }) => 
             />
             <div className="w-layout-grid blog-grid">
               <div className="content-left_blog">
-                <h2 className="blog-h2">{resource?.data?.title}</h2>
+                <h2 className="blog-h2">{data?.title}</h2>
                 <div className="blog-content blog-page">
                   <div className="profile-block blog_page">
                     <img
@@ -76,7 +106,7 @@ const index = ({ id, resource, resources, getResource, getResources, type }) => 
                     />
                     <div className="normal-wrapper">
                       <div className="title-small">
-                        {resource?.data?.user?.name}
+                        {data?.user?.name}
                       </div>
                       <p className="paragraph-detials-small">{bdate}</p>
                     </div>
@@ -115,7 +145,7 @@ const index = ({ id, resource, resources, getResource, getResources, type }) => 
                   Lorem ipsum is the dummy{' '}
                 </p> */}
                 <p
-                  dangerouslySetInnerHTML={{ __html: resource?.data?.body }}
+                  dangerouslySetInnerHTML={{ __html: data?.body }}
                   className="paragraph-detials-large"
                 ></p>
                 {/* <img
@@ -184,7 +214,7 @@ const index = ({ id, resource, resources, getResource, getResources, type }) => 
                   <div className="featured-articles">
                     <div className="title-large">Related articles</div>
                     <div className="featured-block">
-                      {resources?.data?.feedList?.map((item) => (
+                      {dataList?.map((item) => (
                         <div className="featured-item-2 w-inline-block my-6">
                           <Link href={'/resources/' + item?._id}>
                             <div className="cursor-pointer flex items-center">
@@ -216,11 +246,15 @@ const index = ({ id, resource, resources, getResource, getResources, type }) => 
 function mapStateToProps(state) {
   const resources = state?.dashboard?.resources;
   const resource = state?.dashboard?.resource;
-  return { resource, resources };
+  const projects = state?.dashboard?.projects;
+  const project = state?.dashboard?.project;
+  return { resource, resources, project, projects };
 }
 const mapDispatchToProps = (dispatch) => ({
   getResources: (payload) => dispatch(getResources(payload)),
   getResource: (payload) => dispatch(getResource(payload)),
+  getProjects: (payload) => dispatch(getProjects(payload)),
+  getProject: (payload) => dispatch(getProject(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(index);
