@@ -36,7 +36,7 @@ const Resources = ({ categories, getCategories, resources, getResources }) => {
   }, [catId, keywordState]);
 
   const search = () => {
-    // setLoading(true);
+    setLoading(true);
     const body = {
       start,
       limit,
@@ -46,19 +46,18 @@ const Resources = ({ categories, getCategories, resources, getResources }) => {
     };
     getResources({ query: body })
       .then((res) => {
-        setResponse(res.data);
         setLoading(false);
       })
       .catch((err) => {
-        // if (err && err.status === 400) {
-        //   notification.error({
-        //     message: 'Failed to get blogs',
-        //   });
-        // } else {
-        //   notification.error({
-        //     message: `${err?.data?.error?.message}`,
-        //   });
-        // }
+        if (err && err.status === 400) {
+          notification.error({
+            message: 'Failed to get blogs',
+          });
+        } else {
+          notification.error({
+            message: `${err?.data?.error?.message}`,
+          });
+        }
       });
   };
 
@@ -107,8 +106,8 @@ const Resources = ({ categories, getCategories, resources, getResources }) => {
                                 <img
                                   src={item?.media?.url}
                                   width={380}
-                                  sizes="(max-width: 479px) 86vw, (max-width: 767px) 89vw, (max-width: 991px) 86vw, (max-width: 1279px) 45vw, (max-width: 1919px) 48vw, 777.765625px"
-                                  srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
+                                  // sizes="(max-width: 479px) 86vw, (max-width: 767px) 89vw, (max-width: 991px) 86vw, (max-width: 1279px) 45vw, (max-width: 1919px) 48vw, 777.765625px"
+                                  // srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
                                   alt=""
                                   className="blog-image"
                                 />
@@ -157,38 +156,20 @@ const Resources = ({ categories, getCategories, resources, getResources }) => {
                         data-w-id="2cc27067-6af0-5447-19c8-c594f2b275f4"
                         className="div-block-23383"
                       >
-                        <div className="div-block-23384">
-                          <img
-                            src={resources?.data?.feedList[0]?.media?.url}
-                            loading="lazy"
-                            style={{
-                              WebkitTransform:
-                                'translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-                              MozTransform:
-                                'translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-                              msTransform:
-                                'translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-                              transform:
-                                'translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-                            }}
-                            sizes="100vw"
-                            // srcSet="images/cp-molettoparedes-epem-0154_1-p-500.jpeg 500w, images/cp-molettoparedes-epem-0154_1-p-800.jpeg 800w, images/cp-molettoparedes-epem-0154_1-p-1080.jpeg 1080w, images/cp-molettoparedes-epem-0154_1-p-1600.jpeg 1600w, images/cp-molettoparedes-epem-0154_1cp-molettoparedes-epem-0154.jpg 2000w"
-                            alt=""
-                            className="image-57"
-                          />
-                        </div>
-                        <div className="div-block-23385">
+                        <div
+                          className="div-block-23385"
+                          style={{
+                            backgroundImage: `url(${resources?.data?.feedList[3]?.media?.url})`,
+                          }}
+                        >
                           <div className="div-block-23386">
                             <div className="div-block-23387">
                               <div>
-                                {resources?.data?.feedList[0]?.shortDescription}{' '}
+                                {resources?.data?.feedList[3]?.shortDescription}
                               </div>
-                              {/* <div className="text-block-170">
-                            This is some text{' '}
-                          </div> */}
                             </div>
                             <h2 className="heading-39">
-                              {resources?.data?.feedList[0]?.title}
+                              {resources?.data?.feedList[3]?.title}
                             </h2>
                           </div>
                         </div>
@@ -206,35 +187,21 @@ const Resources = ({ categories, getCategories, resources, getResources }) => {
                         data-w-id="571b9005-e3a0-ddaa-14b7-4fb7226efaaf"
                         className="div-block-23383"
                       >
-                        <div className="div-block-23384 smaal-size">
-                          <img
-                            src="/public/images/cp-molettoparedes-epem-0154_1cp-molettoparedes-epem-0154.jpg"
-                            loading="lazy"
-                            style={{
-                              WebkitTransform:
-                                'translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-                              MozTransform:
-                                'translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-                              msTransform:
-                                'translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-                              transform:
-                                'translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-                            }}
-                            sizes="100vw"
-                            srcSet="images/cp-molettoparedes-epem-0154_1-p-500.jpeg 500w, images/cp-molettoparedes-epem-0154_1-p-800.jpeg 800w, images/cp-molettoparedes-epem-0154_1-p-1080.jpeg 1080w, images/cp-molettoparedes-epem-0154_1-p-1600.jpeg 1600w, images/cp-molettoparedes-epem-0154_1cp-molettoparedes-epem-0154.jpg 2000w"
-                            alt=""
-                            className="image-57"
-                          />
-                        </div>
-                        <div className="div-block-23385">
+                        <div
+                          className="div-block-23385"
+                          style={{
+                            backgroundImage: `url(${resources?.data?.feedList[4]?.media?.url})`,
+                          }}
+                        >
                           <div className="div-block-23386">
                             <div className="div-block-23387">
-                              <div>This is some text </div>
-                              <div className="text-block-170">
-                                This is some text{' '}
+                              <div>
+                                {resources?.data?.feedList[4]?.shortDescription}
                               </div>
                             </div>
-                            <h2 className="heading-39">Heading</h2>
+                            <h2 className="heading-39">
+                              {resources?.data?.feedList[4]?.title}
+                            </h2>
                           </div>
                         </div>
                       </div>
@@ -263,15 +230,21 @@ const Resources = ({ categories, getCategories, resources, getResources }) => {
                             className="image-57"
                           />
                         </div>
-                        <div className="div-block-23385">
+                        <div
+                          className="div-block-23385"
+                          style={{
+                            backgroundImage: `url(${resources?.data?.feedList[5]?.media?.url})`,
+                          }}
+                        >
                           <div className="div-block-23386">
                             <div className="div-block-23387">
-                              <div>This is some text </div>
-                              <div className="text-block-170">
-                                This is some text{' '}
+                              <div>
+                                {resources?.data?.feedList[5]?.shortDescription}
                               </div>
                             </div>
-                            <h2 className="heading-39">Heading</h2>
+                            <h2 className="heading-39">
+                              {resources?.data?.feedList[5]?.title}
+                            </h2>
                           </div>
                         </div>
                       </div>
@@ -299,8 +272,8 @@ const Resources = ({ categories, getCategories, resources, getResources }) => {
                                 <img
                                   src={item?.media?.url}
                                   width={380}
-                                  sizes="(max-width: 479px) 86vw, (max-width: 767px) 89vw, (max-width: 991px) 86vw, (max-width: 1279px) 45vw, (max-width: 1919px) 48vw, 777.765625px"
-                                  srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
+                                  // sizes="(max-width: 479px) 86vw, (max-width: 767px) 89vw, (max-width: 991px) 86vw, (max-width: 1279px) 45vw, (max-width: 1919px) 48vw, 777.765625px"
+                                  // srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
                                   alt=""
                                   className="blog-image"
                                 />
