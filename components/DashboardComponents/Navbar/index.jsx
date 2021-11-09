@@ -13,6 +13,7 @@ const Navbar = () => {
   const [courses, setCourses] = useState([]);
   const [competitions, setCompetitions] = useState([]);
   const [breakfast, setBreakfast] = useState([]);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     getDashboardFeed().then((res) => {
@@ -195,6 +196,8 @@ const Navbar = () => {
               <div className="social-link-wrapper">
                 <form action="/search" className="search-2 w-form">
                   <input
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
                     type="search"
                     className="search-input w-input"
                     maxLength={256}
@@ -208,7 +211,15 @@ const Navbar = () => {
                     defaultValue="Search"
                     className="search-button-2 w-button"
                   />
-                  <a className="button-7 w-button">
+                  <a
+                    className="button-7 w-button"
+                    onClick={() =>
+                      router.push({
+                        pathname: '/search',
+                        query: {"query":search },
+                      })
+                    }
+                  >
                     <img
                       src={require('../../../assets/images/search_icon.svg')}
                       alt

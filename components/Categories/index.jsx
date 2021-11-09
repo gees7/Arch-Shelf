@@ -59,13 +59,13 @@ const Categories = ({ categories, getCategories, getProjects }) => {
                 {categories?.categories?.map((item) => (
                   <li className="list-item-4 cursor-pointer" key={item?._id}>
                     <div
-                      onClick={()=>setCatId(item?._id)}
+                      onClick={() => { setCatId(item?._id); setOpen(false);}}
                       data-w-id="57e5c763-6324-7567-b6cc-1ad3c6e1fef1"
                       href="#"
-                      className="link-block-22 w-inline-block"
+                      className="link-block-22 w-inline-block capitalize"
                     >
-                      <div>{item?.name}</div>
-                      <div
+                      <div className={item?._id == catId? "font-bold underline":""}>{item?.name}</div>
+                      {/* <div
                         style={{
                           WebkitTransform:
                             'translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(90deg) skew(0, 0)',
@@ -77,7 +77,7 @@ const Categories = ({ categories, getCategories, getProjects }) => {
                             'translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(90deg) skew(0, 0)',
                         }}
                         className="categories-arrow w-icon-slider-right"
-                      />
+                      /> */}
                     </div>
                   </li>
                 ))}

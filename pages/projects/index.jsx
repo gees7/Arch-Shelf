@@ -12,17 +12,17 @@ import Manufacturers from '../../components/Manufacturers';
 import Link from 'next/link'
 import { connect } from 'react-redux';
 import { getProjects } from '../../store/actions/blogActions';
-const Projects = ({projects, getProjects }) => {
+const Projects = ({ projects, getProjects }) => {
+  const [data, setData] = useState([])
   useEffect(() => {
     getProjects({ query: { type: 'projects', limit: '12' } });
   }, []);
   projects = projects?.data?.feedList;
   // console.log(projects, 'project');
   const Content = () => {
-    let data = [];
+    let temp = [];
     for (let i = 0; i < projects?.length; i=i+6) {
-
-      data.push(
+      temp.push(
         <div key={i}>
           <div className="box---projects">
             <div className="div-block-23372 hide">
@@ -635,8 +635,8 @@ const Projects = ({projects, getProjects }) => {
         </div>
       );
     }
-     return data;
-   
+    // setData(temp);
+    return temp; 
   }
   return (
     <>

@@ -40,6 +40,7 @@ const blog = {
       uri: "/category/list",
     },
   },
+  
 };
 
 export default blog;
