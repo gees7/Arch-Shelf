@@ -25,7 +25,6 @@ const index = () => {
   const query = router.query.query;
   useEffect(() => {
     searchApi({ query: { keywordState: query } }).then((res) => {
-      console.log(res?.data?.resultList, 'RE');
       if (res?.data?.resultList) {
         setResult(res?.data?.resultList);
       } else {
@@ -43,7 +42,6 @@ const index = () => {
           </div>
         </div>
         <div className="container-501">
-          {console.log(result?.length)}
           {result?.length ? (
             result?.map((item) => {
               const date = new Date(item?.created_at);
@@ -70,8 +68,8 @@ const index = () => {
                         <img
                           src={item?.media?.url}
                           width={380}
-                          sizes="(max-width: 479px) 86vw, (max-width: 767px) 89vw, (max-width: 991px) 86vw, (max-width: 1279px) 45vw, (max-width: 1919px) 48vw, 777.765625px"
-                          srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
+                          // sizes="(max-width: 479px) 86vw, (max-width: 767px) 89vw, (max-width: 991px) 86vw, (max-width: 1279px) 45vw, (max-width: 1919px) 48vw, 777.765625px"
+                          // srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"
                           alt=""
                           className="blog-image"
                         />
@@ -110,15 +108,13 @@ const index = () => {
                 );
             })
           ) : (
-            <div
-              className="my-16"
-              style={{ width: '100%' }}
-              >
-                <h1 className="text-3xl text-center">No matching records found</h1>
+            <div className="my-16" style={{ width: '100%' }}>
+              <h1 className="text-3xl text-center">
+                No matching records found
+              </h1>
             </div>
           )}
         </div>
-        <Footer />
       </div>
     </div>
   );
