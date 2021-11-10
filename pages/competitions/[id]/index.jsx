@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { getCompetition } from '../../../store/api/competitionApi';
-import FeatureArticle from '../FeatureArticle';
+import FeatureArticle from '../../competitions/FeatureArticle';
 import moment from 'moment';
 
 const Competitions = () => {
@@ -194,7 +194,7 @@ const Competitions = () => {
               </div>
               <div className="content-right">
                 <div className="stick-wrapper">
-                  <FeatureArticle id={competition?._id} />
+                  <FeatureArticle id={competition?._id} type="competitions" />
                 </div>
               </div>
             </div>

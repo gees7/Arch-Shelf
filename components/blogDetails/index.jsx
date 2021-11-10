@@ -142,7 +142,7 @@ const index = ({
                             <div className="cursor-pointer flex items-center">
                               <img
                                 src={item?.media?.url}
-                                width={90}
+                                style={{ width: '100px', height: '80px' }}
                                 alt
                                 className="feature-image-2"
                               />
