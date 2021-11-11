@@ -153,7 +153,12 @@ const index = ({ id, type }) => {
                                   alt
                                   className="feature-image-2"
                                 />
-                                <div className="title-small">{item?.title}</div>
+                                <div
+                                  className="title-small truncate"
+                                  style={{ maxWidth: '280px' }}
+                                >
+                                  {item?.title}
+                                </div>
                               </div>
                             </Link>
                           </div>

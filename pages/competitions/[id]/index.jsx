@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { getCompetition } from '../../../store/api/competitionApi';
-import FeatureArticle from '../../competitions/FeatureArticle';
+import FeatureArticle from '../../../components/FeatureArticle';
 import moment from 'moment';
 
 const Competitions = () => {

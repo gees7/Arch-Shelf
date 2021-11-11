@@ -3,7 +3,7 @@ import { getCompetitions } from '../../store/api/competitionApi';
 import Link from 'next/link';
 import { Pagination, Spin, Input } from 'antd';
 import moment from 'moment';
-import FeatureArticle from './FeatureArticle';
+import FeatureArticle from '../../components/FeatureArticle';
 import { debounce } from 'lodash';
 
 const Competitions = () => {
@@ -93,29 +93,13 @@ const Competitions = () => {
                                     as={`/competitions/${comp?._id}`}
                                     className="dropdown-link-2 w-dropdown-link"
                                   >
-                                    <a className="link-13 _2">
+                                    <div
+                                      className="link-13 _2 truncate cursor-pointer"
+                                      style={{ maxWidth: '300px' }}
+                                    >
                                       {comp ? comp?.title : 'N/A'}
-                                    </a>
+                                    </div>
                                   </Link>
-                                  <p
-                                    className="paragraph-21 _2"
-                                    style={{
-                                      maxWidth: '320px',
-                                      whiteSpace: 'nowrap',
-                                      overflow: 'hidden',
-                                      textOverflow: 'ellipsis',
-                                    }}
-                                  >
-                                    {comp ? (
-                                      <span
-                                        dangerouslySetInnerHTML={{
-                                          __html: comp.body,
-                                        }}
-                                      ></span>
-                                    ) : (
-                                      'N/A'
-                                    )}
-                                  </p>
                                 </div>
                               </div>
                             </div>

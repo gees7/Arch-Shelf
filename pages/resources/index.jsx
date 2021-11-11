@@ -113,7 +113,12 @@ const Resources = ({ categories, getCategories, resources, getResources }) => {
                                   {item?.category?.name}
                                 </div>
                               </div>
-                              <h3 className="heading-h2">{item?.title}</h3>
+                              <h3
+                                className="heading-h2 truncate"
+                                style={{ maxWidth: '400px' }}
+                              >
+                                {item?.title}
+                              </h3>
                               <p className="paragraph-detials-medium">
                                 {item?.shortDescription}
                               </p>
@@ -169,7 +174,10 @@ const Resources = ({ categories, getCategories, resources, getResources }) => {
                                 {resources?.data?.feedList[3]?.shortDescription}
                               </div>
                             </div>
-                            <h2 className="heading-39">
+                            <h2
+                              className="text-white heading-39 truncate"
+                              style={{ maxWidth: '400px' }}
+                            >
                               {resources?.data?.feedList[3]?.title}
                             </h2>
                             <div className="w-full flex justify-end">

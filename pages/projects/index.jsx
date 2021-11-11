@@ -106,7 +106,10 @@ const Projects = () => {
                                   <p className="hero-slide-p-2 project-sub-head">
                                     {projects[i]?.category?.name}
                                   </p>
-                                  <h3 className="heading-34 project-head">
+                                  <h3
+                                    className="heading-34 project-head truncate"
+                                    style={{ maxWidth: '600px' }}
+                                  >
                                     {projects[i]?.title}
                                   </h3>
                                 </div>
@@ -176,7 +179,10 @@ const Projects = () => {
                                   <p className="hero-slide-p-2 project-sub-head">
                                     {projects[i + 1]?.category?.name}
                                   </p>
-                                  <h3 className="heading-34 project-head">
+                                  <h3
+                                    className="heading-34 project-head truncate"
+                                    style={{ maxWidth: '400px' }}
+                                  >
                                     {projects[i + 1]?.title}
                                   </h3>
                                 </div>
@@ -247,7 +253,10 @@ const Projects = () => {
                                   <p className="hero-slide-p-2 project-sub-head">
                                     {projects[i + 2]?.category?.name}
                                   </p>
-                                  <h3 className="heading-34 project-head">
+                                  <h3
+                                    className="heading-34 project-head truncate"
+                                    style={{ maxWidth: '400px' }}
+                                  >
                                     {projects[i + 2]?.title}
                                   </h3>
                                 </div>
@@ -322,7 +331,10 @@ const Projects = () => {
                                 <p className="hero-slide-p-2 project-sub-head">
                                   {projects[i + 3]?.category?.name}
                                 </p>
-                                <h3 className="heading-34 project-head">
+                                <h3
+                                  className="heading-34 project-head truncate"
+                                  style={{ maxWidth: '400px' }}
+                                >
                                   {projects[i + 3]?.title}
                                 </h3>
                               </div>
@@ -387,7 +399,10 @@ const Projects = () => {
                                     <p className="hero-slide-p-2 project-sub-head">
                                       {projects[i + 4]?.category?.name}
                                     </p>
-                                    <h3 className="heading-34 project-head">
+                                    <h3
+                                      className="heading-34 project-head truncate"
+                                      style={{ maxWidth: '400px' }}
+                                    >
                                       {projects[i + 4]?.title}
                                     </h3>
                                   </div>
@@ -459,7 +474,10 @@ const Projects = () => {
                                     <p className="hero-slide-p-2 project-sub-head">
                                       {projects[i + 5]?.category?.name}
                                     </p>
-                                    <h3 className="heading-34 project-head">
+                                    <h3
+                                      className="heading-34 project-head truncate"
+                                      style={{ maxWidth: '400px' }}
+                                    >
                                       {projects[i + 5]?.title}
                                     </h3>
                                   </div>
@@ -604,13 +622,13 @@ const Projects = () => {
                               open={open}
                               setOpen={setOpen}
                             />
-                            <Country />
+                            {/* <Country />
                             <Architects />
                             <Manufacturers />
                             <Year />
                             <Materials />
                             <Area />
-                            <Color />
+                            <Color /> */}
                           </div>
                         </div>
                         {projects?.length > 0 ? (

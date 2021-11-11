@@ -46,7 +46,10 @@ const Slider = ({ dashboard }) => {
                             </p>
                           </div>
                           <div className="overflow-hide heading">
-                            <h3 className="heading-34">
+                            <h3
+                              className="heading-34 truncate"
+                              style={{ maxWidth: '400px' }}
+                            >
                               {dashboard[0]?.feed?.title || 'N/A'}
                             </h3>
                           </div>
@@ -99,7 +102,10 @@ const Slider = ({ dashboard }) => {
                           </p>
                         </div>
                         <div className="overflow-hide heading">
-                          <h3 className="heading-34">
+                          <h3
+                            className="heading-34 truncate"
+                            style={{ maxWidth: '400px' }}
+                          >
                             {dashboard[1]?.feed?.title || 'N/A'}
                           </h3>
                         </div>
@@ -146,7 +152,10 @@ const Slider = ({ dashboard }) => {
                           </p>
                         </div>
                         <div className="overflow-hide heading">
-                          <h3 className="heading-34">
+                          <h3
+                            className="heading-34 truncate"
+                            style={{ maxWidth: '400px' }}
+                          >
                             {dashboard[2]?.feed?.title || 'N/A'}
                           </h3>
                         </div>
@@ -207,7 +216,10 @@ const Slider = ({ dashboard }) => {
                         </p>
                       </div>
                       <div className="overflow-hide heading">
-                        <h3 className="heading-34">
+                        <h3
+                          className="heading-34 truncate"
+                          style={{ maxWidth: '400px' }}
+                        >
                           {dashboard[3]?.feed?.title || 'N/A'}
                         </h3>
                       </div>

@@ -103,7 +103,12 @@ const Dashboard = () => {
                       textOverflow: 'ellipsis',
                     }}
                   >
-                    <strong className="bold-text-3">{proj?.title}</strong>
+                    <strong
+                      className="bold-text-3 truncate"
+                      style={{ maxWidth: '200px' }}
+                    >
+                      {proj?.title}
+                    </strong>
                     <br />
                   </div>
                   <div className="text-block-6 bold">
@@ -112,8 +117,9 @@ const Dashboard = () => {
                     >
                       <span
                         className="box"
-                        dangerouslySetInnerHTML={{ __html: proj?.body }}
-                      />
+                        // dangerouslySetInnerHTML={{ __html: proj?.body }}
+                      />{' '}
+                      {proj?.shortDescription}
                     </strong>
                   </div>
                 </div>
@@ -196,7 +202,12 @@ const Dashboard = () => {
                       textOverflow: 'ellipsis',
                     }}
                   >
-                    <strong className="bold-text-3">{comp?.title}</strong>
+                    <strong
+                      className="bold-text-3 truncate"
+                      style={{ maxWidth: '200px' }}
+                    >
+                      {comp?.title}
+                    </strong>
                     <br />
                   </div>
                   <div className="text-block-6 bold">
@@ -205,10 +216,9 @@ const Dashboard = () => {
                     >
                       <span
                         className="box"
-                        dangerouslySetInnerHTML={{
-                          __html: comp?.body,
-                        }}
-                      />
+                        // dangerouslySetInnerHTML={{ __html: proj?.body }}
+                      />{' '}
+                      {comp?.shortDescription}
                     </strong>
                   </div>
                 </div>
@@ -445,7 +455,7 @@ const Dashboard = () => {
           <div className="wrapper-2">
             {dashboard.map((dash, index) =>
               index < 3 ? (
-                <a className="main-block w-inline-block">
+                <div className="main-block w-inline-block">
                   <img
                     className="image-box bg"
                     src={dash?.feed?.media?.url}
@@ -473,7 +483,10 @@ const Dashboard = () => {
                         textOverflow: 'ellipsis',
                       }}
                     >
-                      <strong className="bold-text-3">
+                      <strong
+                        className="bold-text-3 truncate"
+                        style={{ maxWidth: '200px' }}
+                      >
                         {dash?.feed?.title}
                       </strong>
                       <br />
@@ -482,24 +495,26 @@ const Dashboard = () => {
                       <strong
                         className={`${styles.truncate_overflow} bold-text-4`}
                       >
-                        <span
-                          className="box"
-                          dangerouslySetInnerHTML={{
-                            __html: dash?.feed?.body,
-                          }}
-                        />
+                        <span className="box" />
+                        {dash?.feed?.shortDescription}
                       </strong>
                     </div>
                   </div>
                   <div className="div-block-70">
-                    <div className="text-block-64">Read More</div>
+                    <Link
+                      href={`/${dash?.feed?.type}/[id]`}
+                      as={`/${dash?.feed?.type}/${dash?.feed?._id}`}
+                      className="dropdown-link-2 w-dropdown-link"
+                    >
+                      <a className="text-block-64">Read More</a>
+                    </Link>
                     <div className="div-block-208">
                       <div className="project-txt past">
                         {dash?.feed?.category?.name}
                       </div>
                     </div>
                   </div>
-                </a>
+                </div>
               ) : null
             )}
           </div>

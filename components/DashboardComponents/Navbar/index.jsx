@@ -3,6 +3,7 @@ import { Menu, Dropdown } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { getDashboardFeed, getFeeds } from '../../../store/api/dashboardApi';
+import { getCompetitions } from '../../../store/api/competitionApi';
 import Link from 'next/link';
 
 const Navbar = () => {
@@ -13,7 +14,7 @@ const Navbar = () => {
   const [courses, setCourses] = useState([]);
   const [competitions, setCompetitions] = useState([]);
   const [breakfast, setBreakfast] = useState([]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     getDashboardFeed().then((res) => {
@@ -28,8 +29,8 @@ const Navbar = () => {
     getFeeds({ query: { type: 'courses', limit: '3' } }).then((res) => {
       setCourses(res?.data?.feedList);
     });
-    getFeeds({ query: { type: 'competitions', limit: '3' } }).then((res) => {
-      setCompetitions(res?.data?.feedList);
+    getCompetitions({ query: { limit: '3' } }).then((res) => {
+      setCompetitions(res?.data?.competitionsList);
     });
     getFeeds({ query: { type: 'breakfasts', limit: '3' } }).then((res) => {
       setBreakfast(res?.data?.feedList);
@@ -40,7 +41,10 @@ const Navbar = () => {
     <Menu>
       {resources?.map((item) => (
         <Menu.Item>
-          <div className="drop-div p-2 border-b">
+          <div
+            className="drop-div p-2 border-b truncate"
+            style={{ maxWidth: '200px' }}
+          >
             <img
               src={item?.media?.url}
               loading="lazy"
@@ -55,8 +59,7 @@ const Navbar = () => {
             <Link
               href="/resources/[id]"
               as={`/resources/${item?._id}`}
-              className="dropdown-link-2 w-dropdown-link truncate"
-              style={{ width: '140px' }}
+              className="dropdown-link-2 w-dropdown-link"
             >
               {item?.title}
             </Link>
@@ -70,7 +73,10 @@ const Navbar = () => {
     <Menu>
       {projects?.map((item) => (
         <Menu.Item>
-          <div className="drop-div p-2 border-b">
+          <div
+            className="drop-div p-2 border-b truncate"
+            style={{ maxWidth: '200px' }}
+          >
             <img
               src={item?.media?.url}
               loading="lazy"
@@ -85,8 +91,7 @@ const Navbar = () => {
             <Link
               href="/projects/[id]"
               as={`/projects/${item?._id}`}
-              className="dropdown-link-2 w-dropdown-link truncate"
-              style={{ width: '140px' }}
+              className="dropdown-link-2 w-dropdown-link"
             >
               {item?.title}
             </Link>
@@ -100,7 +105,10 @@ const Navbar = () => {
     <Menu>
       {courses?.map((item) => (
         <Menu.Item>
-          <div className="drop-div p-2 border-b">
+          <div
+            className="drop-div p-2 border-b truncate"
+            style={{ maxWidth: '200px' }}
+          >
             <img
               src={item?.media?.url}
               loading="lazy"
@@ -115,8 +123,7 @@ const Navbar = () => {
             <Link
               href="/courses/[id]"
               as={`/courses/${item?._id}`}
-              className="dropdown-link-2 w-dropdown-link truncate"
-              style={{ width: '140px' }}
+              className="dropdown-link-2 w-dropdown-link"
             >
               {item?.title}
             </Link>
@@ -130,9 +137,12 @@ const Navbar = () => {
     <Menu>
       {competitions?.map((item) => (
         <Menu.Item>
-          <div className="drop-div p-2 border-b">
+          <div
+            className="drop-div p-2 border-b truncate"
+            style={{ maxWidth: '200px' }}
+          >
             <img
-              src={item?.media?.url}
+              src={item?.media[0]?.url}
               loading="lazy"
               width={40}
               style={{
@@ -145,8 +155,7 @@ const Navbar = () => {
             <Link
               href="/competitions/[id]"
               as={`/competitions/${item?._id}`}
-              className="dropdown-link-2 w-dropdown-link truncate"
-              style={{ width: '140px' }}
+              className="dropdown-link-2 w-dropdown-link"
             >
               {item?.title}
             </Link>
@@ -160,12 +169,14 @@ const Navbar = () => {
     <Menu>
       {breakfast?.map((item) => (
         <Menu.Item>
-          <div className="drop-div p-2 border-b">
+          <div
+            className="drop-div p-2 border-b truncate"
+            style={{ maxWidth: '200px' }}
+          >
             <Link
               href="/breakfasts/[id]"
               as={`/breakfasts/${item?._id}`}
-              className="dropdown-link-2 w-dropdown-link truncate"
-              style={{ width: '140px' }}
+              className="dropdown-link-2 w-dropdown-link"
             >
               {item?.title}
             </Link>
@@ -178,12 +189,14 @@ const Navbar = () => {
   const menu = (
     <Menu>
       <Menu.Item>
-        <div className="drop-div p-2 border-b">
+        <div
+          className="drop-div p-2 border-b truncate"
+          style={{ maxWidth: '200px' }}
+        >
           <Link
             href="/about"
             as="/about"
-            className="dropdown-link-2 w-dropdown-link truncate"
-            style={{ width: '140px' }}
+            className="dropdown-link-2 w-dropdown-link"
           >
             About us
           </Link>
@@ -215,12 +228,14 @@ const Navbar = () => {
       </Menu.Item> */}
 
       <Menu.Item>
-        <div className="drop-div p-2 border-b">
+        <div
+          className="drop-div p-2 border-b truncate"
+          style={{ maxWidth: '200px' }}
+        >
           <Link
             href="/contact"
             as="/contact"
-            className="dropdown-link-2 w-dropdown-link truncate"
-            style={{ width: '140px' }}
+            className="dropdown-link-2 w-dropdown-link"
           >
             Contact us
           </Link>
@@ -270,7 +285,7 @@ const Navbar = () => {
                     onClick={() =>
                       router.push({
                         pathname: '/search',
-                        query: {"query":search },
+                        query: { query: search },
                       })
                     }
                   >
