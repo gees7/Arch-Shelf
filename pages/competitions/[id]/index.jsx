@@ -13,7 +13,6 @@ const Competitions = () => {
     setLoading(true);
     getCompetition({ pathParams: { id } })
       .then((res) => {
-        console.log(`res`, res);
         setCompetition(res?.data);
         setLoading(false);
       })

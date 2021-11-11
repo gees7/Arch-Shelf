@@ -9,10 +9,7 @@ const index = ({ id }) => {
   useEffect(() => {
     setLoading(true);
     const body = {
-      start: 0,
       limit: 4,
-      // selected,
-      // keywordState,
     };
     getCompetitions({ query: body })
       .then((res) => {

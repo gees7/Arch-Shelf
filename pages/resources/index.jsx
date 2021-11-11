@@ -32,10 +32,6 @@ const Resources = ({ categories, getCategories, resources, getResources }) => {
   }, []);
 
   useEffect(() => {
-    search();
-  }, [catId, keywordState]);
-
-  const search = () => {
     setLoading(true);
     const body = {
       start,
@@ -59,7 +55,7 @@ const Resources = ({ categories, getCategories, resources, getResources }) => {
           });
         }
       });
-  };
+  }, [catId, keywordState, start, limit]);
 
   const action = (val) => setKeywordState(val);
   const debounceSearch = debounce(action, 1000);
@@ -420,26 +416,32 @@ const Resources = ({ categories, getCategories, resources, getResources }) => {
                 </div>
                 <div className="categories-block">
                   <div className="title-large">Filter By Categories</div>
-                  <span
-                    className={`categories-pill w-inline-block cursor-pointer
+                  {categories?.categories.length > 0 ? (
+                    <div>
+                      <span
+                        className={`categories-pill w-inline-block cursor-pointer
                         ${!catId ? `bg-gray-900` : `bg-gray-700`}
                       `}
-                    onClick={() => setCatId('')}
-                  >
-                    <div className="title-small pink">All</div>
-                  </span>
+                        onClick={() => setCatId('')}
+                      >
+                        <div className="title-small pink">All</div>
+                      </span>
 
-                  {categories?.categories?.map((item) => (
-                    <span
-                      key={item?._id}
-                      className={`categories-pill w-inline-block cursor-pointer 
+                      {categories?.categories?.map((item) => (
+                        <span
+                          key={item?._id}
+                          className={`categories-pill w-inline-block cursor-pointer 
                           ${catId === item?._id ? 'bg-gray-900' : 'bg-gray-700'}
                         `}
-                      onClick={() => setCatId(item?._id)}
-                    >
-                      <div className="title-small pink">{item?.name}</div>
-                    </span>
-                  ))}
+                          onClick={() => setCatId(item?._id)}
+                        >
+                          <div className="title-small pink">{item?.name}</div>
+                        </span>
+                      ))}
+                    </div>
+                  ) : (
+                    'No category found'
+                  )}
                 </div>
                 <img
                   src="https://assets.website-files.com/615e8b5e6632c8dc750e1133/61651f9a56de5b87a53233c9_ad-3.JPG"

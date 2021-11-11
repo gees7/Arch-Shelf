@@ -7,18 +7,9 @@ import {
   getProject,
   getProjects,
 } from '../../store/actions/blogActions';
-const index = ({
-  id,
-  resource,
-  resources,
-  getResource,
-  getResources,
-  project,
-  projects,
-  getProject,
-  getProjects,
-  type,
-}) => {
+import { getFeed, getFeeds } from '../../store/api/dashboardApi';
+
+const index = ({ id, type }) => {
   var mL = [
     'January',
     'February',
@@ -37,27 +28,42 @@ const index = ({
   const [readTime, setReadTime] = useState(0);
   const [data, setData] = useState(null);
   const [dataList, setDataList] = useState(null);
+
   useEffect(() => {
-    if (type === 'resources') {
-      getResources({ query: { type: 'resources', limit: '4' } });
-      getResource({ pathParams: { id } });
-    }
-    if (type === 'projects') {
-      getProjects({ query: { type: 'projects', limit: '4' } });
-      getProject({ pathParams: { id } });
-    }
+    getFeed({ pathParams: { id } })
+      .then((res) => {
+        setData(res?.data);
+      })
+      .catch((err) => {
+        if (err && err.status === 400) {
+          notification.error({
+            message: 'Failed to get competitions',
+          });
+        } else {
+          notification.error({
+            message: `${err.data.error.message}`,
+          });
+        }
+      });
   }, [id]);
 
   useEffect(() => {
-    if (type === 'resources') {
-      setData(resource?.data);
-      setDataList(resources?.data?.feedList);
-    }
-    if (type === 'projects') {
-      setData(project?.data);
-      setDataList(projects?.data?.feedList);
-    }
-  }, [resource, project, resources, projects]);
+    getFeeds({ query: { type } })
+      .then((res) => {
+        setDataList(res?.data.feedList);
+      })
+      .catch((err) => {
+        if (err && err.status === 400) {
+          notification.error({
+            message: 'Failed to get competitions',
+          });
+        } else {
+          notification.error({
+            message: `${err.data.error.message}`,
+          });
+        }
+      });
+  }, [id]);
 
   useEffect(() => {
     if (data) {
@@ -76,7 +82,6 @@ const index = ({
     }
   }, [data]);
 
-  // console.log(resource,'RESOURCE');
   return (
     <div>
       <div>
@@ -111,7 +116,7 @@ const index = ({
                       <p className="paragraph-detials-small">{bdate}</p>
                     </div>
                   </div>
-                  <div className="div-block-23369 blog_page">
+                  {/* <div className="div-block-23369 blog_page">
                     <img
                       src="images/back-in-time.png"
                       loading="lazy"
@@ -123,7 +128,7 @@ const index = ({
                     <p className="paragraph-detials-medium time">
                       {readTime} Mintues Read
                     </p>
-                  </div>
+                  </div> */}
                 </div>
 
                 <p
@@ -136,21 +141,23 @@ const index = ({
                   <div className="featured-articles">
                     <div className="title-large">Featured</div>
                     <div className="featured-block">
-                      {dataList?.map((item) => (
-                        <div className="featured-item-2 w-inline-block my-6">
-                          <Link href={'/resources/' + item?._id}>
-                            <div className="cursor-pointer flex items-center">
-                              <img
-                                src={item?.media?.url}
-                                style={{ width: '100px', height: '80px' }}
-                                alt
-                                className="feature-image-2"
-                              />
-                              <div className="title-small">{item?.title}</div>
-                            </div>
-                          </Link>
-                        </div>
-                      ))}
+                      {dataList
+                        ?.filter((data) => data._id !== id)
+                        ?.map((item) => (
+                          <div className="featured-item-2 w-inline-block my-6">
+                            <Link href={'/resources/' + item?._id}>
+                              <div className="cursor-pointer flex items-center">
+                                <img
+                                  src={item?.media?.url}
+                                  style={{ width: '100px', height: '80px' }}
+                                  alt
+                                  className="feature-image-2"
+                                />
+                                <div className="title-small">{item?.title}</div>
+                              </div>
+                            </Link>
+                          </div>
+                        ))}
                     </div>
                   </div>
                 </div>

@@ -1,33 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getCategories, getProjects } from '../../store/actions/blogActions';
-import { debounce } from 'lodash';
-import { Input } from 'antd';
 
 const Categories = ({
   categories,
   getCategories,
-  getProjects,
-  start,
-  limit,
-  keywordState,
-  setKeywordState,
+  catId,
+  setCatId,
+  open,
+  setOpen,
 }) => {
-  const [catId, setCatId] = useState('');
-  const [open, setOpen] = useState(false);
-
   useEffect(() => {
     getCategories({ query: { categoryType: 'projects' } });
   }, []);
-
-  useEffect(() => {
-    getProjects({
-      query: { type: 'projects', limit, start, selected: catId, keywordState },
-    });
-  }, [catId, keywordState, limit, start]);
-
-  const action = (val) => setKeywordState(val);
-  const debounceSearch = debounce(action, 1000);
 
   return (
     <div>
@@ -46,62 +31,53 @@ const Categories = ({
               : 'dropdown-list-5 p-6 w-dropdown-list bg-white '
           }
         >
-          <div className="div-block-23357">
-            <form action="/search" className="search w-form">
-              <Input
-                className="seach-bar w-input"
-                onChange={(e) => debounceSearch(e.target.value)}
-                placeholder="Search"
-              />
-              <a className="search-button-wrapper w-inline-block">
-                <input className="search-button w-button" />
-                <img src="images/search_icon.svg" alt className="search-icon" />
-              </a>
-            </form>
-          </div>
           <div className="div-block-23358">
             <div className="div-block-23359">
               {/* <div className="div-block-23360">
                 <div className="text-block-168">Categories</div>
               </div> */}
-              <ul role="list" className="list-6 w-list-unstyled">
-                <li className="list-item-4 cursor-pointer">
-                  <div
-                    className="link-block-22 w-inline-block capitalize"
-                    onClick={() => {
-                      setCatId('');
-                      setOpen(false);
-                    }}
-                  >
+              {categories?.categories.length > 0 ? (
+                <ul role="list" className="list-6 w-list-unstyled">
+                  <li className="list-item-4 cursor-pointer">
                     <div
-                      className="font-bold underline"
-                      className={!catId ? 'font-bold underline' : ''}
-                    >
-                      All
-                    </div>
-                  </div>
-                </li>
-                {categories?.categories?.map((item) => (
-                  <li className="list-item-4 cursor-pointer" key={item?._id}>
-                    <div
+                      className="link-block-22 w-inline-block capitalize"
                       onClick={() => {
-                        setCatId(item?._id);
+                        setCatId('');
                         setOpen(false);
                       }}
-                      data-w-id="57e5c763-6324-7567-b6cc-1ad3c6e1fef1"
-                      className="link-block-22 w-inline-block capitalize"
                     >
                       <div
-                        className={
-                          item?._id == catId ? 'font-bold underline' : ''
-                        }
+                        className="font-bold underline"
+                        className={!catId ? 'font-bold underline' : ''}
                       >
-                        {item?.name}
+                        All
                       </div>
                     </div>
                   </li>
-                ))}
-              </ul>
+                  {categories?.categories?.map((item) => (
+                    <li className="list-item-4 cursor-pointer" key={item?._id}>
+                      <div
+                        onClick={() => {
+                          setCatId(item?._id);
+                          setOpen(false);
+                        }}
+                        data-w-id="57e5c763-6324-7567-b6cc-1ad3c6e1fef1"
+                        className="link-block-22 w-inline-block capitalize"
+                      >
+                        <div
+                          className={
+                            item?._id == catId ? 'font-bold underline' : ''
+                          }
+                        >
+                          {item?.name}
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                'No category found'
+              )}
             </div>
             {/* <div className="div-block-23359">
               <div className="card-1">
