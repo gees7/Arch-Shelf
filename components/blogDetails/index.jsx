@@ -105,12 +105,12 @@ const index = ({ id, type }) => {
                 <h2 className="blog-h2">{data?.title}</h2>
                 <div className="blog-content blog-page">
                   <div className="profile-block blog_page">
-                    <img
+                    {/* <img
                       src="images/team-1.jpg"
                       width={62}
                       alt=""
                       className="profile-picture"
-                    />
+                    /> */}
                     <div className="normal-wrapper">
                       <div className="title-small">{data?.user?.name}</div>
                       <p className="paragraph-detials-small">{bdate}</p>

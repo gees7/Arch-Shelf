@@ -6,6 +6,7 @@ import { getCategories } from '../../store/actions/blogActions';
 import FeatureArticle from '../../components/FeatureArticle';
 import { notification, Pagination, Spin, Input } from 'antd';
 import { debounce } from 'lodash';
+import moment from 'moment';
 
 const Courses = ({ categories, getCategories }) => {
   const [coursesData, setCoursesData] = useState([]);
@@ -101,16 +102,21 @@ const Courses = ({ categories, getCategories }) => {
                                 {item?.shortDescription}
                               </p>
                               <div className="profile-block mt-4">
-                                <img
+                                {/* <img
                                   src="images/team-1.jpg"
                                   width={40}
                                   alt
                                   className="profile-picture"
-                                />
+                                /> */}
                                 <div className="normal-wrapper">
                                   <div className="title-small">
                                     {item?.user?.name}
                                   </div>
+                                  <p className="paragraph-detials-small">
+                                    {item
+                                      ? moment(item.created_at).format('LL')
+                                      : 'N/A'}
+                                  </p>
                                 </div>
                               </div>
                             </div>

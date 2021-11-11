@@ -54,12 +54,12 @@ const Competitions = () => {
                 </h2>
                 <div className="blog-content blog-page">
                   <div className="profile-block blog_page">
-                    <img
+                    {/* <img
                       src="images/team-1.jpg"
                       width={62}
                       alt=""
                       className="profile-picture"
-                    />
+                    /> */}
                     <div className="normal-wrapper">
                       <div className="title-small">
                         {competition ? competition?.user?.name : 'N/A'}
