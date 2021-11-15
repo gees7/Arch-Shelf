@@ -96,7 +96,7 @@ const Resources = ({ categories, getCategories, resources, getResources }) => {
                           >
                             <div className="blog-image-wrap">
                               <img
-                                src={item?.media?.url}
+                                src={item?.media[0]?.url}
                                 width={380}
                                 // sizes="(max-width: 479px) 86vw, (max-width: 767px) 89vw, (max-width: 991px) 86vw, (max-width: 1279px) 45vw, (max-width: 1919px) 48vw, 777.765625px"
                                 // srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"

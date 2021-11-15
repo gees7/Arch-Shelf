@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Link from 'next/link';
+import { Carousel } from 'antd';
 
 const Slider = ({ dashboard }) => {
+  console.log(`dashboard`, dashboard);
   return (
     <div>
       <div className="hero-section _5 wf-section">
@@ -25,38 +27,41 @@ const Slider = ({ dashboard }) => {
                   data-w-id="e216f069-1762-980d-deaa-5e059803ef65"
                   className="slide-2 w-slide"
                 >
-                  <div
-                    className="div-block-386"
-                    style={{
-                      backgroundImage: `url(${dashboard[0]?.feed?.media?.url})`,
-                      backgroundPosition: '0px 0px, 50% 50%',
-                      backgroundSize: 'cover',
-                      backgroundRepeat: 'no-repeat',
-                    }}
+                  <Carousel autoplay>
+                    {dashboard[0]?.feed?.media?.map((img) => (
+                      <div>
+                        <img
+                          src={img?.url}
+                          loading="lazy"
+                          alt="image"
+                          className="div-block-386"
+                          style={{ height: '600px' }}
+                        />
+                      </div>
+                    ))}
+                  </Carousel>
+                  <Link
+                    href={`/${dashboard[0]?.feed?.type}/[id]`}
+                    as={`/${dashboard[0]?.feed?.type}/${dashboard[0]?.feed?._id}`}
                   >
-                    <Link
-                      href={`/${dashboard[0]?.feed?.type}/[id]`}
-                      as={`/${dashboard[0]?.feed?.type}/${dashboard[0]?.feed?._id}`}
-                    >
-                      <a className="link-block-21 w-inline-block">
-                        <div className="white-box">
-                          <div className="overflow-hide">
-                            <p className="hero-slide-p-2">
-                              {dashboard[0]?.feed?.category?.name || 'N/A'}
-                            </p>
-                          </div>
-                          <div className="overflow-hide heading">
-                            <h3
-                              className="heading-34 truncate"
-                              style={{ maxWidth: '400px' }}
-                            >
-                              {dashboard[0]?.feed?.title || 'N/A'}
-                            </h3>
-                          </div>
+                    <a className="link-block-21 w-inline-block">
+                      <div className="white-box">
+                        <div className="overflow-hide">
+                          <p className="hero-slide-p-2">
+                            {dashboard[0]?.feed?.category?.name || 'N/A'}
+                          </p>
                         </div>
-                      </a>
-                    </Link>
-                  </div>
+                        <div className="overflow-hide heading">
+                          <h3
+                            className="heading-34 truncate"
+                            style={{ maxWidth: '400px' }}
+                          >
+                            {dashboard[0]?.feed?.title || 'N/A'}
+                          </h3>
+                        </div>
+                      </div>
+                    </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -79,17 +84,24 @@ const Slider = ({ dashboard }) => {
               data-infinite="true"
             >
               <div className="mask-4 w-slider-mask">
-                <div className="slide-3 w-slide">
-                  <div
-                    className="div-block-413"
-                    style={{
-                      backgroundImage: `url(${dashboard[1]?.feed?.media?.url})`,
-                      backgroundPosition: '0px 0px, 50% 50%',
-                      backgroundSize: 'cover',
-                      backgroundRepeat: 'no-repeat',
-                      backgroundColor: '#dddddd',
-                    }}
-                  />
+                <div
+                  className="slide-3 w-slide"
+                  style={{ height: '200px', width: '360px' }}
+                >
+                  <Carousel autoplay>
+                    {dashboard[1]?.feed?.media?.map((img) => (
+                      <div>
+                        <img
+                          src={img?.url}
+                          loading="lazy"
+                          alt="image"
+                          className="div-block-413"
+                          style={{ height: '280px' }}
+                        />
+                      </div>
+                    ))}
+                  </Carousel>
+
                   <Link
                     href={`/${dashboard[1]?.feed?.type}/[id]`}
                     as={`/${dashboard[1]?.feed?.type}/${dashboard[1]?.feed?._id}`}
@@ -129,17 +141,23 @@ const Slider = ({ dashboard }) => {
               data-infinite="true"
             >
               <div className="mask-4 w-slider-mask">
-                <div className="slide-3 w-slide">
-                  <div
-                    className="div-block-413"
-                    style={{
-                      backgroundImage: `url(${dashboard[2]?.feed?.media?.url})`,
-                      backgroundPosition: '0px 0px, 50% 50%',
-                      backgroundSize: 'cover',
-                      backgroundRepeat: 'no-repeat',
-                      backgroundColor: '#dddddd',
-                    }}
-                  />
+                <div
+                  className="slide-3 w-slide"
+                  style={{ height: '200px', width: '360px' }}
+                >
+                  <Carousel autoplay>
+                    {dashboard[2]?.feed?.media?.map((img) => (
+                      <div>
+                        <img
+                          src={img?.url}
+                          loading="lazy"
+                          alt="image"
+                          className="div-block-413"
+                          style={{ height: '280px' }}
+                        />
+                      </div>
+                    ))}
+                  </Carousel>
                   <Link
                     href={`/${dashboard[2]?.feed?.type}/[id]`}
                     as={`/${dashboard[2]?.feed?.type}/${dashboard[2]?.feed?._id}`}
@@ -193,17 +211,23 @@ const Slider = ({ dashboard }) => {
               </div>
             </div>
             <div className="mask-4 w-slider-mask">
-              <div className="slide-3 w-slide">
-                <div
-                  className="div-block-413"
-                  style={{
-                    backgroundImage: `url(${dashboard[3]?.feed?.media?.url})`,
-                    backgroundPosition: '0px 0px, 50% 50%',
-                    backgroundSize: 'cover',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundColor: '#dddddd',
-                  }}
-                />
+              <div
+                className="slide-3 w-slide"
+                style={{ height: '400px', width: '450px' }}
+              >
+                <Carousel autoplay dots={false}>
+                  {dashboard[3]?.feed?.media?.map((img) => (
+                    <div>
+                      <img
+                        src={img?.url}
+                        loading="lazy"
+                        alt="image"
+                        className="div-block-413"
+                        style={{ height: '280px' }}
+                      />
+                    </div>
+                  ))}
+                </Carousel>
                 <Link
                   href={`/${dashboard[3]?.feed?.type}/[id]`}
                   as={`/${dashboard[3]?.feed?.type}/${dashboard[3]?.feed?._id}`}

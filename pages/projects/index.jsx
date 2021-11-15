@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Categories from '../../components/Categories';
 import Country from '../../components/Country';
 import Architects from '../../components/Architects';
@@ -11,7 +11,7 @@ import { debounce } from 'lodash';
 import Link from 'next/link';
 import { connect } from 'react-redux';
 import { getProjects } from '../../store/actions/blogActions';
-import { Pagination, Spin, Input } from 'antd';
+import { Pagination, Spin, Input, Carousel } from 'antd';
 import { getFeeds } from '../../store/api/dashboardApi';
 
 const Projects = () => {
@@ -23,6 +23,9 @@ const Projects = () => {
   const [loading, setLoading] = useState(false);
   const [catId, setCatId] = useState('');
   const [open, setOpen] = useState(false);
+  const sliderRef = useRef(null);
+  const sliderRefTwo = useRef(null);
+  const sliderRefThree = useRef(null);
 
   const projects = data?.feedList;
   const count = data?.count;
@@ -92,56 +95,46 @@ const Projects = () => {
                       >
                         <div className="mask-4 w-slider-mask">
                           <div className="w-slide">
-                            <div className="div-block-23364">
-                              <img
-                                sizes="(max-width: 479px) 92vw, (max-width: 767px) 95vw, (max-width: 991px) 31vw, (max-width: 1279px) 28vw, (max-width: 1919px) 30vw, 480px"
-                                // srcSet="images/cp-molettoparedes-epem-0154_1-p-500.jpeg 500w, images/cp-molettoparedes-epem-0154_1-p-800.jpeg 800w, images/cp-molettoparedes-epem-0154_1-p-1080.jpeg 1080w, images/cp-molettoparedes-epem-0154_1-p-1600.jpeg 1600w, images/cp-molettoparedes-epem-0154_1cp-molettoparedes-epem-0154.jpg 2000w"
-                                src={projects[i]?.media?.url}
-                                loading="lazy"
-                                alt
-                                className="w-full h-full"
-                              />
-                              <Link href={'/projects/' + projects[i]?._id}>
-                                <div className="link-block-23 w-inline-block cursor-pointer">
-                                  <p className="hero-slide-p-2 project-sub-head">
-                                    {projects[i]?.category?.name}
-                                  </p>
-                                  <h3
-                                    className="heading-34 project-head truncate"
-                                    style={{ maxWidth: '600px' }}
-                                  >
-                                    {projects[i]?.title}
-                                  </h3>
+                            <Carousel autoplay ref={sliderRef}>
+                              {projects[i]?.media?.map((img) => (
+                                <div>
+                                  <img
+                                    // sizes="(max-width: 479px) 92vw, (max-width: 767px) 95vw, (max-width: 991px) 31vw, (max-width: 1279px) 28vw, (max-width: 1919px) 30vw, 480px"
+                                    // srcSet="images/cp-molettoparedes-epem-0154_1-p-500.jpeg 500w, images/cp-molettoparedes-epem-0154_1-p-800.jpeg 800w, images/cp-molettoparedes-epem-0154_1-p-1080.jpeg 1080w, images/cp-molettoparedes-epem-0154_1-p-1600.jpeg 1600w, images/cp-molettoparedes-epem-0154_1cp-molettoparedes-epem-0154.jpg 2000w"
+                                    src={img?.url}
+                                    loading="lazy"
+                                    alt
+                                    style={{ height: '680px' }}
+                                  />
                                 </div>
-                              </Link>
-                            </div>
+                              ))}
+                            </Carousel>
+                            <Link href={'/projects/' + projects[i]?._id}>
+                              <div className="link-block-23 w-inline-block cursor-pointer">
+                                <p className="hero-slide-p-2 project-sub-head">
+                                  {projects[i]?.category?.name}
+                                </p>
+                                <h3
+                                  className="heading-34 project-head truncate"
+                                  style={{ maxWidth: '600px' }}
+                                >
+                                  {projects[i]?.title}
+                                </h3>
+                              </div>
+                            </Link>
                           </div>
-                          {/* <div className="w-slide">
-                      <div className="div-block-23364">
-                        <img
-                          sizes="(max-width: 479px) 92vw, (max-width: 767px) 95vw, (max-width: 991px) 31vw, (max-width: 1279px) 28vw, (max-width: 1919px) 30vw, 480px"
-                          srcSet="images/cp-molettoparedes-epem-0154_1-p-500.jpeg 500w, images/cp-molettoparedes-epem-0154_1-p-800.jpeg 800w, images/cp-molettoparedes-epem-0154_1-p-1080.jpeg 1080w, images/cp-molettoparedes-epem-0154_1-p-1600.jpeg 1600w, images/cp-molettoparedes-epem-0154_1cp-molettoparedes-epem-0154.jpg 2000w"
-                          src="images/cp-molettoparedes-epem-0154_1cp-molettoparedes-epem-0154.jpg"
-                          loading="lazy"
-                          alt
-                        />
-                        <a
-                          href="projects-detail-page.html"
-                          className="link-block-23 w-inline-block"
-                        >
-                          <p className="hero-slide-p-2 project-sub-head">
-                            Lorem{' '}
-                          </p>
-                          <h3 className="heading-34 project-head">Heading</h3>
-                        </a>
-                      </div>
-                    </div> */}
                         </div>
                         <div className="left-arrow-8 w-slider-arrow-left">
-                          <div className="icon-27 _1 w-icon-slider-left" />
+                          <div
+                            className="icon-27 _1 w-icon-slider-left"
+                            onClick={() => sliderRef.current.prev()}
+                          />
                         </div>
                         <div className="right-arrow-8 w-slider-arrow-right">
-                          <div className="icon-27 w-icon-slider-right" />
+                          <div
+                            className="icon-27 w-icon-slider-right"
+                            onClick={() => sliderRef.current.next()}
+                          />
                         </div>
                         <div className="slide-nav-9 w-slider-nav w-round" />
                       </div>
@@ -149,7 +142,7 @@ const Projects = () => {
                     {projects[i + 1] && (
                       <div
                         id="w-node-_0c497f53-2a51-a14b-e390-7b6095c98b62-c97228da"
-                        style={{ height: '320px' }}
+                        style={{ height: '320px', width: '350px' }}
                       >
                         <div
                           data-delay={4000}
@@ -166,14 +159,21 @@ const Projects = () => {
                         >
                           <div className="mask-4 w-slider-mask">
                             <div className="w-slide">
-                              <img
-                                sizes="(max-width: 479px) 92vw, (max-width: 767px) 95vw, (max-width: 991px) 31vw, (max-width: 1279px) 28vw, (max-width: 1919px) 30vw, 480px"
-                                // srcSet="images/cp-molettoparedes-epem-0154_1-p-500.jpeg 500w, images/cp-molettoparedes-epem-0154_1-p-800.jpeg 800w, images/cp-molettoparedes-epem-0154_1-p-1080.jpeg 1080w, images/cp-molettoparedes-epem-0154_1-p-1600.jpeg 1600w, images/cp-molettoparedes-epem-0154_1cp-molettoparedes-epem-0154.jpg 2000w"
-                                src={projects[i + 1]?.media?.url}
-                                loading="lazy"
-                                alt="image"
-                                className="w-full h-full"
-                              />
+                              <Carousel autoplay ref={sliderRefTwo}>
+                                {projects[i + 1]?.media?.map((img) => (
+                                  <div>
+                                    <img
+                                      sizes="(max-width: 479px) 92vw, (max-width: 767px) 95vw, (max-width: 991px) 31vw, (max-width: 1279px) 28vw, (max-width: 1919px) 30vw, 480px"
+                                      // srcSet="images/cp-molettoparedes-epem-0154_1-p-500.jpeg 500w, images/cp-molettoparedes-epem-0154_1-p-800.jpeg 800w, images/cp-molettoparedes-epem-0154_1-p-1080.jpeg 1080w, images/cp-molettoparedes-epem-0154_1-p-1600.jpeg 1600w, images/cp-molettoparedes-epem-0154_1cp-molettoparedes-epem-0154.jpg 2000w"
+                                      src={img?.url}
+                                      loading="lazy"
+                                      alt="image"
+                                      style={{ height: '400px' }}
+                                    />
+                                  </div>
+                                ))}
+                              </Carousel>
+
                               <Link href={'/projects/' + projects[i + 1]?._id}>
                                 <div className="link-block-23 short-box w-inline-block cursor-pointer">
                                   <p className="hero-slide-p-2 project-sub-head">
@@ -193,7 +193,7 @@ const Projects = () => {
                                 {/* <img
                           sizes="(max-width: 479px) 92vw, (max-width: 767px) 95vw, (max-width: 991px) 31vw, (max-width: 1279px) 28vw, (max-width: 1919px) 30vw, 480px"
                           // srcSet="images/cp-molettoparedes-epem-0154_1-p-500.jpeg 500w, images/cp-molettoparedes-epem-0154_1-p-800.jpeg 800w, images/cp-molettoparedes-epem-0154_1-p-1080.jpeg 1080w, images/cp-molettoparedes-epem-0154_1-p-1600.jpeg 1600w, images/cp-molettoparedes-epem-0154_1cp-molettoparedes-epem-0154.jpg 2000w"
-                          src={projects[i + 2]?.media?.url}
+                          src={projects[i + 2]?.media[0]?.url}
                           loading="lazy"
                           alt
                         /> */}
@@ -212,10 +212,16 @@ const Projects = () => {
                             </div>
                           </div>
                           <div className="left-arrow-8 w-slider-arrow-left">
-                            <div className="icon-27 w-icon-slider-left" />
+                            <div
+                              className="icon-27 w-icon-slider-left"
+                              onClick={() => sliderRefTwo.current.prev()}
+                            />
                           </div>
                           <div className="right-arrow-8 w-slider-arrow-right">
-                            <div className="icon-27 w-icon-slider-right" />
+                            <div
+                              className="icon-27 w-icon-slider-right"
+                              onClick={() => sliderRefTwo.current.next()}
+                            />
                           </div>
                           <div className="slide-nav-9 w-slider-nav w-round" />
                         </div>
@@ -224,7 +230,7 @@ const Projects = () => {
                     {projects[i + 2] && (
                       <div
                         id="w-node-_0c497f53-2a51-a14b-e390-7b6095c98b70-c97228da"
-                        style={{ height: '320px' }}
+                        style={{ height: '320px', width: '350px' }}
                       >
                         <div
                           data-delay={4000}
@@ -241,13 +247,27 @@ const Projects = () => {
                         >
                           <div className="mask-4 w-slider-mask">
                             <div className="w-slide">
-                              <img
+                              <Carousel autoplay ref={sliderRefThree}>
+                                {projects[i + 2]?.media?.map((img) => (
+                                  <div>
+                                    <img
+                                      sizes="(max-width: 479px) 92vw, (max-width: 767px) 95vw, (max-width: 991px) 31vw, (max-width: 1279px) 28vw, (max-width: 1919px) 30vw, 480px"
+                                      // srcSet="images/cp-molettoparedes-epem-0154_1-p-500.jpeg 500w, images/cp-molettoparedes-epem-0154_1-p-800.jpeg 800w, images/cp-molettoparedes-epem-0154_1-p-1080.jpeg 1080w, images/cp-molettoparedes-epem-0154_1-p-1600.jpeg 1600w, images/cp-molettoparedes-epem-0154_1cp-molettoparedes-epem-0154.jpg 2000w"
+                                      src={img?.url}
+                                      loading="lazy"
+                                      alt="image"
+                                      style={{ height: '400px' }}
+                                    />
+                                  </div>
+                                ))}
+                              </Carousel>
+                              {/* <img
                                 sizes="(max-width: 479px) 92vw, (max-width: 767px) 95vw, (max-width: 991px) 31vw, (max-width: 1279px) 28vw, (max-width: 1919px) 30vw, 480px"
                                 // srcSet="images/cp-molettoparedes-epem-0154_1-p-500.jpeg 500w, images/cp-molettoparedes-epem-0154_1-p-800.jpeg 800w, images/cp-molettoparedes-epem-0154_1-p-1080.jpeg 1080w, images/cp-molettoparedes-epem-0154_1-p-1600.jpeg 1600w, images/cp-molettoparedes-epem-0154_1cp-molettoparedes-epem-0154.jpg 2000w"
-                                src={projects[i + 2]?.media?.url}
+                                src={projects[i + 2]?.media[0]?.url}
                                 alt
                                 className="w-full h-full"
-                              />
+                              /> */}
                               <Link href={'/projects/' + projects[i + 2]?._id}>
                                 <div className="link-block-23 short-box w-inline-block cursor-pointer">
                                   <p className="hero-slide-p-2 project-sub-head">
@@ -286,10 +306,16 @@ const Projects = () => {
                             </div>
                           </div>
                           <div className="left-arrow-8 w-slider-arrow-left">
-                            <div className="icon-27 w-icon-slider-left" />
+                            <div
+                              className="icon-27 w-icon-slider-left"
+                              onClick={() => sliderRefThree.current.prev()}
+                            />
                           </div>
                           <div className="right-arrow-8 w-slider-arrow-right">
-                            <div className="icon-27 w-icon-slider-right" />
+                            <div
+                              className="icon-27 w-icon-slider-right"
+                              onClick={() => sliderRefThree.current.next()}
+                            />
                           </div>
                           <div className="slide-nav-9 w-slider-nav w-round" />
                         </div>
@@ -321,7 +347,7 @@ const Projects = () => {
                             <img
                               sizes="(max-width: 479px) 92vw, (max-width: 767px) 95vw, (max-width: 991px) 31vw, (max-width: 1279px) 28vw, (max-width: 1919px) 30vw, 480px"
                               // srcSet="images/cp-molettoparedes-epem-0154_1-p-500.jpeg 500w, images/cp-molettoparedes-epem-0154_1-p-800.jpeg 800w, images/cp-molettoparedes-epem-0154_1-p-1080.jpeg 1080w, images/cp-molettoparedes-epem-0154_1-p-1600.jpeg 1600w, images/cp-molettoparedes-epem-0154_1cp-molettoparedes-epem-0154.jpg 2000w"
-                              src={projects[i + 3]?.media?.url}
+                              src={projects[i + 3]?.media[0]?.url}
                               loading="lazy"
                               className="w-full h-full"
                               alt
@@ -388,7 +414,7 @@ const Projects = () => {
                                 <img
                                   sizes="(max-width: 479px) 92vw, (max-width: 767px) 95vw, (max-width: 991px) 31vw, (max-width: 1279px) 28vw, (max-width: 1919px) 30vw, 480px"
                                   // srcSet="images/cp-molettoparedes-epem-0154_1-p-500.jpeg 500w, images/cp-molettoparedes-epem-0154_1-p-800.jpeg 800w, images/cp-molettoparedes-epem-0154_1-p-1080.jpeg 1080w, images/cp-molettoparedes-epem-0154_1-p-1600.jpeg 1600w, images/cp-molettoparedes-epem-0154_1cp-molettoparedes-epem-0154.jpg 2000w"
-                                  src={projects[i + 4]?.media?.url}
+                                  src={projects[i + 4]?.media[0]?.url}
                                   loading="lazy"
                                   alt
                                 />
@@ -463,7 +489,7 @@ const Projects = () => {
                                 <img
                                   sizes="(max-width: 479px) 92vw, (max-width: 767px) 95vw, (max-width: 991px) 31vw, (max-width: 1279px) 28vw, (max-width: 1919px) 30vw, 480px"
                                   // srcSet="images/cp-molettoparedes-epem-0154_1-p-500.jpeg 500w, images/cp-molettoparedes-epem-0154_1-p-800.jpeg 800w, images/cp-molettoparedes-epem-0154_1-p-1080.jpeg 1080w, images/cp-molettoparedes-epem-0154_1-p-1600.jpeg 1600w, images/cp-molettoparedes-epem-0154_1cp-molettoparedes-epem-0154.jpg 2000w"
-                                  src={projects[i + 5]?.media?.url}
+                                  src={projects[i + 5]?.media[0]?.url}
                                   loading="lazy"
                                   alt
                                 />

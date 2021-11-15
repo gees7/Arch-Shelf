@@ -90,7 +90,7 @@ const Dashboard = () => {
               <div className="main-block w-inline-block">
                 <img
                   className="image-box"
-                  src={proj.media?.url}
+                  src={proj.media[0]?.url}
                   style={{ height: '300px', width: '100%' }}
                 />
                 <div className="card-box">
@@ -458,7 +458,7 @@ const Dashboard = () => {
                 <div className="main-block w-inline-block">
                   <img
                     className="image-box bg"
-                    src={dash?.feed?.media?.url}
+                    src={dash?.feed?.media[0]?.url}
                     style={{ height: '300px', width: '100%' }}
                   />
                   <div className="card-box">

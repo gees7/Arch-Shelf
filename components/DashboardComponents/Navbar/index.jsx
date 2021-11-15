@@ -46,7 +46,7 @@ const Navbar = () => {
             style={{ maxWidth: '200px' }}
           >
             <img
-              src={item?.media?.url}
+              src={item?.media[0]?.url}
               loading="lazy"
               width={40}
               style={{
@@ -78,7 +78,7 @@ const Navbar = () => {
             style={{ maxWidth: '200px' }}
           >
             <img
-              src={item?.media?.url}
+              src={item?.media[0]?.url}
               loading="lazy"
               width={40}
               style={{
@@ -110,7 +110,7 @@ const Navbar = () => {
             style={{ maxWidth: '200px' }}
           >
             <img
-              src={item?.media?.url}
+              src={item?.media[0]?.url}
               loading="lazy"
               width={40}
               style={{

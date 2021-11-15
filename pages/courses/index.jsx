@@ -80,7 +80,7 @@ const Courses = ({ categories, getCategories }) => {
                           <div className="cursor-pointer flex h-full items-start ">
                             <div className="blog-image-wrap">
                               <img
-                                src={item?.media?.url}
+                                src={item?.media[0]?.url}
                                 style={{ height: '170px', width: '250px' }}
                                 // sizes="(max-width: 479px) 79vw, (max-width: 991px) 42vw, (max-width: 1279px) 15vw, (max-width: 1919px) 16vw, 264.1875px"
                                 // srcSet="images/springwood-p-500.jpeg 500w, images/springwood-p-800.jpeg 800w, images/springwood.jpg 900w"

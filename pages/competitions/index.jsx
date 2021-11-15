@@ -257,7 +257,7 @@ const Competitions = () => {
                     />
                   </a>
                 </form>
-                <FeatureArticle />
+                <FeatureArticle type="competitions" />
                 <img src="images/ad-3.JPG" loading="lazy" alt />
               </div>
             </div>

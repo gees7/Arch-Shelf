@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import { connect } from 'react-redux';
 import {
@@ -8,6 +8,8 @@ import {
   getProjects,
 } from '../../store/actions/blogActions';
 import { getFeed, getFeeds } from '../../store/api/dashboardApi';
+import { Carousel } from 'antd';
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 
 const index = ({ id, type }) => {
   var mL = [
@@ -28,6 +30,7 @@ const index = ({ id, type }) => {
   const [readTime, setReadTime] = useState(0);
   const [data, setData] = useState(null);
   const [dataList, setDataList] = useState(null);
+  const sliderRef = useRef(null);
 
   useEffect(() => {
     getFeed({ pathParams: { id } })
@@ -93,13 +96,56 @@ const index = ({ id, type }) => {
         </div>
         <div className="blog-section">
           <div className="container-501">
-            <img
+            {/* <img
               src={data?.media?.url}
               // sizes="(max-width: 479px) 94vw, (max-width: 991px) 75vw, (max-width: 1279px) 73vw, (max-width: 1919px) 76vw, 1216px"
               // srcSet="images/architect-drawing-architectural-project-PH4Q7EB-min-p-500.jpeg 500w, images/architect-drawing-architectural-project-PH4Q7EB-min-p-800.jpeg 800w, images/architect-drawing-architectural-project-PH4Q7EB-min.jpg 888w"
               alt=""
               className="blog-hero-image"
-            />
+            /> */}
+            <Carousel autoplay ref={sliderRef} style={{ marginTop: '-140px' }}>
+              {data?.media?.map((img) => (
+                <div>
+                  <div>
+                    <img
+                      src={img?.url}
+                      // sizes="(max-width: 479px) 94vw, (max-width: 991px) 75vw, (max-width: 1279px) 73vw, (max-width: 1919px) 76vw, 1216px"
+                      // srcSet="images/architect-drawing-architectural-project-PH4Q7EB-min-p-500.jpeg 500w, images/architect-drawing-architectural-project-PH4Q7EB-min-p-800.jpeg 800w, images/architect-drawing-architectural-project-PH4Q7EB-min.jpg 888w"
+                      alt=""
+                      className="blog-hero-image"
+                      style={{
+                        height: '700px',
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                        marginTop: '0px',
+                        marginBottom: '0px',
+                      }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </Carousel>
+            <div
+              className="flex justify-start mt-4"
+              style={{
+                width: '80%',
+                marginLeft: 'auto',
+                marginRight: 'auto',
+              }}
+            >
+              <div>
+                <LeftOutlined
+                  onClick={() => sliderRef.current.prev()}
+                  style={{ fontSize: '20px', marginRight: '20px' }}
+                />
+              </div>
+              <div>
+                <RightOutlined
+                  onClick={() => sliderRef.current.next()}
+                  style={{ fontSize: '20px' }}
+                />
+              </div>
+            </div>
             <div className="w-layout-grid blog-grid">
               <div className="content-left_blog">
                 <h2 className="blog-h2">{data?.title}</h2>
@@ -148,7 +194,7 @@ const index = ({ id, type }) => {
                             <Link href={'/resources/' + item?._id}>
                               <div className="cursor-pointer flex items-center">
                                 <img
-                                  src={item?.media?.url}
+                                  src={item?.media[0]?.url}
                                   style={{ width: '100px', height: '80px' }}
                                   alt
                                   className="feature-image-2"
