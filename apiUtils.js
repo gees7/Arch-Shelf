@@ -11,7 +11,8 @@ import { refreshToken } from './store/api/authApi';
 export const hostname = () => {
   let hostUrl = '';
   // hostUrl = process.env.SERVER;
-  hostUrl = 'http://localhost:5000';
+  // hostUrl = 'http://localhost:5000';
+  hostUrl = 'https://api.archshelf.com';
   return hostUrl;
 };
 
