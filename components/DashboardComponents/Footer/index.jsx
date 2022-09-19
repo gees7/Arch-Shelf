@@ -21,10 +21,9 @@ const Footer = () => {
             </div>
           </div>
           <div className="logocontent">
-            <p className="divpara footer">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt &nbsp;aliqua.
-            </p>
+            {/* <p className="divpara footer">
+            Archshelf, a second portal from Archistudent Platform (founded in 2008), is an online collaborative platform and a network for the working professionals, budding architects, designers and aspiring architecture students. It is a feast of knowledge, inspiration and creativity for the architecture fraternity.
+            </p> */}
           </div>
         </div>
         <div className="footer-links-container">
@@ -34,8 +33,7 @@ const Footer = () => {
                 <strong>About</strong>
               </h4>
               <p className="paragraph color">
-                Lorem ipsum dolor sit amet, consectetur&nbsp;elit. Suspendisse
-                varius enim in eros elementum tristique.
+              Archshelf, a second portal from Archistudent Platform (founded in 2008), is an online collaborative platform and a network for the working professionals, budding architects, designers and aspiring architecture students. It is a feast of knowledge, inspiration and creativity for the architecture fraternity.
               </p>
             </div>
             <div className="footerdiv1">

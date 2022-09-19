@@ -20,22 +20,13 @@ const AboutUs = () => {
               </div>
               <div>
                 <p className="paragraph-26">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse varius enim in eros elementum tristique. Duis
-                  cursus, mi quis viverra ornare, eros dolor interdum nulla, ut
-                  commodo diam libero vitae erat. Aenean faucibus nibh et justo
-                  cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus
-                  tristique posuere. Aenean faucibus nibh et justo cursus id
-                  rutrum lorem imperdiet. Nunc ut sem vitae risus tristique
-                  posuere. Aenean faucibus nibh et justo cursus id rutrum lorem
-                  imperdiet. Nunc ut sem vitae risus tristique posuere.
+                Archshelf, a second portal from Archistudent Platform (founded in 2008), is an online collaborative platform and a network for the working professionals, budding architects, designers and aspiring architecture students. It is a feast of knowledge, inspiration and creativity for the architecture fraternity.
                 </p>
                 <p className="paragraph-26">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse varius enim in eros elementum tristique. Duis
-                  cursus, mi quis viverra ornare, eros dolor interdum nulla, ut
-                  commodo diam libero vitae erat. Aenean faucibus nibh et justo
-                  cursus id rutrum lorem imperdiet.{' '}
+                We at Archshelf promote collaborative approach towards design and believe in providing an exclusive platform for design thinkers and creative minds to excel in the future endeavors and reach new heights. Archshelf serves an influential global audience of design aspirants, architects, planners, landscapers, interior designers, construction professionals, and students of similar fields who are eager to gain knowledge about the latest trends, technology, and product materials. Archshelf is a destination that engages the community in dialogues, debates, and discourses all across.
+                </p>
+                <p className="paragraph-26">
+                Archshelf try to bring together architects, designers, engineers, builders, manufacturers, suppliers, academicians and general people to help develop, share, train and promote excellence in design and construction. We want to be part of the change to help better our lives and well-being through comfort, health and sustainability in our homes and work places.
                 </p>
               </div>
               <div className="div-block-395">
